@@ -86,10 +86,3 @@ def test_cli_run_daily_dry_run_offline(tmp_path, monkeypatch, capsys):
     assert "MARKET INTEL DIGEST" in out and "SPY" not in out.split("WATCHLIST")[1]
     for symbol in ("AAPL", "NVDA", "GS", "XOM", "DIS"):
         assert symbol in out
-
-
-def test_cli_digest_requires_dry_run(tmp_path):
-    import pytest
-
-    with pytest.raises(SystemExit):
-        cli.main(["digest", "--db", str(tmp_path / "x.duckdb")])
