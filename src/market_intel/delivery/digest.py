@@ -66,6 +66,10 @@ class Digest:
     market: TickerRow | None = None  # the regime benchmark (SPY), for "vs the market"
     names: dict[str, str] = field(default_factory=dict)
     insider_trades: list[dict[str, Any]] = field(default_factory=list)  # largest first
+    news: list[dict[str, Any]] = field(default_factory=list)  # newest first per symbol
+
+    def headlines(self, symbol: str) -> list[dict[str, Any]]:
+        return [n for n in self.news if n["symbol"] == symbol]
 
     @property
     def as_of(self) -> dt.date | None:
@@ -268,6 +272,15 @@ def build_digest(
         ).fetchall()
     ]
 
+    from market_intel.collectors.news import recent_headlines
+
+    news = recent_headlines(
+        con,
+        symbols,
+        now_naive - dt.timedelta(days=int(dig.get("news_days", 3))),
+        int(dig.get("news_per_symbol", 3)),
+    )
+
     order = {s: i for i, s in enumerate(symbols)}
     flags.sort(key=lambda f: order.get(f[0], len(order)))
     return Digest(
@@ -278,10 +291,15 @@ def build_digest(
         flags=flags,
         filings=filings,
         insiders=insiders,
-        windows={"filings": filings_days, "insiders": insider_days},
+        windows={
+            "filings": filings_days,
+            "insiders": insider_days,
+            "news": int(dig.get("news_days", 3)),
+        },
         market=market if market.close is not None else None,
         names={sec.symbol: sec.name for sec in securities},
         insider_trades=insider_trades,
+        news=news,
     )
 
 

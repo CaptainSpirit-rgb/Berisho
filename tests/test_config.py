@@ -54,7 +54,7 @@ def test_cli_run_daily_dry_run_offline(tmp_path, monkeypatch, capsys):
     import json
     from pathlib import Path
 
-    from market_intel.collectors import edgar, prices
+    from market_intel.collectors import edgar, news, prices
 
     today = dt.datetime.now(dt.UTC).date()
     real_collect = prices.collect_prices
@@ -80,9 +80,20 @@ def test_cli_run_daily_dry_run_offline(tmp_path, monkeypatch, capsys):
             return (Path(__file__).parent / "fixtures" / "form4_sample.xml").read_text()
 
     monkeypatch.setattr(edgar, "SecClient", FakeSec)
+    real_news = news.collect_news
+    item = {
+        "title": "Apple unveils thing",
+        "publisher": "Wire",
+        "link": "https://n.test/1",
+        "providerPublishTime": int(dt.datetime.now(dt.UTC).timestamp()) - 3600,
+    }
+    monkeypatch.setattr(
+        news, "collect_news", lambda con, symbols: real_news(con, symbols, lambda s: [item])
+    )
     path = tmp_path / "daily.duckdb"
     assert cli.main(["run-daily", "--dry-run", "--db", str(path)]) == 0
     out = capsys.readouterr().out
     assert "MARKET DIGEST" in out and "TODAY IN BRIEF" in out and "Notes from fixed rules" in out
     for symbol in ("KO", "AAPL", "NVDA", "MSFT", "JPM"):
         assert symbol in out
+    assert "Apple unveils thing" in out
