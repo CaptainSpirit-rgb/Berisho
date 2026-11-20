@@ -1,0 +1,24 @@
+# Test watchlist (5 tickers) for Phase 0/1.
+# CIK = SEC Central Index Key, used by the EDGAR collectors.
+# Verify CIKs against https://www.sec.gov/files/company_tickers.json before relying on them.
+tickers:
+  - symbol: AAPL
+    name: Apple Inc.
+    cik: 320193
+    sector_etf: XLK
+  - symbol: NVDA
+    name: NVIDIA Corporation
+    cik: 1045810
+    sector_etf: XLK
+  - symbol: GS
+    name: The Goldman Sachs Group, Inc.
+    cik: 886982
+    sector_etf: XLF
+  - symbol: XOM
+    name: Exxon Mobil Corporation
+    cik: 34088
+    sector_etf: XLE
+  - symbol: DIS
+    name: The Walt Disney Company
+    cik: 1744489
+    sector_etf: XLC

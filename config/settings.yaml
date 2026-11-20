@@ -1,0 +1,47 @@
+# Thresholds, weights and schedule. Keep tunables here, not in code.
+
+timezone:
+  storage: UTC
+  display: Asia/Tbilisi
+
+benchmark:
+  symbol: SPY
+  regime_ma_days: 200        # bull if close > 200-day MA (thesis rule)
+
+signals:
+  price_gap_pct: 5.0         # overnight gap, absolute %
+  volume_spike_multiple: 3.0 # volume vs 20-day average
+  volume_lookback_days: 20
+  insider_cluster:
+    min_buyers: 3
+    window_days: 10
+  sentiment_baseline_days: 60
+
+scoring:
+  weights:
+    price_gap: 1.0
+    volume_spike: 1.0
+    insider_cluster_buy: 1.5
+    new_8k: 1.0
+  regime_multiplier:
+    bull: 1.0
+    bear: 1.0
+
+digest:
+  top_n: 10
+  filings_days: 7            # "Recent filings" section window
+  new_8k_days: 3             # an 8-K this recent raises a flag
+  insider_days: 30           # "Insider activity" section window
+  instant_alert_min_score: 0.8
+  send_time_local: "17:00"   # before the US open (17:30 Tbilisi); confirm
+
+prices:
+  lookback_days: 400         # first fetch for a new symbol; enough for the 200-day MA
+
+sec:
+  max_requests_per_second: 10
+  filings_lookback_days: 365 # filings index window per run
+  form4_lookback_days: 90    # fetch Form 4 XML for filings this recent
+  forms: ["8-K", "8-K/A", "10-Q", "10-K", "10-K/A", "4", "4/A",
+          "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A",
+          "SCHEDULE 13D", "SCHEDULE 13D/A", "SCHEDULE 13G", "SCHEDULE 13G/A"]
