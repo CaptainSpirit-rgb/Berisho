@@ -66,6 +66,7 @@ class Digest:
     market: TickerRow | None = None  # the regime benchmark (SPY), for "vs the market"
     names: dict[str, str] = field(default_factory=dict)
     insider_trades: list[dict[str, Any]] = field(default_factory=list)  # largest first
+    sentiment: list[tuple[str, str]] = field(default_factory=list)  # (symbol, line); [] = no news
 
     @property
     def as_of(self) -> dt.date | None:
@@ -268,6 +269,8 @@ def build_digest(
         ).fetchall()
     ]
 
+    sentiment_lines = _sentiment(con, symbols, settings, now, regime, flags)
+
     order = {s: i for i, s in enumerate(symbols)}
     flags.sort(key=lambda f: order.get(f[0], len(order)))
     return Digest(
@@ -282,7 +285,31 @@ def build_digest(
         market=market if market.close is not None else None,
         names={sec.symbol: sec.name for sec in securities},
         insider_trades=insider_trades,
+        sentiment=sentiment_lines,
     )
+
+
+def _sentiment(
+    con: duckdb.DuckDBPyConnection,
+    symbols: list[str],
+    settings: dict[str, Any],
+    now: dt.datetime,
+    regime: dict[str, Any] | None,
+    flags: list[tuple[str, str]],
+) -> list[tuple[str, str]]:
+    """News-sentiment lines per ticker, and flags for any shift or volume spike. Read-only
+    (signals are written by `score-sentiment`); empty while no news has been collected."""
+    from market_intel.signals import sentiment
+
+    cfg = sentiment.sentiment_settings(settings)
+    if not cfg["enabled"] or not con.execute("SELECT count(*) FROM news").fetchone()[0]:
+        return []
+    results = sentiment.detect(
+        con, symbols, settings, now=now, regime=(regime or {}).get("regime"), write=False
+    )
+    for r in results:
+        flags += [(r.symbol, sentiment.flag_text(s)) for s in r.signals]
+    return [(r.symbol, sentiment.describe(r, cfg)) for r in results]
 
 
 def _pct(v: float | None) -> str:
