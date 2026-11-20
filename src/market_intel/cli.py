@@ -264,6 +264,183 @@ def cmd_run_daily(args: argparse.Namespace) -> int:
     return 0 if ok_prices and ok_filings and ok_sentiment and ok_sent else 1
 
 
+# ------------------------------------------------------------------ weekly screener
+def _open_screen_db(args: argparse.Namespace):
+    from market_intel import screener
+
+    con = _open_db(args)
+    screener.init_schema(con)
+    return con
+
+
+def _sec_client(settings: dict):
+    from market_intel.collectors import edgar
+
+    config.load_env()
+    sec = settings.get("sec", {})
+    return edgar.SecClient(max_requests_per_second=float(sec.get("max_requests_per_second", 10)))
+
+
+def _collect_screen_data(con, settings: dict, zip_path: str | None, download: bool) -> bool:
+    """Universe + SEC financials (bulk zip) + SIC codes."""
+    from pathlib import Path
+
+    from market_intel.collectors import edgar
+    from market_intel.screener import facts, universe
+
+    try:
+        client = _sec_client(settings)
+    except edgar.MissingUserAgentError as exc:
+        log.error("%s", exc)
+        return False
+    scfg = settings.get("screener", {}) or {}
+    n = universe.refresh(con, client, scfg.get("exchanges") or universe.DEFAULT_EXCHANGES)
+    log.info("Universe: %d listed companies", n)
+
+    path = Path(zip_path) if zip_path else config.REPO_ROOT / "data" / "companyfacts.zip"
+    if download or not path.exists():
+        log.info("Downloading SEC companyfacts.zip (over 1 GB, takes a while) to %s", path)
+        facts.download_bulk_zip(client, path)
+    ciks = {r[0] for r in con.execute("SELECT cik FROM screen_universe").fetchall()}
+    companies, rows = facts.ingest_bulk_zip(con, path, ciks)
+    log.info("Financials: %d companies, %d facts loaded", companies, rows)
+
+    with_facts = {r[0] for r in con.execute("SELECT DISTINCT cik FROM xbrl_facts").fetchall()}
+    todo = universe.missing_sic(con, with_facts)
+    if todo:
+        log.info("Looking up industry codes for %d companies (first run is slow)", len(todo))
+        universe.fill_sic(con, client, todo)
+    return True
+
+
+def _collect_screen_prices(con, settings: dict, start) -> bool:
+    import datetime as dt
+
+    from market_intel.screener import backtest, prices
+
+    tickers = [r[0] for r in con.execute("SELECT ticker FROM screen_universe").fetchall()]
+    bench = backtest.bt_settings(settings).get("benchmark")
+    if bench:
+        tickers.append(bench)
+    today = dt.datetime.now(dt.UTC).date()
+    rows, missing = prices.collect(con, tickers, start, today + dt.timedelta(days=1))
+    log.info("Prices: %d rows; %d tickers returned nothing", rows, len(missing))
+    return rows > 0
+
+
+def _screen_and_deliver(con, args: argparse.Namespace, settings: dict) -> bool:
+    import datetime as dt
+
+    from market_intel.screener import screen
+
+    as_of = (
+        dt.date.fromisoformat(args.date)
+        if getattr(args, "date", None)
+        else (dt.datetime.now(dt.UTC).date())
+    )
+    cfg = screen.screen_settings(settings)
+    top_n = int(cfg["top_n"])
+    result = screen.run_screen(con, as_of, settings)
+    previous = screen.previous_tickers(con, as_of)
+    screen.save_results(con, result, top_n)
+    watch = {s.symbol for s in config.load_watchlist()}
+    text = screen.render_section(result, top_n, previous, watch)
+    log.info("Screen: %d passed; excluded %s", len(result.candidates), result.excluded)
+    if args.dry_run:
+        print(text)
+        return True
+    from market_intel.delivery import telegram
+
+    config.load_env()
+    try:
+        telegram.TelegramClient(telegram.TelegramConfig.from_env()).send_text(text)
+    except telegram.TelegramError as exc:
+        log.error("%s", exc)
+        log.error("Screen not sent; printing it here instead.")
+        print(text)
+        return False
+    log.info("Screen sent to Telegram")
+    return True
+
+
+def cmd_screen_collect(args: argparse.Namespace) -> int:
+    con = _open_screen_db(args)
+    ok = _collect_screen_data(con, config.load_settings(), args.zip, args.download)
+    con.close()
+    return 0 if ok else 1
+
+
+def cmd_screen_prices(args: argparse.Namespace) -> int:
+    import datetime as dt
+
+    con = _open_screen_db(args)
+    start = (
+        dt.date.fromisoformat(args.start)
+        if args.start
+        else dt.datetime.now(dt.UTC).date() - dt.timedelta(days=10)
+    )
+    ok = _collect_screen_prices(con, config.load_settings(), start)
+    con.close()
+    return 0 if ok else 1
+
+
+def cmd_screen(args: argparse.Namespace) -> int:
+    con = _open_screen_db(args)
+    ok = _screen_and_deliver(con, args, config.load_settings())
+    con.close()
+    return 0 if ok else 1
+
+
+def cmd_run_weekly(args: argparse.Namespace) -> int:
+    """Refresh universe, financials and latest prices, then send (or print) the screen."""
+    import datetime as dt
+
+    settings = config.load_settings()
+    con = _open_screen_db(args)
+    ok_data = _collect_screen_data(con, settings, None, download=True)
+    ok_px = _collect_screen_prices(
+        con, settings, dt.datetime.now(dt.UTC).date() - dt.timedelta(days=10)
+    )
+    ok_sent = _screen_and_deliver(con, args, settings)
+    con.close()
+    return 0 if ok_data and ok_px and ok_sent else 1
+
+
+def cmd_screen_backtest(args: argparse.Namespace) -> int:
+    import datetime as dt
+    from pathlib import Path
+
+    from market_intel.screener import backtest, screen
+
+    settings = config.load_settings()
+    con = _open_screen_db(args)
+    top_n = args.top_n or int(screen.screen_settings(settings)["top_n"])
+    try:
+        periods, summary = backtest.run_backtest(
+            con,
+            settings,
+            start=dt.date.fromisoformat(args.start) if args.start else None,
+            end=dt.date.fromisoformat(args.end) if args.end else None,
+            top_n=top_n,
+        )
+    except ValueError as exc:
+        log.error("%s", exc)
+        return 1
+    finally:
+        con.close()
+    report = backtest.render_report(periods, summary, top_n, settings)
+    out = (
+        Path(args.out)
+        if args.out
+        else (config.REPO_ROOT / "data" / "backtests" / f"screen_backtest_{dt.date.today()}.md")
+    )
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(report, encoding="utf-8")
+    print(report)
+    log.info("Report written to %s", out)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="market-intel", description=__doc__)
     parser.add_argument("-v", "--verbose", action="store_true")
@@ -314,6 +491,38 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("telegram-test", help="Send a test message to TELEGRAM_CHAT_ID")
     p.set_defaults(func=cmd_telegram_test)
+
+    p = sub.add_parser(
+        "screen-collect", help="Load the screener universe, SEC financials and industries"
+    )
+    p.add_argument("--db", help="Override the database path")
+    p.add_argument("--zip", help="Use this companyfacts.zip instead of data/companyfacts.zip")
+    p.add_argument("--download", action="store_true", help="Download a fresh companyfacts.zip")
+    p.set_defaults(func=cmd_screen_collect)
+
+    p = sub.add_parser("screen-prices", help="Fetch prices for the whole screener universe")
+    p.add_argument("--db", help="Override the database path")
+    p.add_argument("--start", help="First date (YYYY-MM-DD); default 10 days ago")
+    p.set_defaults(func=cmd_screen_prices)
+
+    for name, func, help_ in (
+        ("screen", cmd_screen, "Run the screen on stored data and send the candidates"),
+        ("run-weekly", cmd_run_weekly, "Refresh screener data, then send the candidates"),
+    ):
+        p = sub.add_parser(name, help=help_)
+        p.add_argument("--db", help="Override the database path")
+        p.add_argument("--dry-run", action="store_true", help="Print instead of sending")
+        if name == "screen":
+            p.add_argument("--date", help="Screen as of this date (YYYY-MM-DD)")
+        p.set_defaults(func=func)
+
+    p = sub.add_parser("screen-backtest", help="Replay the screen on past dates (point-in-time)")
+    p.add_argument("--db", help="Override the database path")
+    p.add_argument("--start", help="First rebalance date (default from settings)")
+    p.add_argument("--end", help="Last rebalance date (default: latest price)")
+    p.add_argument("--top-n", type=int, help="Picks per date (default from settings)")
+    p.add_argument("--out", help="Where to write the Markdown report")
+    p.set_defaults(func=cmd_screen_backtest)
     return parser
 
 

@@ -85,6 +85,40 @@ collection started are scored but don't count as history. All thresholds are und
 `sentiment:` in `config/settings.yaml`. Per-day counts and means are in the
 `sentiment_daily` table, signals in `signals`.
 
+## Weekly screener: new candidates (Phase 2)
+
+Finds small and mid caps ($300M to $10B) beyond the watchlist that look good on four
+things at once: **growth** (12-month sales growth, and whether it is speeding up),
+**quality** (operating and free-cash-flow margins, margin trend), **balance sheet** (net
+debt vs EBITDA) and **price** (earnings yield, FCF yield, EV/sales vs its industry). Each
+pick comes with plain-language reasons and warnings. Everything is free: SEC financials
+plus Yahoo prices. Banks, insurers and REITs are left out because their accounts differ.
+
+```bash
+market-intel screen-collect              # SEC ticker list + companyfacts.zip (>1 GB) + industries
+market-intel screen-prices               # latest prices for the whole universe (bulk Yahoo)
+market-intel screen --dry-run            # print the ranked candidates
+market-intel run-weekly                  # all of it, candidates sent to Telegram
+```
+
+The first `screen-collect` takes a while: the bulk download is over 1 GB and industry codes
+are looked up once per company (about 15 minutes at SEC's rate limit). Later runs only look
+up new companies. Thresholds and pillar weights live under `screener:` in
+`config/settings.yaml`.
+
+### Backtest before trusting it
+
+```bash
+market-intel screen-prices --start 2014-06-01   # ~10 years of prices for the universe (slow)
+market-intel screen-backtest                    # report in data/backtests/
+```
+
+Every quarter since 2015 the screen is replayed using only financials **filed** by that
+date (not period end), and the top 10 are compared with the average of every company that
+passed the filters, and with IWM. Each pillar is also tested alone. Known bias: today's
+ticker list misses companies that went bust or were taken over, so absolute returns look
+better than reality. The excess over the (equally biased) universe is the fairer number.
+
 ## Telegram setup
 
 The digest is sent by your own Telegram bot to your own chat. One-time setup:
@@ -116,5 +150,6 @@ several messages at section boundaries to fit Telegram's 4,096-character limit.
 | `src/market_intel/scoring/` | Ranking with explainable contributions |
 | `src/market_intel/llm/` | Claude briefs and prompts |
 | `src/market_intel/delivery/` | Digest, Telegram, email |
+| `src/market_intel/screener/` | Weekly fundamentals screen and its point-in-time backtest |
 | `src/market_intel/journal/` | Decision journal and outcome evaluation |
 | `backtests/`, `notebooks/` | Screen backtests, exploration |
