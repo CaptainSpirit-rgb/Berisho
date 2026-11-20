@@ -31,11 +31,20 @@ def load_prices(con, symbol, closes, volumes=None, last_open=None):
     )
 
 
-def add_filing(con, acc, symbol, form, accepted, items=None):
+def add_filing(con, acc, symbol, form, accepted, items=None, subject_cik=1):
     con.execute(
         "INSERT INTO filings (accession_no, cik, symbol, form_type, filed_date, accepted_at, "
-        "items, primary_doc_url) VALUES (?, 1, ?, ?, ?, ?, ?, ?)",
-        [acc, symbol, form, accepted.date(), accepted, items, f"https://sec.test/{acc}"],
+        "items, primary_doc_url, subject_cik) VALUES (?, 1, ?, ?, ?, ?, ?, ?, ?)",
+        [
+            acc,
+            symbol,
+            form,
+            accepted.date(),
+            accepted,
+            items,
+            f"https://sec.test/{acc}",
+            subject_cik,
+        ],
     )
 
 
@@ -87,6 +96,16 @@ def test_recent_8k_flagged_and_old_filings_excluded(con):
     d = digest.build_digest(con, WATCH, settings(), now=NOW)
     assert [f["form_type"] for f in d.filings] == ["8-K", "10-K"]
     assert ("AAPL", "new 8-K (5.02 officer/director change)") in d.flags
+
+
+def test_filings_about_other_issuers_are_excluded(con):
+    # e.g. Goldman's own 13G/13D stakes in other companies show up in its EDGAR feed.
+    add_filing(con, "g1", "AAPL", "SCHEDULE 13D", dt.datetime(2026, 11, 19, 12), subject_cik=99)
+    add_filing(con, "g2", "AAPL", "SC 13G", dt.datetime(2026, 11, 19, 12), subject_cik=None)
+    add_filing(con, "g3", "AAPL", "SCHEDULE 13D", dt.datetime(2026, 11, 18, 12))
+    d = digest.build_digest(con, WATCH, settings(), now=NOW)
+    assert [f["form_type"] for f in d.filings] == ["SCHEDULE 13D"]
+    assert [t for s, t in d.flags if s == "AAPL"] == ["new SCHEDULE 13D (activist-size stake)"]
 
 
 def test_insider_cluster_buy(con):

@@ -173,6 +173,7 @@ def build_digest(
             FROM filings
             WHERE symbol IN (SELECT unnest(?))
               AND form_type NOT IN ('4', '4/A')
+              AND subject_cik = cik  -- skip filings the company made about other issuers
               AND coalesce(accepted_at, filed_date::TIMESTAMP) >= ?
             ORDER BY coalesce(accepted_at, filed_date::TIMESTAMP) DESC
             """,

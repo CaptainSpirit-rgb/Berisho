@@ -10,6 +10,15 @@ from market_intel.config import Security
 FIXTURES = Path(__file__).parent / "fixtures"
 SUBMISSIONS = json.loads((FIXTURES / "submissions_sample.json").read_text())
 FORM4_XML = (FIXTURES / "form4_sample.xml").read_text()
+HEADERS_AAPL = (FIXTURES / "headers_13g_subject_aapl.html").read_text()
+HEADERS_GS = (FIXTURES / "headers_13g_filed_by_gs.html").read_text()
+FORM4_URL = (
+    "https://www.sec.gov/Archives/edgar/data/320193/000032019326000100/wk-form4_1763506882.xml"
+)
+HEADERS_URL = (
+    "https://www.sec.gov/Archives/edgar/data/320193/000114036126000050/"
+    "0001140361-26-000050-index-headers.html"
+)
 AAPL = Security("AAPL", "Apple Inc.", 320193, "XLK")
 TODAY = dt.date(2026, 11, 20)
 
@@ -29,23 +38,20 @@ class FakeClient:
         return self.text_by_url[url]
 
 
-def apple_client():
+def apple_client(form4_xml=FORM4_XML, headers=HEADERS_AAPL):
     return FakeClient(
         {"https://data.sec.gov/submissions/CIK0000320193.json": SUBMISSIONS},
-        {
-            "https://www.sec.gov/Archives/edgar/data/320193/000032019326000100/"
-            "wk-form4_1763506882.xml": FORM4_XML
-        },
+        {FORM4_URL: form4_xml, HEADERS_URL: headers},
     )
 
 
-def test_acceptance_time_is_eastern_converted_to_utc():
-    # November: EST (UTC-5)
-    assert edgar.parse_acceptance("2026-11-19T16:30:05.000Z") == dt.datetime(
-        2026, 11, 19, 21, 30, 5
+def test_acceptance_time_is_already_utc():
+    # Real NVDA 8-K 0001045810-26-000088: index page says "Accepted 2026-11-17 16:20:51"
+    # (New York, EST), the submissions JSON says 21:20:51Z. The Z is honest.
+    assert edgar.parse_acceptance("2026-11-17T21:20:51.000Z") == dt.datetime(
+        2026, 11, 17, 21, 20, 51
     )
-    # July: EDT (UTC-4)
-    assert edgar.parse_acceptance("2026-07-01T16:30:00.000Z") == dt.datetime(2026, 7, 1, 20, 30)
+    assert edgar.parse_acceptance("2026-07-01T20:30:00.000Z") == dt.datetime(2026, 7, 1, 20, 30)
     assert edgar.parse_acceptance("") is None
     assert edgar.parse_acceptance("garbage") is None
 
@@ -65,6 +71,8 @@ def test_parse_submissions_filters_forms_and_dates():
         "https://www.sec.gov/Archives/edgar/data/320193/000032019326000101/aapl-20261119.htm"
     )
     assert rows[2].period_of_report is None  # empty reportDate
+    # Own filings are about the company; Form 4 and 13G subjects are resolved later.
+    assert [r.subject_cik for r in rows] == [320193, None, None, 320193, 320193]
     only_8k = edgar.parse_submissions(SUBMISSIONS, 320193, "AAPL", forms=["8-K"])
     assert {r.form_type for r in only_8k} == {"8-K"}
 
@@ -99,12 +107,15 @@ def test_collect_filings_end_to_end_and_idempotent(con):
     [res] = edgar.collect_filings(con, [AAPL], client, today=TODAY)
     assert res.error is None
     assert (res.filings, res.form4_parsed, res.insider_rows) == (5, 1, 2)
+    assert (res.stake_checked, res.not_subject) == (1, 0)
     # The old 2025 Form 4 is outside the 365-day window and never fetched.
-    assert len(client.calls) == 2
+    assert len(client.calls) == 3  # submissions, Form 4 XML, 13G header
 
     [res2] = edgar.collect_filings(con, [AAPL], client, today=TODAY)
-    assert res2.form4_parsed == 0  # already parsed, not re-fetched
-    assert len(client.calls) == 3  # only the submissions JSON again
+    assert res2.form4_parsed == 0 and res2.stake_checked == 0  # not re-fetched
+    assert len(client.calls) == 4  # only the submissions JSON again
+    subjects = con.execute("SELECT DISTINCT subject_cik FROM filings").fetchall()
+    assert subjects == [(320193,)]  # the re-run upsert kept the resolved subjects
     assert con.execute("SELECT count(*) FROM filings").fetchone() == (5,)
     assert con.execute("SELECT count(*) FROM insider_transactions").fetchone() == (2,)
     parsed = con.execute(
@@ -113,10 +124,39 @@ def test_collect_filings_end_to_end_and_idempotent(con):
     assert parsed == (True,)
 
 
+def test_parse_subject_cik_from_sec_header():
+    assert edgar.parse_subject_cik(HEADERS_GS) == 1935172  # Xiao-I, not Goldman (886982)
+    assert edgar.parse_subject_cik(HEADERS_AAPL) == 320193
+    assert edgar.parse_subject_cik("<html>no header</html>") is None
+
+
+def test_stake_filing_about_another_issuer_is_not_ours(con):
+    client = apple_client(headers=HEADERS_GS)
+    [res] = edgar.collect_filings(con, [AAPL], client, today=TODAY)
+    assert (res.stake_checked, res.not_subject) == (1, 1)
+    row = con.execute(
+        "SELECT subject_cik, details_parsed_at IS NOT NULL FROM filings "
+        "WHERE accession_no = '0001140361-26-000050'"
+    ).fetchone()
+    assert row == (1935172, True)
+
+
+def test_form4_where_company_is_reporting_owner_is_skipped(con):
+    other_issuer = FORM4_XML.replace(
+        "<issuerCik>0000320193</issuerCik>", "<issuerCik>0000999999</issuerCik>"
+    )
+    [res] = edgar.collect_filings(con, [AAPL], apple_client(form4_xml=other_issuer), today=TODAY)
+    assert (res.form4_parsed, res.insider_rows, res.not_subject) == (1, 0, 1)
+    assert con.execute("SELECT count(*) FROM insider_transactions").fetchone() == (0,)
+    assert con.execute("SELECT subject_cik FROM filings WHERE form_type = '4'").fetchone() == (
+        999999,
+    )
+
+
 def test_form4_failure_is_retried_next_run(con):
     client = apple_client()
     good = dict(client.text_by_url)
-    client.text_by_url = {}  # Form 4 fetch raises KeyError
+    client.text_by_url = {HEADERS_URL: HEADERS_AAPL}  # Form 4 fetch raises KeyError
     [res] = edgar.collect_filings(con, [AAPL], client, today=TODAY)
     assert res.error is None and res.form4_parsed == 0
     client.text_by_url = good
