@@ -13,10 +13,17 @@ Both steps are idempotent. SEC asks for a descriptive User-Agent with a contact 
 (``SEC_USER_AGENT`` in ``.env``) and at most 10 requests per second; ``SecClient``
 enforces both.
 
-Point-in-time note: ``acceptanceDateTime`` in the submissions JSON carries a ``Z``
-suffix but the clock time matches EDGAR's Eastern-time acceptance stamp, so it is read
-as America/New_York and stored as UTC. Verify this against a live filing index page
-before relying on it for backtests.
+Point-in-time note: ``acceptanceDateTime`` in the submissions JSON is true UTC (the
+``Z`` is honest). Checked against a live index page: NVDA's 8-K 0001045810-26-000088
+shows "Accepted 2026-11-17 16:20:51" (New York time) and the JSON says
+``2026-11-17T21:20:51.000Z``. It is stored as naive UTC unchanged.
+
+Filer vs subject: a company's submissions feed also lists filings it made *about other
+companies*: Goldman's Schedule 13G stakes in other issuers, Exxon's 13D on Imperial Oil,
+or Form 4s where the company is a 10% owner of another issuer. Each filing therefore
+gets ``subject_cik``: the company itself for 8-K/10-Q/10-K, the issuer from the Form 4
+XML, and the SUBJECT-COMPANY CIK from the SEC header for 13D/13G. Only rows with
+``subject_cik = cik`` are about the watchlist company.
 """
 
 from __future__ import annotations
@@ -24,13 +31,13 @@ from __future__ import annotations
 import datetime as dt
 import logging
 import os
+import re
 import threading
 import time
 import xml.etree.ElementTree as ET
 from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Any, Protocol
-from zoneinfo import ZoneInfo
 
 import duckdb
 
@@ -40,7 +47,7 @@ log = logging.getLogger(__name__)
 
 SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK{cik:010d}.json"
 ARCHIVES_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{acc_nodash}/{doc}"
-EASTERN = ZoneInfo("America/New_York")
+HEADERS_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{acc_nodash}/{acc}-index-headers.html"
 
 DEFAULT_FORMS = (
     "8-K",
@@ -60,6 +67,16 @@ DEFAULT_FORMS = (
     "SCHEDULE 13G/A",
 )
 FORM4_TYPES = {"4", "4/A"}
+
+
+def is_stake_form(form: str) -> bool:
+    """Schedule 13D/13G (old 'SC 13D' and new 'SCHEDULE 13D' names, amendments too)."""
+    return "13D" in form or "13G" in form
+
+
+def needs_subject_check(form: str) -> bool:
+    """Forms where the listed company may be the filer rather than the subject."""
+    return form in FORM4_TYPES or is_stake_form(form)
 
 
 class MissingUserAgentError(RuntimeError):
@@ -139,6 +156,7 @@ class Filing:
     items: str | None
     primary_doc: str | None
     primary_doc_url: str | None
+    subject_cik: int | None = None  # None until resolved (Form 4, 13D/13G)
 
 
 def _date(value: str | None) -> dt.date | None:
@@ -151,14 +169,13 @@ def _date(value: str | None) -> dt.date | None:
 
 
 def parse_acceptance(value: str | None) -> dt.datetime | None:
-    """EDGAR acceptance stamp (Eastern clock time, despite the 'Z') -> naive UTC."""
+    """EDGAR acceptanceDateTime ('2026-11-17T21:20:51.000Z', true UTC) -> naive UTC."""
     if not value:
         return None
     try:
-        naive = dt.datetime.fromisoformat(value.rstrip("Z")[:19])
+        return dt.datetime.fromisoformat(value.rstrip("Z")[:19])
     except ValueError:
         return None
-    return naive.replace(tzinfo=EASTERN).astimezone(dt.UTC).replace(tzinfo=None)
 
 
 def archive_url(cik: int, accession_no: str, doc: str) -> str:
@@ -202,6 +219,7 @@ def parse_submissions(
                 items=col("items", i) or None,
                 primary_doc=doc,
                 primary_doc_url=archive_url(cik, acc, doc) if doc else None,
+                subject_cik=None if needs_subject_check(form) else cik,
             )
         )
     return out
@@ -219,22 +237,26 @@ def upsert_filings(con: duckdb.DuckDBPyConnection, filings: Iterable[Filing]) ->
             f.period_of_report,
             f.items,
             f.primary_doc_url,
+            f.subject_cik,
         )
         for f in filings
     ]
     if rows:
-        # ON CONFLICT keeps details_parsed_at, so Form 4s aren't re-fetched every run.
+        # ON CONFLICT keeps details_parsed_at and a resolved subject_cik, so Form 4s and
+        # 13D/13G headers aren't re-fetched every run.
         con.executemany(
             """
             INSERT INTO filings (accession_no, cik, symbol, form_type, filed_date,
-                                 accepted_at, period_of_report, items, primary_doc_url)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 accepted_at, period_of_report, items, primary_doc_url,
+                                 subject_cik)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (accession_no) DO UPDATE SET
                 cik = excluded.cik, symbol = excluded.symbol,
                 form_type = excluded.form_type, filed_date = excluded.filed_date,
                 accepted_at = excluded.accepted_at,
                 period_of_report = excluded.period_of_report, items = excluded.items,
                 primary_doc_url = excluded.primary_doc_url,
+                subject_cik = coalesce(excluded.subject_cik, filings.subject_cik),
                 ingested_at = now()
             """,
             rows,
@@ -282,6 +304,12 @@ def _float(value: str | None) -> float | None:
         return float(value) if value is not None else None
     except ValueError:
         return None
+
+
+def form4_issuer_cik(xml_text: str) -> int | None:
+    root = ET.fromstring(xml_text.strip().encode())
+    value = _text(root, "issuer/issuerCik")
+    return int(value) if value and value.isdigit() else None
 
 
 def _insider_title(owner_rel: ET.Element | None) -> str | None:
@@ -393,6 +421,43 @@ def pending_form4(
     ).fetchall()
 
 
+# ------------------------------------------------------------------ 13D / 13G subject
+
+_SUBJECT_CIK = re.compile(r"<SUBJECT-COMPANY>.*?<CIK>\s*(\d+)", re.S)
+
+
+def headers_url(cik: int, accession_no: str) -> str:
+    return HEADERS_URL.format(cik=cik, acc_nodash=accession_no.replace("-", ""), acc=accession_no)
+
+
+def parse_subject_cik(headers_text: str) -> int | None:
+    """SUBJECT-COMPANY CIK from a filing's SEC header (the -index-headers.html page)."""
+    m = _SUBJECT_CIK.search(headers_text)
+    return int(m.group(1)) if m else None
+
+
+def pending_stake_filings(con: duckdb.DuckDBPyConnection, cik: int, since: dt.date) -> list[str]:
+    """13D/13G accession numbers for a company whose subject isn't resolved yet."""
+    rows = con.execute(
+        """
+        SELECT accession_no FROM filings
+        WHERE cik = ? AND details_parsed_at IS NULL AND filed_date >= ?
+          AND (form_type LIKE '%13D%' OR form_type LIKE '%13G%')
+        ORDER BY filed_date
+        """,
+        [cik, since],
+    ).fetchall()
+    return [r[0] for r in rows]
+
+
+def _mark_parsed(con: duckdb.DuckDBPyConnection, acc: str, subject_cik: int | None) -> None:
+    con.execute(
+        "UPDATE filings SET details_parsed_at = current_timestamp, subject_cik = ? "
+        "WHERE accession_no = ?",
+        [subject_cik, acc],
+    )
+
+
 # ------------------------------------------------------------------ orchestration
 
 
@@ -402,6 +467,8 @@ class EdgarResult:
     filings: int = 0
     form4_parsed: int = 0
     insider_rows: int = 0
+    stake_checked: int = 0
+    not_subject: int = 0  # filings the company made about other issuers
     error: str | None = None
 
 
@@ -441,21 +508,36 @@ def collect_filings(
             doc = doc_url.rsplit("/", 1)[-1]
             try:
                 xml_text = client.get_text(form4_xml_url(sec.cik, acc, doc))
+                issuer = form4_issuer_cik(xml_text)
                 txns = parse_form4(xml_text, acc, sec.cik, symbol, accepted)
             except Exception:
                 log.exception("%s: Form 4 %s failed, will retry next run", sec.symbol, acc)
                 continue
-            res.insider_rows += upsert_insider_transactions(con, txns)
-            con.execute(
-                "UPDATE filings SET details_parsed_at = current_timestamp WHERE accession_no = ?",
-                [acc],
-            )
+            if issuer == sec.cik:
+                res.insider_rows += upsert_insider_transactions(con, txns)
+            else:
+                res.not_subject += 1  # the company is the reporting owner, not the issuer
+            _mark_parsed(con, acc, issuer)
             res.form4_parsed += 1
+
+        for acc in pending_stake_filings(con, sec.cik, form4_since):
+            try:
+                subject = parse_subject_cik(client.get_text(headers_url(sec.cik, acc)))
+            except Exception:
+                log.exception("%s: 13D/13G header %s failed, will retry next run", sec.symbol, acc)
+                continue
+            if subject != sec.cik:
+                res.not_subject += 1
+            _mark_parsed(con, acc, subject)
+            res.stake_checked += 1
         log.info(
-            "%s: %d filings, %d Form 4 parsed (%d transactions)",
+            "%s: %d filings, %d Form 4 parsed (%d transactions), %d 13D/13G checked, "
+            "%d filed about other issuers",
             sec.symbol,
             res.filings,
             res.form4_parsed,
             res.insider_rows,
+            res.stake_checked,
+            res.not_subject,
         )
     return results

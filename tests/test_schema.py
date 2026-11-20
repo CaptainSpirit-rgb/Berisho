@@ -33,6 +33,15 @@ def test_init_schema_is_idempotent(con):
     assert EXPECTED_TABLES <= set(db.list_tables(con))
 
 
+def test_init_schema_adds_subject_cik_to_old_filings_table():
+    con = db.connect(":memory:")
+    con.execute("CREATE TABLE filings (accession_no VARCHAR PRIMARY KEY, cik BIGINT NOT NULL)")
+    db.init_schema(con)
+    cols = {r[0] for r in con.execute("DESCRIBE filings").fetchall()}
+    assert "subject_cik" in cols
+    con.close()
+
+
 def test_prices_upsert_by_natural_key(con):
     sql = """
         INSERT OR REPLACE INTO prices_daily (symbol, trade_date, close, volume, source)

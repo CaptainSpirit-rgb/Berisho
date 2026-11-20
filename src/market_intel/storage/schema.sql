@@ -41,8 +41,11 @@ CREATE TABLE IF NOT EXISTS filings (
     items        VARCHAR,          -- 8-K item numbers, comma-separated
     primary_doc_url VARCHAR,
     details_parsed_at TIMESTAMP,       -- set once the document (e.g. Form 4 XML) is parsed
+    subject_cik  BIGINT,           -- company the filing is about; = cik when it's about us
     ingested_at  TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
+-- Databases created before subject_cik existed.
+ALTER TABLE filings ADD COLUMN IF NOT EXISTS subject_cik BIGINT;
 
 -- Form 4 transactions (one row per reported transaction line).
 CREATE TABLE IF NOT EXISTS insider_transactions (
