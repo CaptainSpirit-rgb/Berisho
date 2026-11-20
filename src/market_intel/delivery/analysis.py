@@ -12,6 +12,7 @@ Neither invents numbers: every figure comes from the stored data.
 
 from __future__ import annotations
 
+import html
 import re
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -116,6 +117,22 @@ HIGHLIGHT_WORDS = {
     "2.05": ("restructuring", "workforce", "charges"),
     "2.06": ("impairment",),
 }
+# SEC cover-page and legal boilerplate that can contain the key words but says nothing.
+BOILERPLATE = (
+    "check mark",
+    "registrant",
+    "exchange act",
+    "securities act",
+    "rule 14a",
+    "rule 13e",
+    "rule 14d",
+    "commission file",
+    "emerging growth",
+    "forward-looking",
+    "pursuant to",
+    "incorporated by reference",
+    "safe harbor",
+)
 _SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\"])")
 
 
@@ -130,10 +147,12 @@ def highlights(
     if not words or not text:
         return []
     picked = []
-    for line in text.splitlines():
+    for line in html.unescape(html.unescape(text)).splitlines():  # some are double-escaped
         for sentence in _SENTENCE.split(line):
-            sentence = sentence.strip()
+            sentence = sentence.strip().lstrip("•·▪-–* ").strip()
             low = sentence.lower()
+            if any(b in low for b in BOILERPLATE):
+                continue
             if 25 <= len(sentence) <= max_len and any(w in low for w in words):
                 if sentence not in picked:
                     picked.append(sentence)
@@ -234,8 +253,21 @@ def rule_based(
             why.append(
                 "Insiders buying with their own money is one of the stronger insider signals."
             )
-        if eight_ks:
-            check.append("Read the full filing (and its press release, exhibit 99.1, if any).")
+        if "2.02" in items_codes:
+            check.append(
+                "Read the outlook/guidance and margin lines in the press release (exhibit "
+                "99.1): a drop after strong headline numbers usually means the outlook or "
+                "something beneath the headline disappointed."
+            )
+        if "5.02" in items_codes:
+            check.append(
+                "Check whether the change is a planned succession or a sudden departure, "
+                "and whether the filing gives a reason."
+            )
+        if eight_ks and not items_codes & {"2.02", "5.02"}:
+            check.append("Read the full filing to see what the event is and its size.")
+        if buys:
+            check.append("Look at who bought (role) and how big the buys are versus their pay.")
         if big and not eight_ks:
             check.append("Read the headlines to see what drove the move.")
 

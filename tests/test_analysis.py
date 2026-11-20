@@ -92,3 +92,24 @@ def test_highlights_pick_item_keywords_verbatim():
     ]
     assert analysis.highlights(text, "9.01") == []
     assert analysis.highlights("", "2.02") == []
+
+
+def test_highlights_skip_cover_page_boilerplate_and_fix_entities():
+    text = (
+        "JPMorgan Chase &amp;amp; Co. announced Bregje de Best will succeed Jeremy Barnum as CFO.\n"
+        "If an emerging growth company, indicate by check mark if the registrant has elected "
+        "not to use the extended transition period.\n"
+        "• Revenue of $115.8 billion, up 103% from a year ago"
+    )
+    got = analysis.highlights(text, "5.02,2.02")
+    assert got == [
+        "JPMorgan Chase & Co. announced Bregje de Best will succeed Jeremy Barnum as CFO.",
+        "Revenue of $115.8 billion, up 103% from a year ago",
+    ]
+
+
+def test_check_next_is_specific_to_the_filing(con):
+    d, settings = make(con)
+    a = analysis.rule_based(d, settings)
+    assert "outlook/guidance" in a.items[0].check_next  # NVDA results
+    assert "planned succession" in a.items[1].check_next  # JPM officer change
