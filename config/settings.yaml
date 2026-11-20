@@ -1,0 +1,36 @@
+# Thresholds, weights and schedule. Keep tunables here, not in code.
+
+timezone:
+  storage: UTC
+  display: Asia/Tbilisi
+
+benchmark:
+  symbol: SPY
+  regime_ma_days: 200        # bull if close > 200-day MA (thesis rule)
+
+signals:
+  price_gap_pct: 5.0         # overnight gap, absolute %
+  volume_spike_multiple: 3.0 # volume vs 20-day average
+  volume_lookback_days: 20
+  insider_cluster:
+    min_buyers: 3
+    window_days: 10
+  sentiment_baseline_days: 60
+
+scoring:
+  weights:
+    price_gap: 1.0
+    volume_spike: 1.0
+    insider_cluster_buy: 1.5
+    new_8k: 1.0
+  regime_multiplier:
+    bull: 1.0
+    bear: 1.0
+
+digest:
+  top_n: 10
+  instant_alert_min_score: 0.8
+  send_time_local: "17:00"   # before the US open (17:30 Tbilisi); confirm
+
+sec:
+  max_requests_per_second: 10
