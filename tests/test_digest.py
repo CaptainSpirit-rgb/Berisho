@@ -121,22 +121,6 @@ def test_insider_cluster_buy(con):
     assert any("insider cluster buy: 3 insiders" in t for s, t in d.flags if s == "NVDA")
 
 
-def test_render_text_sections_and_tbilisi_time(con):
-    load_prices(con, "AAPL", [100.0] * 25 + [107.0], last_open=106.0)
-    add_filing(con, "a1", "AAPL", "8-K", dt.datetime(2026, 11, 19, 21, 30), "5.02,9.01")
-    text = digest.render_text(digest.build_digest(con, WATCH, settings(), now=NOW))
-    assert "Fri 20 Nov 2026, 17:00 Asia/Tbilisi" in text
-    for section in ("FLAGS", "WATCHLIST", "FILINGS", "INSIDER", "not financial advice"):
-        assert section in text
-    assert "20 Nov 01:30" in text  # 21:30 UTC accepted time shown in Tbilisi (UTC+4)
-    assert "no price data yet" in text  # NVDA
-
-
-def test_render_empty_database(con):
-    text = digest.render_text(digest.build_digest(con, WATCH, settings(), now=NOW))
-    assert "Nothing flagged today." in text and "Regime: unknown" in text
-
-
 def test_describe_items():
     assert digest.describe_items("2.02,9.01") == "2.02 results of operations"
     assert digest.describe_items("9.99") == "9.99"

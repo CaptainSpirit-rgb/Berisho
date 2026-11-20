@@ -79,26 +79,54 @@ def _collect_filings(con, settings: dict) -> bool:
     failed = [r.symbol for r in results if r.error]
     if failed:
         log.error("Filings collection failed for: %s", ", ".join(failed))
+
+    # Text of recent 8-Ks (main document + press-release exhibits) for the briefs.
+    import datetime as dt
+
+    from market_intel.collectors import filing_text
+
+    days = int(settings.get("digest", {}).get("filings_days", 7))
+    done, text_failed = filing_text.collect_filing_text(
+        con,
+        client,
+        [s.symbol for s in config.load_watchlist()],
+        dt.datetime.now(dt.UTC).replace(tzinfo=None) - dt.timedelta(days=days),
+    )
+    log.info("Fetched text for %d recent 8-K filing(s)", done)
+    if text_failed:
+        log.warning("Filing text failed for %d filing(s); retried next run", len(text_failed))
     return not failed
 
 
 def _deliver_digest(con, args: argparse.Namespace) -> bool:
     """Print the digest (--dry-run) or send it to Telegram. If sending fails, the digest is
     printed to the console instead so the run's output isn't lost, and False is returned."""
-    from market_intel.delivery import digest
+    from market_intel.delivery import analysis, digest, render
 
-    d = digest.build_digest(con, config.load_watchlist(), config.load_settings())
-    text = digest.render_text(d)
+    config.load_env()
+    settings = config.load_settings()
+    d = digest.build_digest(con, config.load_watchlist(), settings)
+    if getattr(args, "no_llm", False):
+        a, reason = None, "--no-llm was given"
+    else:
+        from market_intel.llm import briefs
+
+        a, reason = briefs.generate(con, d, settings)
+    if a is None:
+        from market_intel.collectors.filing_text import filing_text_lookup
+
+        log.info("Using rule-based notes: %s", reason)
+        a = analysis.rule_based(d, settings, note=reason, filing_text=filing_text_lookup(con))
+    text = render.render_text(d, a)
     if args.dry_run:
         print(text)
         return True
 
     from market_intel.delivery import telegram
 
-    config.load_env()
     try:
         client = telegram.TelegramClient(telegram.TelegramConfig.from_env())
-        n = client.send_text(text)
+        n = client.send_html(render.render_html(d, a))
     except telegram.TelegramError as exc:
         log.error("%s", exc)
         log.error("Digest not sent; printing it here instead.")
@@ -226,6 +254,11 @@ def build_parser() -> argparse.ArgumentParser:
             "--dry-run",
             action="store_true",
             help="Print the digest to the console instead of sending it",
+        )
+        p.add_argument(
+            "--no-llm",
+            action="store_true",
+            help="Skip Claude and use the rule-based notes (no API cost)",
         )
         p.set_defaults(func=func)
 
