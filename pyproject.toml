@@ -5,6 +5,7 @@ description = "Personal market intelligence: event detection, LLM briefs and a d
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "anthropic>=2.12",
     "duckdb>=1.1",
     "pandas>=2.0",
     "pyyaml>=6.0",
@@ -14,6 +15,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# FinBERT news sentiment (runs on the CPU; the model downloads once, ~440 MB).
+sentiment = [
+    "torch>=2.2",
+    "transformers>=4.40",
+]
 dev = [
     "pytest>=8.0",
     "ruff>=0.6",
@@ -31,7 +37,7 @@ packages = ["src/market_intel"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "tests"]
 
 [tool.ruff]
 line-length = 100

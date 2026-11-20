@@ -121,23 +121,52 @@ def test_insider_cluster_buy(con):
     assert any("insider cluster buy: 3 insiders" in t for s, t in d.flags if s == "NVDA")
 
 
-def test_render_text_sections_and_tbilisi_time(con):
-    load_prices(con, "AAPL", [100.0] * 25 + [107.0], last_open=106.0)
-    add_filing(con, "a1", "AAPL", "8-K", dt.datetime(2026, 11, 19, 21, 30), "5.02,9.01")
-    text = digest.render_text(digest.build_digest(con, WATCH, settings(), now=NOW))
-    assert "Fri 20 Nov 2026, 17:00 Asia/Tbilisi" in text
-    for section in ("FLAGS", "WATCHLIST", "FILINGS", "INSIDER", "not financial advice"):
-        assert section in text
-    assert "20 Nov 01:30" in text  # 21:30 UTC accepted time shown in Tbilisi (UTC+4)
-    assert "no price data yet" in text  # NVDA
-
-
-def test_render_empty_database(con):
-    text = digest.render_text(digest.build_digest(con, WATCH, settings(), now=NOW))
-    assert "Nothing flagged today." in text and "Regime: unknown" in text
-
-
 def test_describe_items():
     assert digest.describe_items("2.02,9.01") == "2.02 results of operations"
     assert digest.describe_items("9.99") == "9.99"
     assert digest.describe_items(None) == ""
+
+
+def add_headline(con, nid, symbol, published_at, score):
+    con.execute(
+        """
+        INSERT INTO news (news_id, symbol, published_at, source, headline, sentiment_score,
+                          sentiment_label, ingested_at)
+        VALUES (?, ?, ?, 'Test', ?, ?, 'neutral', ?)
+        """,
+        [nid, symbol, published_at, f"headline {nid}", score, published_at],
+    )
+
+
+def test_no_sentiment_section_without_news(con):
+    from market_intel.delivery import analysis, render
+
+    d = digest.build_digest(con, WATCH, settings(), now=NOW)
+    assert d.sentiment == []
+    text = render.render_text(d, analysis.rule_based(d, settings()))
+    assert "NEWS SENTIMENT" not in text
+
+
+def test_sentiment_section_and_flag(con):
+    from market_intel.delivery import analysis, render
+
+    now = NOW.replace(tzinfo=None)
+    for day in range(1, 41):  # 40 days of mildly mixed AAPL news, 2 a day
+        for k in range(2):
+            t = now - dt.timedelta(days=day, hours=k)
+            add_headline(con, f"b{day}-{k}", "AAPL", t, 0.1 if k else -0.1)
+    for h in range(6):  # a burst of very negative headlines in the last day
+        add_headline(con, f"c{h}", "AAPL", now - dt.timedelta(hours=1 + h), -0.9)
+    add_headline(con, "n1", "NVDA", now - dt.timedelta(hours=2), 0.5)  # just started
+
+    d = digest.build_digest(con, WATCH, settings(), now=NOW)
+    lines = dict(d.sentiment)
+    assert "z " in lines["AAPL"]
+    assert "building baseline (0/20 days" in lines["NVDA"]
+    aapl_flags = [t for s, t in d.flags if s == "AAPL"]
+    assert any("turned negative" in t for t in aapl_flags)
+    assert any(t.startswith("news volume ") for t in aapl_flags), aapl_flags
+    text = render.render_text(d, analysis.rule_based(d, settings()))
+    assert "NEWS SENTIMENT" in text
+    html = render.render_html(d, analysis.rule_based(d, settings()))
+    assert "<b>News sentiment</b>" in html

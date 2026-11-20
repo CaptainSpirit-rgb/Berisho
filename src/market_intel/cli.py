@@ -79,26 +79,86 @@ def _collect_filings(con, settings: dict) -> bool:
     failed = [r.symbol for r in results if r.error]
     if failed:
         log.error("Filings collection failed for: %s", ", ".join(failed))
+
+    # Text of recent 8-Ks (main document + press-release exhibits) for the briefs.
+    import datetime as dt
+
+    from market_intel.collectors import filing_text
+
+    days = int(settings.get("digest", {}).get("filings_days", 7))
+    done, text_failed = filing_text.collect_filing_text(
+        con,
+        client,
+        [s.symbol for s in config.load_watchlist()],
+        dt.datetime.now(dt.UTC).replace(tzinfo=None) - dt.timedelta(days=days),
+    )
+    log.info("Fetched text for %d recent 8-K filing(s)", done)
+    if text_failed:
+        log.warning("Filing text failed for %d filing(s); retried next run", len(text_failed))
     return not failed
+
+
+def _score_sentiment(con, settings: dict, required: bool = False) -> bool:
+    """FinBERT-score new headlines, rebuild the daily summary and write sentiment signals.
+    Without the optional FinBERT install this is skipped (an error only if ``required``)."""
+    from market_intel.signals import regime, sentiment
+
+    cfg = sentiment.sentiment_settings(settings)
+    if not cfg["enabled"] and not required:
+        return True
+    pending = con.execute("SELECT count(*) FROM news WHERE sentiment_score IS NULL").fetchone()[0]
+    if pending:
+        if not sentiment.finbert_available():
+            msg = "FinBERT isn't installed (pip install -e .[sentiment]); %d headlines unscored"
+            (log.error if required else log.info)(msg, pending)
+            if required:
+                return False
+        else:
+            scorer = sentiment.FinBertScorer(cfg["model"], int(cfg["batch_size"]))
+            sentiment.score_unscored(con, scorer)
+    sentiment.refresh_daily(con)
+    bench = settings.get("benchmark", {})
+    reg = regime.current_regime(
+        con, bench.get("symbol", "SPY"), int(bench.get("regime_ma_days", 200))
+    )
+    symbols = [s.symbol for s in config.load_watchlist()]
+    results = sentiment.detect(con, symbols, settings, regime=reg)
+    for r in results:
+        log.info("Sentiment %-6s %s", r.symbol, sentiment.describe(r, cfg))
+        for sig in r.signals:
+            log.info("  SIGNAL %s", sentiment.flag_text(sig))
+    return True
 
 
 def _deliver_digest(con, args: argparse.Namespace) -> bool:
     """Print the digest (--dry-run) or send it to Telegram. If sending fails, the digest is
     printed to the console instead so the run's output isn't lost, and False is returned."""
-    from market_intel.delivery import digest
+    from market_intel.delivery import analysis, digest, render
 
-    d = digest.build_digest(con, config.load_watchlist(), config.load_settings())
-    text = digest.render_text(d)
+    config.load_env()
+    settings = config.load_settings()
+    d = digest.build_digest(con, config.load_watchlist(), settings)
+    if getattr(args, "no_llm", False):
+        a, reason = None, "--no-llm was given"
+    else:
+        from market_intel.llm import briefs
+
+        a, reason = briefs.generate(con, d, settings)
+    if a is None:
+        from market_intel.collectors.filing_text import filing_text_lookup
+
+        log.info("Using rule-based notes: %s", reason)
+        a = analysis.rule_based(d, settings, note=reason, filing_text=filing_text_lookup(con))
+    text = render.render_text(d, a)
     if args.dry_run:
         print(text)
         return True
 
     from market_intel.delivery import telegram
 
-    config.load_env()
     try:
         client = telegram.TelegramClient(telegram.TelegramConfig.from_env())
-        n = client.send_text(text)
+        n = client.send_html(render.render_html(d, a))
     except telegram.TelegramError as exc:
         log.error("%s", exc)
         log.error("Digest not sent; printing it here instead.")
@@ -176,6 +236,13 @@ def cmd_collect_filings(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_score_sentiment(args: argparse.Namespace) -> int:
+    con = _open_db(args)
+    ok = _score_sentiment(con, config.load_settings(), required=True)
+    con.close()
+    return 0 if ok else 1
+
+
 def cmd_digest(args: argparse.Namespace) -> int:
     con = _open_db(args)
     ok = _deliver_digest(con, args)
@@ -191,9 +258,10 @@ def cmd_run_daily(args: argparse.Namespace) -> int:
     con = _open_db(args)
     ok_prices = _collect_prices(con, settings)
     ok_filings = _collect_filings(con, settings)
+    ok_sentiment = _score_sentiment(con, settings)
     ok_sent = _deliver_digest(con, args)
     con.close()
-    return 0 if ok_prices and ok_filings and ok_sent else 1
+    return 0 if ok_prices and ok_filings and ok_sentiment and ok_sent else 1
 
 
 # ------------------------------------------------------------------ weekly screener
@@ -393,6 +461,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--db", help="Override the database path")
     p.set_defaults(func=cmd_collect_filings)
 
+    p = sub.add_parser(
+        "score-sentiment",
+        help="FinBERT-score new headlines and detect sentiment shifts / news-volume spikes",
+    )
+    p.add_argument("--db", help="Override the database path")
+    p.set_defaults(func=cmd_score_sentiment)
+
     for name, func, help_ in (
         ("digest", cmd_digest, "Send the digest built from stored data to Telegram"),
         ("run-daily", cmd_run_daily, "Collect prices and filings, then send the digest"),
@@ -403,6 +478,11 @@ def build_parser() -> argparse.ArgumentParser:
             "--dry-run",
             action="store_true",
             help="Print the digest to the console instead of sending it",
+        )
+        p.add_argument(
+            "--no-llm",
+            action="store_true",
+            help="Skip Claude and use the rule-based notes (no API cost)",
         )
         p.set_defaults(func=func)
 

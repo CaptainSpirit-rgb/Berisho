@@ -15,7 +15,24 @@ signals:
   insider_cluster:
     min_buyers: 3
     window_days: 10
-  sentiment_baseline_days: 60
+
+# News sentiment (thesis pipeline, FinBERT on your PC, free). The signal is the change from
+# each stock's own baseline plus news-volume spikes, not the raw level. Install the model
+# with `pip install -e .[sentiment]`; without it, run-daily just skips this step.
+sentiment:
+  enabled: true
+  model: ProsusAI/finbert
+  batch_size: 32
+  current_window_hours: 24   # "today" = headlines from the last 24 hours
+  baseline_days: 60          # compared with the stock's own previous 60 days
+  min_baseline_days: 20      # days of collection before a stock can raise a signal
+  min_baseline_headlines: 30
+  min_current_headlines: 3
+  shift_z: 2.0               # |z| of today's mean vs baseline to flag a sentiment shift
+  volume_multiple: 3.0       # headlines vs usual daily count to flag a volume spike
+  regime_multiplier:         # thesis: sentiment predicted better in bull markets
+    bull: 1.0
+    bear: 0.5
 
 scoring:
   weights:
@@ -23,6 +40,8 @@ scoring:
     volume_spike: 1.0
     insider_cluster_buy: 1.5
     new_8k: 1.0
+    sentiment_shift: 1.0
+    news_volume_spike: 0.5
   regime_multiplier:
     bull: 1.0
     bear: 1.0
@@ -32,8 +51,26 @@ digest:
   filings_days: 7            # "Recent filings" section window
   new_8k_days: 3             # an 8-K this recent raises a flag
   insider_days: 30           # "Insider activity" section window
+  max_items: 5               # "What matters" items at most
+  big_move_pct: 5.0          # rule-based notes: a 1-day move this big is worth a look
+  relative_move_pct: 8.0     # ...or a 5-day move this far from the market (points)
   instant_alert_min_score: 0.8
   send_time_local: "17:00"   # before the US open (17:30 Tbilisi); confirm
+
+llm:
+  enabled: false             # true = Claude writes the analysis (paid API, ~$1-3/month);
+                             # false = free rule-based notes with quotes from filings
+  model: claude-opus-5-5
+  effort: medium             # low | medium | high: more effort = deeper, costlier
+  max_tokens: 16000
+  server_fallback: true      # if the model declines, the API retries on a fallback model
+  max_chars_per_document: 15000  # filing text sent per document (press release first)
+  max_chars_per_filing: 30000
+  price_per_mtok:            # USD per million tokens, for the cost log; check current pricing
+    input: 4.0
+    output: 20.0
+    cache_write: 5.0
+    cache_read: 0.2
 
 prices:
   lookback_days: 400         # first fetch for a new symbol; enough for the 200-day MA

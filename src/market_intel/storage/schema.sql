@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS news (
     headline     VARCHAR NOT NULL,
     summary      VARCHAR,
     url          VARCHAR,
-    sentiment_score DOUBLE,            -- filled later (FinBERT)
+    sentiment_score DOUBLE,            -- FinBERT P(positive) - P(negative), -1..1
     sentiment_label VARCHAR,
     ingested_at  TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
@@ -114,10 +114,25 @@ CREATE TABLE IF NOT EXISTS market_regime (
     regime     VARCHAR NOT NULL CHECK (regime IN ('bull', 'bear'))
 );
 
+-- Per ticker and UTC day: headline count and FinBERT summary, zero-headline days included
+-- (from the day news collection started). Rebuilt from `news` by score-sentiment.
+CREATE TABLE IF NOT EXISTS sentiment_daily (
+    symbol       VARCHAR NOT NULL,
+    day          DATE NOT NULL,
+    n_headlines  INTEGER NOT NULL,
+    n_scored     INTEGER NOT NULL,
+    mean_score   DOUBLE,               -- mean of P(positive) - P(negative)
+    n_positive   INTEGER NOT NULL,
+    n_negative   INTEGER NOT NULL,
+    n_neutral    INTEGER NOT NULL,
+    PRIMARY KEY (symbol, day)
+);
+
 CREATE TABLE IF NOT EXISTS signals (
     signal_id   VARCHAR PRIMARY KEY,   -- hash of type + symbol + as_of + source key
     symbol      VARCHAR NOT NULL,
-    signal_type VARCHAR NOT NULL,      -- price_gap, volume_spike, insider_cluster_buy, new_8k, ...
+    signal_type VARCHAR NOT NULL,      -- price_gap, volume_spike, insider_cluster_buy, new_8k,
+                                       -- sentiment_shift, news_volume_spike, ...
     as_of       TIMESTAMP NOT NULL,
     strength    DOUBLE,                -- normalised 0..1
     details     JSON,                  -- inputs that produced the signal
@@ -171,4 +186,18 @@ CREATE TABLE IF NOT EXISTS journal_outcomes (
     sector_return_pct DOUBLE,
     computed_at    TIMESTAMP NOT NULL DEFAULT current_timestamp,
     PRIMARY KEY (idea_id, horizon_days)
+);
+
+-- ---------------------------------------------------------------- filing text
+-- Plain text of a filing's main document and press-release exhibits (EX-99.x), fetched
+-- for recent 8-Ks so the brief can say what a filing actually says.
+CREATE TABLE IF NOT EXISTS filing_documents (
+    accession_no VARCHAR NOT NULL,
+    doc_name     VARCHAR NOT NULL,
+    doc_type     VARCHAR,              -- 8-K, EX-99.1, ...
+    description  VARCHAR,
+    url          VARCHAR,
+    text         VARCHAR,
+    fetched_at   TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    PRIMARY KEY (accession_no, doc_name)
 );

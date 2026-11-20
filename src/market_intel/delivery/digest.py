@@ -63,6 +63,15 @@ class Digest:
     filings: list[dict[str, Any]]
     insiders: list[dict[str, Any]]
     windows: dict[str, int] = field(default_factory=dict)
+    market: TickerRow | None = None  # the regime benchmark (SPY), for "vs the market"
+    names: dict[str, str] = field(default_factory=dict)
+    insider_trades: list[dict[str, Any]] = field(default_factory=list)  # largest first
+    sentiment: list[tuple[str, str]] = field(default_factory=list)  # (symbol, line); [] = no news
+
+    @property
+    def as_of(self) -> dt.date | None:
+        dates = [r.trade_date for r in self.rows if r.trade_date]
+        return max(dates) if dates else None
 
 
 def describe_items(items: str | None) -> str:
@@ -151,8 +160,12 @@ def build_digest(
     new_8k_days = int(dig.get("new_8k_days", 3))
     insider_days = int(dig.get("insider_days", 30))
 
-    rows = _ticker_rows(con, symbols, vol_lookback)
-    regime = _regime(con, bench.get("symbol", "SPY"), int(bench.get("regime_ma_days", 200)))
+    bench_symbol = bench.get("symbol", "SPY")
+    all_rows = _ticker_rows(con, symbols + [bench_symbol], vol_lookback)
+    rows, market = all_rows[:-1], all_rows[-1]
+    if bench_symbol in symbols:
+        market = rows[symbols.index(bench_symbol)]
+    regime = _regime(con, bench_symbol, int(bench.get("regime_ma_days", 200)))
 
     flags: list[tuple[str, str]] = []
     for r in rows:
@@ -164,12 +177,23 @@ def build_digest(
     filings = [
         dict(
             zip(
-                ("symbol", "form_type", "accepted_at", "filed_date", "items", "url"), f, strict=True
+                (
+                    "accession_no",
+                    "symbol",
+                    "form_type",
+                    "accepted_at",
+                    "filed_date",
+                    "items",
+                    "url",
+                ),
+                f,
+                strict=True,
             )
         )
         for f in con.execute(
             """
-            SELECT symbol, form_type, accepted_at, filed_date, items, primary_doc_url
+            SELECT accession_no, symbol, form_type, accepted_at, filed_date, items,
+                   primary_doc_url
             FROM filings
             WHERE symbol IN (SELECT unnest(?))
               AND form_type NOT IN ('4', '4/A')
@@ -227,6 +251,26 @@ def build_digest(
                 )
             )
 
+    trade_keys = ("symbol", "insider", "title", "code", "date", "shares", "price", "value")
+    insider_trades = [
+        dict(zip(trade_keys, r, strict=True))
+        for r in con.execute(
+            """
+            SELECT symbol, insider_name, insider_title, transaction_code, transaction_date,
+                   shares, price, shares * price AS value
+            FROM insider_transactions
+            WHERE symbol IN (SELECT unnest(?)) AND transaction_date >= ?
+              AND transaction_code IN ('P', 'S')
+            QUALIFY row_number() OVER (PARTITION BY symbol ORDER BY shares * price DESC NULLS LAST)
+                    <= 5
+            ORDER BY symbol, value DESC NULLS LAST
+            """,
+            [symbols, (now_naive - dt.timedelta(days=insider_days)).date()],
+        ).fetchall()
+    ]
+
+    sentiment_lines = _sentiment(con, symbols, settings, now, regime, flags)
+
     order = {s: i for i, s in enumerate(symbols)}
     flags.sort(key=lambda f: order.get(f[0], len(order)))
     return Digest(
@@ -238,7 +282,34 @@ def build_digest(
         filings=filings,
         insiders=insiders,
         windows={"filings": filings_days, "insiders": insider_days},
+        market=market if market.close is not None else None,
+        names={sec.symbol: sec.name for sec in securities},
+        insider_trades=insider_trades,
+        sentiment=sentiment_lines,
     )
+
+
+def _sentiment(
+    con: duckdb.DuckDBPyConnection,
+    symbols: list[str],
+    settings: dict[str, Any],
+    now: dt.datetime,
+    regime: dict[str, Any] | None,
+    flags: list[tuple[str, str]],
+) -> list[tuple[str, str]]:
+    """News-sentiment lines per ticker, and flags for any shift or volume spike. Read-only
+    (signals are written by `score-sentiment`); empty while no news has been collected."""
+    from market_intel.signals import sentiment
+
+    cfg = sentiment.sentiment_settings(settings)
+    if not cfg["enabled"] or not con.execute("SELECT count(*) FROM news").fetchone()[0]:
+        return []
+    results = sentiment.detect(
+        con, symbols, settings, now=now, regime=(regime or {}).get("regime"), write=False
+    )
+    for r in results:
+        flags += [(r.symbol, sentiment.flag_text(s)) for s in r.signals]
+    return [(r.symbol, sentiment.describe(r, cfg)) for r in results]
 
 
 def _pct(v: float | None) -> str:
@@ -256,61 +327,3 @@ def _money(v: float | None) -> str:
 
 def _local(ts: dt.datetime, tz: ZoneInfo) -> str:
     return ts.replace(tzinfo=dt.UTC).astimezone(tz).strftime("%d %b %H:%M")
-
-
-def render_text(d: Digest) -> str:
-    tz = d.display_tz
-    local_now = d.generated_at.astimezone(tz)
-    out = [
-        f"MARKET INTEL DIGEST  {local_now:%a %d %b %Y, %H:%M} {tz.key}",
-        "=" * 64,
-    ]
-
-    r = d.regime
-    if r and "regime" in r:
-        out.append(
-            f"Regime: {r['regime'].upper()}  ({r['benchmark']} {r['close']:.2f} vs "
-            f"{r['ma_days']}-day MA {r['ma']:.2f}, as of {r['as_of']})"
-        )
-    elif r:
-        out.append(f"Regime: unknown ({r['benchmark']} has {r['history']} of {r['needed']} days)")
-
-    out += ["", f"FLAGS ({len(d.flags)})"]
-    out += [f"  * {sym:<6} {text}" for sym, text in d.flags] or ["  Nothing flagged today."]
-
-    out += [
-        "",
-        "WATCHLIST",
-        f"  {'SYMBOL':<7}{'CLOSE':>10}{'1D':>8}{'5D':>8}{'GAP':>8}{'VOL/AVG':>9}  LAST BAR",
-    ]
-    for t in d.rows:
-        if t.close is None:
-            out.append(f"  {t.symbol:<7}{'no price data yet':>43}")
-            continue
-        vol = f"{t.volume_ratio:.1f}x" if t.volume_ratio is not None else "-"
-        out.append(
-            f"  {t.symbol:<7}{t.close:>10.2f}{_pct(t.change_1d_pct):>8}{_pct(t.change_5d_pct):>8}"
-            f"{_pct(t.gap_pct):>8}{vol:>9}  {t.trade_date}"
-        )
-
-    out += ["", f"FILINGS (last {d.windows['filings']} days, excluding Form 4)"]
-    if not d.filings:
-        out.append("  None.")
-    for f in d.filings:
-        when = _local(f["accepted_at"], tz) if f["accepted_at"] else str(f["filed_date"])
-        desc = describe_items(f["items"]) if f["form_type"].startswith("8-K") else ""
-        out.append(f"  {when:<13} {f['symbol']:<6} {f['form_type']:<8} {desc}".rstrip())
-        if f["url"]:
-            out.append(f"  {'':<13} {f['url']}")
-
-    out += ["", f"INSIDER OPEN-MARKET TRADES (last {d.windows['insiders']} days)"]
-    if not d.insiders:
-        out.append("  None.")
-    for i in d.insiders:
-        out.append(
-            f"  {i['symbol']:<6} buys: {i['buyers']} insider(s), {_money(i['buy_value'])}   "
-            f"sells: {i['sellers']} insider(s), {_money(i['sell_value'])}"
-        )
-
-    out += ["", "Decision support only, not financial advice."]
-    return "\n".join(out)
