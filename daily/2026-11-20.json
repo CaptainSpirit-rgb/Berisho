@@ -1,0 +1,380 @@
+{
+ "schema_version": 1,
+ "generated_at_utc": "2026-11-20T23:46:06+00:00",
+ "display_timezone": "Asia/Tbilisi",
+ "data_as_of": "2026-11-20",
+ "regime": {
+  "benchmark": "SPY",
+  "regime": "bear",
+  "close": 689.81,
+  "moving_average": 730.29,
+  "moving_average_days": 200,
+  "pct_vs_average": -5.5,
+  "as_of": "2026-11-20"
+ },
+ "market": {
+  "symbol": "SPY",
+  "change_1d_pct": -3.6,
+  "change_5d_pct": -8.6
+ },
+ "watchlist": [
+  {
+   "symbol": "KO",
+   "name": "The Coca-Cola Company",
+   "last_bar": "2026-11-20",
+   "close": 96.99,
+   "change_1d_pct": 0.9,
+   "change_5d_pct": -2.3,
+   "change_5d_vs_market_pts": 6.3,
+   "opening_gap_pct": 0.9,
+   "volume_vs_20d_avg": 1.4
+  },
+  {
+   "symbol": "AAPL",
+   "name": "Apple Inc.",
+   "last_bar": "2026-11-20",
+   "close": 342.56,
+   "change_1d_pct": -1.9,
+   "change_5d_pct": -3.8,
+   "change_5d_vs_market_pts": 4.7,
+   "opening_gap_pct": 1.0,
+   "volume_vs_20d_avg": 1.7
+  },
+  {
+   "symbol": "NVDA",
+   "name": "NVIDIA Corporation",
+   "last_bar": "2026-11-20",
+   "close": 125.53,
+   "change_1d_pct": -14.0,
+   "change_5d_pct": -22.9,
+   "change_5d_vs_market_pts": -14.4,
+   "opening_gap_pct": -1.7,
+   "volume_vs_20d_avg": 2.4
+  },
+  {
+   "symbol": "MSFT",
+   "name": "Microsoft Corporation",
+   "last_bar": "2026-11-20",
+   "close": 484.52,
+   "change_1d_pct": -2.8,
+   "change_5d_pct": -7.5,
+   "change_5d_vs_market_pts": 1.0,
+   "opening_gap_pct": -1.0,
+   "volume_vs_20d_avg": 1.7
+  },
+  {
+   "symbol": "JPM",
+   "name": "JPMorgan Chase & Co.",
+   "last_bar": "2026-11-20",
+   "close": 310.53,
+   "change_1d_pct": -3.0,
+   "change_5d_pct": -10.3,
+   "change_5d_vs_market_pts": -1.7,
+   "opening_gap_pct": -0.1,
+   "volume_vs_20d_avg": 1.9
+  }
+ ],
+ "rule_flags": [],
+ "filings_last_days": 7,
+ "filings": [
+  {
+   "symbol": "NVDA",
+   "form": "8-K",
+   "accepted_utc": "2026-11-17 21:20:51",
+   "items": "2.02 results of operations",
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm",
+   "documents": [
+    {
+     "type": "EX-99.1",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm",
+     "text": "EX-99.1\n2\nq3fy27pr.htm\nEX-99.1\nNVIDIA Announces Financial Results for Third Quarter Fiscal 2027\n•Revenue of $115.8 billion, up 103% from a year ago\n•Data Center revenue of $107.6 billion, up 110% from a year ago\n•Vera Rubin NVL72, the most versatile and advanced computing platform ever built, has shipped\nSANTA CLARA, Calif.—Nov. 17, 2026―NVIDIA (NASDAQ: NVDA) today reported revenue for the third quarter ended October 25, 2026, of $115.8 billion, up 20% from the previous quarter and up 103% from a year ago. For the quarter, GAAP and non-GAAP gross margins were 74.8% and 74.9%, respectively. GAAP and non-GAAP earnings per diluted share were $2.70 and $2.68, respectively.\n“Our momentum is real. NVIDIA is an exceptional technology leader, powered by the relentless innovation of our people,” said Colette Kress, interim CEO and executive vice president and chief financial officer of NVIDIA. “Vera Rubin is off to an explosive start, our roadmap is on track and our ambition has never been greater.”\nIn September 2026, NVIDIA’s Board of Directors approved an increase of $150 billion to the company’s share repurchase authorization, without expiration. During the third quarter of fiscal 2027, NVIDIA returned $28.1 billion to shareholders in the form of shares repurchased and cash dividends. As of the end of the third quarter, the company had approximately $227.3 billion remaining under its share repurchase authorization.\nNVIDIA will pay its next quarterly cash dividend of $0.25 per share on December 23, 2026, to all shareholders of record on December 2, 2026.\nQ3 Fiscal 2027 Summary\nGAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.8 % 75.0 % 73.4 % (0.2) pts 1.4 pts\nOperating expenses $9.2 $8.4 $5.8 9 % 57 %\nOperating income $77.5 $63.7 $36.0 22 % 115 %\nNet income $65.3 $59.7 $31.9 9 % 105 %\nDiluted earnings per share\n$2.70 $2.46 $1.30 10 % 108 %\n*Q/Q and Y/Y calculated based on $ in millions\nNon-GAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.9 % 75.0 % 73.5 % (0.1) pts 1.4 pts\nOperating expenses $8.8 $8.2 $5.8 7 % 52 %\nOperating income $77.9 $64.0 $36.1 22 % 116 %\nNet income $64.9 $54.0 $31.0 20 % 109 %\nDiluted earnings per share\n$2.68 $2.22 $1.27 21 % 111 %\n*Q/Q and Y/Y calculated based on $ in millions\nOutlook\nNVIDIA’s outlook for the fourth quarter of fiscal 2027, which includes an additional week, is as follows:\n•Revenue is expected to be $130.0 billion, plus or minus 3%. NVIDIA is not assuming any Data Center compute revenue from China in its outlook.\n•GAAP and non-GAAP gross margins are expected to be between 71.0% and 72.0%.\n•GAAP and non-GAAP operating expenses are expected to be approximately $11.0 billion and $10.7 billion, respectively.\n•For the full year fiscal 2027, NVIDIA expects GAAP and non-GAAP tax rates to be between 16.0% and 18.0%, excluding any discrete items and material changes to NVIDIA’s tax environment.\nHighlights\nData Center\n•Third-quarter revenue was $107.6 billion, up 21% from the previous quarter and up 110% from a year ago.\n•Ramped production and began shipping NVIDIA Vera Rubin NVL72 — the fastest product ramp in the company’s history — with racks running at partners including CoreWeave, Google Cloud, Microsoft Azure, Oracle Cloud Infrastructure and Nebius, and coming online soon at SpaceXSI.\n•Expanded the Vera Rubin cloud ecosystem, announcing general availability of Vera Rubin NVL72 systems and Vera CPUs on Oracle Cloud Infrastructure, general availability of Google Cloud’s Vera Rubin-powered A5X instances and the continued buildout of SpaceXSI’s infrastructure.\n•Announced Vera Rubin open architecture advances to help the industry scale faster, and revealed that Cisco, Google, Meta, Microsoft and Visionbay are joining many technology leaders advancing infrastructure for Vera Rubin.\n•Revealed that leading AI natives, cloud providers and neoclouds, including CoreWeave, Meta, Nebius, Nscale, OpenAI and Verda, are building with NVIDIA Vera CPUs to support the growing computing needs of businesses and developers, joining AWS, Oracle Cloud Infrastructure and SpaceXSI.\n•Expanded Anthropic’s access to NVIDIA Grace Blackwell and Vera Rubin capacity through cloud providers, and continued to collaborate on design and engineering to optimize future NVIDIA architectures for Anthropic’s workloads.\n•Announced the NVIDIA Vera CPU rack-scale platform for high-performance computing — combining NVIDIA’s first fully custom data center CPU with the gold standard for HPC networking to drive extreme efficiency and throughput for scientific modeling, simulation and agentic science.\n•Introduced NVIDIA Rubin HPC, a new GPU in the Vera Rubin platform designed to accelerate simulation and data processing for science, engineering and analytics workflows.\n•Expanded collaboration with Meta on AI agent Muse and its family of models, with Meta planning expanded deployment of Vera Rubin, Vera CPUs, NVIDIA Spectrum-X™ networking and BlueField®-4 to scale training, inference and agents.\n•Introduced DSX POD, a reference design for complete Vera Rubin AI factories built by partners inside modular containers, integrated and validated before delivery to accelerate infrastructure deployment.\n•Announced European ecosystem adoption of NVIDIA DSX™ to reduce AI factory power requirements and enable near-zero facility cooling water consumption.\n•Announced that NVIDIA swept every MLPerf Training and Endpoints benchmark, and Vera Rubin NVL72 demonstrated leading inference performance in its MLPerf Inference preview debut.\n•Launched NVIDIA Open Agent Safety Platform and introduced the NVIDIA OpenShell Reference Architecture, combining open source OpenShell software, Vera Rubin for model inference, Vera CPUs for agent execution and BlueField®-4 DPUs running NVIDIA Sentry to independently monitor agent behavior and enforce security policies in silicon.\n•Announced an agreement to acquire Hugging Face to scale its platform and make intelligence more open, capable and accessible.\n•Announced plans with global supply chain partners, including Amkor Technology, IBIDEN, King Yuan Electronics, Samsung Electro-Mechanics, Siliconware Precision Industries and Unimicron Technology Corporation, to scale critical manufacturing capabilities to meet demand for NVIDIA infrastructure.\n•Deepened partnership with MediaTek across cloud infrastructure, local computing and automotive, extending NVIDIA’s rack-scale platform to custom XPUs through NVIDIA NVLink Fusion™.\n•Announced plans with Cisco for USFP, a new optical-module form factor designed to increase bandwidth density and power efficiency for next-generation AI factory networks.\n•Announced collaboration with Australia’s data center ecosystem on infrastructure supporting a planned buildout of up to 2 gigawatts by 2027 for NVIDIA DSX AI factories.\n•Introduced NVIDIA Nemotron for Science to help researchers build specialized agents for scientific discovery, and collaborated with global healthcare and life sciences organizations to advance protein design, accelerate drug discovery and expand precision patient care.\n•Partnered with Palantir to bring sovereign AI intelligence and NVIDIA Nemotron™ open models to critical supply chains.\n•Partnered with Firebird to scale the company’s total potential AI infrastructure capacity.\n•Expanded the open source NVIDIA CUDA-Q™ platform with CUDA-Q Logical for fault-tolerant quantum computing development, and ran a record simulation of a fault-tolerant quantum processor on JUPITER at the Jülich Supercomputing Centre.\nEdge Computing\n•Third-quarter Edge Computing revenue was $8.2 billion, up 14% from the previous quarter and up 42% from a year ago.\n•Reinvented Windows PCs with NVIDIA RTX Spark™ laptops, now shipping from ASUS, Dell, HP, Lenovo, Microsoft Surface and MSI.\n•Launched NVIDIA DLSS 5 in NBA 2K27 and Hogwarts Legacy, bringing AI-powered, photorealistic lighting and materials to GeForce RTX 50 Series GPUs, GeForce NOW and RTX Spark, and coming soon to Where Winds Meet.\n•Expanded the NVIDIA local AI lineup with a new NVIDIA DGX Spark 64GB model, bringing near-frontier AI capabilities to desktops at a more accessible price point, and accelerated leading AI models from NVIDIA Nemotron, Black Forest Labs, Liquid AI and Qwen for running AI agents locally, with expanded support for Hermes, OpenClaw and Perplexity.\n•Introduced new NVIDIA Alpamayo™ development tools and the NVIDIA Halos™ SAFE framework to help developers build and evaluate autonomous-driving systems.\n•Expanded partnerships with Mercedes-Benz and Volvo Cars to advance safe automated driving.\n•Announced European mobility leaders — including Bolt with Lucid, Mercedes-Benz, Volkswagen Commercial Vehicles and Einride — are showcasing NVIDIA Hyperion™ use cases for automated vehicles and future robotaxi fleets.\n•Advanced the NVIDIA Isaac™ robotics platform with new development tools, datasets and runtime, alongside Agile Robots’ introduction of a reference humanoid powered by NVIDIA Jetson Thor™ and built on Isaac GR00T.\n•Expanded NVIDIA Cosmos™ with tools to train, evaluate and deploy world models for robotics, autonomous vehicles and industrial applications.\n•Advanced AI-RAN with Nokia and global telecom operators, including T-Mobile’s first AI-RAN call on a commercial network, bringing NVIDIA accelerated computing deeper into wireless networks.\nCFO Commentary\nCommentary on the quarter by Colette Kress, NVIDIA’s interim CEO and executive vice president and chief financial officer, is available at https://investor.nvidia.com.\nConference Call and Webcast Information\nNVIDIA will conduct a conference call with analysts and investors to discuss its third quarter fiscal 2027 financial results and current financial prospects today at 2 p.m. Pacific time (5 p.m. Eastern time). A live webcast (listen-only mode) of the conference call will be accessible at NVIDIA’s investor relations website, https://investor.nvidia.com. The webcast will be recorded and available for replay until NVIDIA’s conference call to discuss its financial results for its fourth quarter and full fiscal 2027.\nNon-GAAP Measures\nTo supplement NVIDIA’s condensed consolidated financial statements presented in accordance with GAAP, the company uses non-GAAP measures of certain components of financial performance.\nThese non-GAAP measures include non-GAAP gross profit, non-GAAP gross margin, non-GAAP operating expenses, non-GAAP operating income, non-GAAP other income (expense), net, non-GAAP net income, non-GAAP net income, or earnings, per diluted share, and free cash flow. For NVIDIA’s investors to be better able to compare its current results with those of previous periods, the company has shown a reconciliation of GAAP to non-GAAP financial measures. These reconciliations adjust the related GAAP financial measures to exclude acquisition-related and other costs, other, legal settlement costs, gains/losses from equity securities, net, certain other income and expense, and the associated tax impact of these items where applicable. Beginning in the first quarter of fiscal 2027, NVIDIA’s non-GAAP financial measures no longer exclude stock-based compensation expense. The historical non-GAAP financial information presented has been updated to include stock-based compensation expense. Free cash flow is calculated as GAAP net cash provided by operating activities less both purchases related to property and equipment and intangible assets and principal payments on property and equipment and intangible assets. NVIDIA believes the presentation of its non-GAAP financial measures enhances the users’ overall understanding of the company’s historical financial performance. The presentation of the company’s non-GAAP financial measures is not meant to be considered in isolation or as a substitute for the company’s financial results prepared in accordance with GAAP, and the company’s non-GAAP measures may be different from non-GAAP measures used by other companies.\nAbout NVIDIA\nNVIDIA (NASDAQ: NVDA) is the world leader in AI and accelerated computing.\n###\nFor further information, contact:\nToshiya Hari Mylene Mangalindan\nInvestor Relations Corporate Communications\nNVIDIA Corporation NVIDIA Corporation\nIR@nvidia.com press@nvidia.com\nCertain statements in this press release including, but not limited to, statements as to: the buildout of AI factories; NVIDIA’s strategy and expectations regarding data center sites; expectations with respect to growth, performance and benefits of NVIDIA’s products, services and technologies, including Blackwell and Vera Rubin, NVIDIA’s roadmap and related trends and drivers; expectations with respect to supply and demand for NVIDIA’s products, services and technologies, including Blackwell and Vera Rubin, and related matters including inventory, production and distribution; expectations with respect to NVIDIA’s strategic commitments and their anticipated benefits; expectations with respect to NVIDIA’s third party arrangements, including with its collaborators, partners and suppliers; expectations with respect to upcoming data center leases, including their commencement and reassignment; expectations regarding revenue under agreements with neoclouds; expectations with respect to NVIDIA’s investments and acquisitions, including NVIDIA’s pending acquisition of Hugging Face; expectations with respect to NVIDIA’s financing arrangements; expectations with respect to technology developments, and related trends and drivers; future NVIDIA cash dividends and stock repurchases or other returns to stockholders; NVIDIA’s financial and business outlook for the fourth quarter of fiscal 2027 and beyond; projected market growth and trends; expectations with respect to AI and related industries; expectations with respect to NVIDIA’s Form 10-Q for the third quarter of fiscal 2027; expectations with respect to NVIDIA’s leadership transition and the search for a new chief executive officer and related matters; expectations with respect to the ongoing investigation by an independent committee of NVIDIA’s board of directors and related matters; expectations with respect to litigation, government and regulatory inquiries and other actions or proceedings and related matters; and other statements that are not historical facts are forward-looking statements within the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended, which are subject to the “safe harbor” created by those sections based on management’s beliefs and assumptions and on information currently available to management and are subject to risks and uncertainties that could cause results to be materially different than expectations. Important factors that could cause actual results to differ materially include: global economic and political conditions; NVI [...text cut for length]"
+    },
+    {
+     "type": "EX-99.2",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm",
+     "text": "EX-99.2\n3\nq3fy27cfocommentary.htm\nEX-99.2\nCFO Commentary on Third Quarter Fiscal 2027 Results\nQ3 Fiscal 2027 Summary\nGAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.8 % 75.0 % 73.4 % (0.2) pts 1.4 pts\nOperating expenses $9.2 $8.4 $5.8 9 % 57 %\nOperating income $77.5 $63.7 $36.0 22 % 115 %\nNet income $65.3 $59.7 $31.9 9 % 105 %\nDiluted earnings per share\n$2.70 $2.46 $1.30 10 % 108 %\n*Q/Q and Y/Y calculated based on $ in millions\nNon-GAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.9 % 75.0 % 73.5 % (0.1) pts 1.4 pts\nOperating expenses $8.8 $8.2 $5.8 7 % 52 %\nOperating income $77.9 $64.0 $36.1 22 % 116 %\nNet income $64.9 $54.0 $31.0 20 % 109 %\nDiluted earnings per share\n$2.68 $2.22 $1.27 21 % 111 %\n*Q/Q and Y/Y calculated based on $ in millions\nRevenue by Reportable Segments\n($ in billions) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nCompute & Networking $106.0 $88.3 $50.9 20 % 108 %\nGraphics 9.8 7.9 6.1 25 % 62 %\nTotal $115.8 $96.2 $57.0 20 % 103 %\n*Q/Q and Y/Y calculated based on $ in millions\nRevenue by Market Platform\n($ in billions) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nData Center $107.6 $89.0 $51.2 21 % 110 %\nHyperscale 60.1 48.7 35.1 23 % 71 %\nAI Clouds, Industrial, & Enterprise 47.5 40.3 16.1 18 % 195 %\nEdge Computing 8.2 7.2 5.8 14 % 42 %\nTotal $115.8 $96.2 $57.0 20 % 103 %\n*Q/Q and Y/Y calculated based on $ in millions\nWe specialize in markets where our computing platforms can provide tremendous acceleration for applications. These platforms incorporate processors, interconnects, software, algorithms, systems, and services to deliver unique value. Our platforms address large markets where our expertise is critical: Data Center and Edge Computing.\nWe plan to file our 10-Q in the coming weeks. In the interim, we have provided a supplemental document with additional financial information on our investor website.\nRevenue\nRevenue for the third quarter was a record $115.8 billion, up 103% from a year ago and up 20% sequentially.\nData Center revenue for the third quarter was a record $107.6 billion, up 110% from a year ago and up 21% sequentially. Our Hyperscale and AI Clouds, Industrial, & Enterprise platforms both grew substantially, driven by the introduction of our Rubin infrastructure, our fastest architecture ramp ever, standalone Vera CPUs and the continued growth of Blackwell Ultra. Shipments of Data Center Hopper products to China during the quarter were $2.4 billion.\nEdge Computing revenue for the third quarter was $8.2 billion, up 42% from a year ago and up 14% sequentially. Strong Blackwell workstation sales and edge compute for Physical AI applications drove the increases, while higher memory and system prices continue to affect consumer PC demand.\nGross Margin\nGAAP and non-GAAP gross margins for the third quarter increased from a year ago on improved mix from Blackwell Ultra. GAAP and non-GAAP gross margins decreased slightly sequentially, reflecting the initial Rubin ramp.\nExpenses\nGAAP operating expenses for the third quarter were up 57% from a year ago and up 9% sequentially, and non-GAAP operating expenses were up 52% from a year ago and up 7% sequentially. These increases were driven by higher compute infrastructure and employee compensation and benefits costs.\nOther Income, Net and Income Tax\nGAAP other income, net includes equity securities gains or losses, interest income, interest expense, and other income and expense. Non-GAAP other income, net excludes equity securities gains or losses and certain other income and expense.\nNet gains from equity securities for the third quarter were $1.8 billion, comprised of net gains of $2.8 billion from our publicly held equity securities and a net loss of $1.0 billion from our non-marketable equity securities, including impairment of $1.8 billion.\nGAAP effective tax rate for the third quarter was 17.4%, an increase from a year ago, primarily due to higher revenue. Non-GAAP effective tax rate for the third quarter was 17.0%.\nCommitments\nWe have entered into strategic commitments across our supply, infrastructure, and partner ecosystems to capitalize on future growth opportunities and support our business.\nWe’ve partnered with our extensive network of suppliers to secure the critical components needed to meet demand for the next several years. Our supply commitments increased from $279 billion last quarter to $390 billion, primarily related to the multi-year procurement of memory supply.\nOur cloud service agreements and data center lease commitments together of $102 billion, an increase from last quarter’s $74 billion, provide the physical and cloud infrastructure that powers our research and development — from the engineering, product design, and testing of our compute chips, networking products, and systems, to the development of our open models, such as NVIDIA Nemotron™, NVIDIA Cosmos™, and GR00T, and our autonomous vehicle software. Our upcoming data center leases have terms up to twenty years and have not commenced. These leases are expected to commence between the fourth quarter of fiscal 2027 and fiscal 2033. We may assign some of these leases to third parties in the future.\nOur equity investments are focused on frontier labs, infrastructure financiers, and other private companies, subject to certain contingencies.\nFuture commitments by fiscal year as of October 25, 2026, were as follows:\nRemainder of 2027 2028 2029 2030 2031 2032 and thereafter Total\n(In billions)\nSupply and capacity $ 69 $ 203 $ 92 $ 10 $ 8 $ 8 $ 390\nCloud service agreements 2 7 7 6 4 2 28\nData center leases not commenced — 1 2 4 4 63 74\nEquity investments 5 11 2 2 — — 20\nCapital expenditures 6 — — — — — 6\nTotal $ 82 $ 222 $ 103 $ 22 $ 16 $ 73 $ 518\nAdditional Commitments\nSecuring land, power and shell for data centers has become the next critical phase in the AI infrastructure buildout. Neoclouds and frontier labs are seeing extraordinary demand for AI infrastructure, yet many are growing faster than their balance sheets and long-term credit profiles can support. In response, we have entered into arrangements that help select customers secure the land, power and data center capacity needed to support their growth. We will focus on exceptional sites where visible, durable demand can support multiple generations of NVIDIA compute.\nWe have partnered with leading neoclouds to enable broader access to our AI infrastructure to serve AI startups, model builders, enterprises, research organizations and sovereign customers. Our commitments take effect only if the neoclouds secure financing to purchase the data center infrastructure products and the related compute capacity is deployed, made operational, and accepted by us. The maximum commitment presented assumes these contingencies are satisfactorily resolved. If they are not timely resolved, the amount and timing of our commitments\nmay be affected, and certain commitments could be reduced or eliminated. Under these agreements, we will earn revenue on the upfront sale of our infrastructure and if certain criteria are met, we will participate in revenue share generated by the neoclouds from their third-party customers.\nFuture additional commitments by fiscal year as of October 25, 2026, were as follows:\nRemainder of 2027 2028 2029 2030 2031 2032 and thereafter Total\n(In billions)\nNeocloud agreements (1) $ — $ 6 $ 7 $ 6 $ 5 $ 8 $ 32\n(1)Formerly referred to as “AI cloud agreements”\nGuarantees\nWe have land, power, shell, and hardware financing arrangements, under which we may be required to make payments to third parties if certain of our partners default on their obligations.\nIn August 2026, we entered into guarantees to provide credit support on the land, power, and shell buildout to secure approximately 4.25 gigawatts (GW) across nine buildings at SB Energy's PORTS-Pike Technology Campus in Ohio, which will exclusively host NVIDIA infrastructure under 20-year leases to OpenAI, subject to limited exceptions. Our guarantees take effect phase by phase, with each one becoming effective only when its related building is completed and ready for service. The first is expected in fiscal 2029. Our exposure therefore builds over time as each building comes online, up to a maximum of $105 billion, and then declines over each 20-year lease term as OpenAI makes lease payments. We also have the option to provide credit support in phases for approximately 3.8 additional GW as the site scales.\nTo date, we have not made any payments related to our guarantees.\nThe following table summarizes the maximum gross exposure related to our guarantees:\nOctober 25, 2026\n(In billions)\nLand, power, and shell guarantees for neoclouds $ 3.5\nSB Energy Corp. credit support guarantees\n105.0\nPower and systems credit support guarantees 9.5\nTotal $ 118.0\nBalance Sheet and Cash Flow\nCash, cash equivalents, and marketable debt securities were $53.5 billion, down from $56.7 billion a year ago and down from $56.6 billion a quarter ago. These changes were driven by strong free cash flow generation and a record $28.1 billion of capital returned to shareholders in the third quarter through share repurchases and cash dividends.\nIn September 2026, our Board of Directors approved an increase of $150 billion to our share repurchase authorization, without expiration. At the end of our third quarter, we had $227.3 billion of share repurchase authorization remaining which we plan to utilize through fiscal 2028.\nAccounts receivable was $81.0 billion with 64 days sales outstanding (DSO), up from 60 days sequentially, driven by shipment linearity from our Rubin launch and extended payment terms on large, multi-quarter agreements with certain investment-grade customers.\nInventory was $39.7 billion, up from $31.6 billion sequentially, to support our Rubin product ramp.\nCash flow from operating activities was $48.3 billion, up from $23.8 billion a year ago and up from $24.1 billion a quarter ago. The year-on-year increases reflect growth in revenue, while the sequential increase was also impacted by the timing of federal cash tax payments.\nWe repaid $1.0 billion of senior notes in the third quarter.\nOutlook\nOutlook for the fourth quarter of fiscal 2027, which includes an additional week, is as follows:\n•Revenue is expected to be $130.0 billion, plus or minus 3%. We are not assuming any Data Center compute revenue from China in our outlook.\n•GAAP and non-GAAP gross margins are expected to be between 71.0% and 72.0%.\n•GAAP and non-GAAP operating expenses are expected to be approximately $11.0 billion and $10.7 billion, respectively.\nFor the full year fiscal 2027, we expect GAAP and non-GAAP tax rates to be between 16.0% and 18.0%, excluding any discrete items and material changes to our tax environment.\n______________\nFor further information, contact:\nToshiya Hari Mylene Mangalindan\nInvestor Relations Corporate Communications\nNVIDIA Corporation NVIDIA Corporation\nIR@nvidia.com press@nvidia.com\nNon-GAAP Measures\nTo supplement NVIDIA’s condensed consolidated financial statements presented in accordance with GAAP, the company uses non-GAAP measures of certain components of financial performance. These non-GAAP measures include non-GAAP gross profit, non-GAAP gross margin, non-GAAP operating expenses, non-GAAP operating income, non-GAAP other income (expense), net, non-GAAP net income, non-GAAP net income, or earnings, per diluted share, and free cash flow. For NVIDIA’s investors to be better able to compare its current results with those of previous periods, the company has shown a reconciliation of GAAP to non-GAAP financial measures. These reconciliations adjust the related GAAP financial measures to exclude acquisition-related and other costs, other, legal settlement costs, gains/losses from equity securities, net, certain other income and expense, and the associated tax impact of these items where applicable. Beginning in the first quarter of fiscal 2027, NVIDIA’s non-GAAP financial measures no longer exclude stock-based compensation expense. The historical non-GAAP financial information presented has been updated to include stock-based compensation expense. Free cash flow is calculated as GAAP net cash provided by operating activities less both purchases related to property and equipment and intangible assets and principal payments on property and equipment and intangible assets. NVIDIA believes the presentation of its non-GAAP financial measures enhances the users' overall understanding of the company’s historical financial performance. The presentation of the company’s non-GAAP financial measures is not meant to be considered in isolation or as a substitute for the company’s financial results prepared in accordance with GAAP, and the company’s non-GAAP measures may be different from non-GAAP measures used by other companies.\nCertain statements in this CFO Commentary including, but not limited to, statements as to: the buildout of AI factories; our strategy and expectations regarding data center sites; expectations with respect to growth, performance and benefits of our products, services, and technologies, including Blackwell and Vera Rubin, our roadmap and related trends and drivers; expectations with respect to supply and demand for our products, services, and technologies, including Blackwell and Vera Rubin, and related matters including inventory, production and distribution; expectations with respect to our strategic commitments and their anticipated benefits; expectations with respect to our third party arrangements, including with our collaborators, partners and suppliers; expectations with respect to upcoming data center leases, including their commencement and reassignment; expectations regarding revenue under agreements with neoclouds; expectations with respect to our investments and acquisitions, including our pending acquisition of Hugging Face; expectations with respect to our financing arrangements; expectations with respect to technology developments, and related trends and drivers; our future cash dividends and stock repurchases or other returns to stockholders; our financial and business outlook for the fourth quarter of fiscal 2027 and beyond; projected market growth and trends; expectations with respect to AI and related industries; expectations with respect to our Form 10-Q for the third quarter of fiscal 2027; expectations with respect to our leadership transition and the search for a new chief executive officer and related matters; expectations with respect to the ongoing investigation by an independent committee of our board of directors and related matters; expectations with respect to litigation, government and regulatory inquiries and other actions or proceedings and related matters; and other statements that are not historical facts are forward-looking statements within the meaning of Section 27A of the [...text cut for length]"
+    }
+   ]
+  },
+  {
+   "symbol": "JPM",
+   "form": "8-K",
+   "accepted_utc": "2026-11-17 13:00:28",
+   "items": "5.02 officer/director change",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm",
+   "documents": [
+    {
+     "type": "EX-99.1",
+     "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpmcpressrelease11172026.htm",
+     "text": "EX-99.1\n2\njpmcpressrelease11172026.htm\nJPMORGAN CHASE & CO. PRESS RELEASE DATED NOVEMBER 17, 2026\nJPMorgan Chase & Co. 270 Park Avenue, NY 10017-2014 NYSE symbol: JPM www.jpmorganchase.com News release: IMMEDIATE JPMorganChase announces Bregje de Best will succeed Jeremy Barnum as Chief Financial Officer following first-quarter 2027 financial reporting. Barnum to become a Vice Chairman at that time. New York, November 17, 2026 – JPMorganChase announced today that Bregje de Best, Chief Financial Officer (CFO) of the Commercial & Investment Bank (CIB), will succeed Jeremy Barnum as CFO of the company following its first-quarter 2027 financial reporting. At that time, de Best will join the firmwide Operating Committee (OC), and Barnum will become a Vice Chairman of the company. Barnum informed the company of his intention to conclude his tenure as CFO after six years in the role and to support the transition to the next generation of talent. He and de Best will work closely between now and the change to ensure a smooth transition, with Barnum leading the January and April earnings announcements and the company’s Investor Day in February. Following first-quarter financial reporting, Barnum will become a Vice Chairman and has agreed to stay on until early 2028, helping Chairman and Chief Executive Officer Jamie Dimon and other senior leaders on a range of firmwide initiatives. “Jeremy has been an outstanding CFO of our company since 2021 and is enormously respected both internally by our leadership team and employees as well as outside the company by investors, analysts and others. After many years in the job, he asked to transition leadership of Finance to another outstanding executive. I’m excited he will be helping Bregje through this period and taking on a Vice Chairman role, where he can continue to be such a valuable advisor and partner to me and our OC,” said Jamie Dimon. Barnum said: “My years as CFO at JPMorgan Chase have been among the most challenging and fulfilling of my life, and I am very grateful to Jamie for the opportunity to serve the company and its shareholders as well as for his mentorship and support. I couldn’t be happier to have Bregje as my successor to continue the tradition of excellence in our Finance organization, and I am very grateful to my team for their support during my time as CFO. During my remaining time at the company, I’m looking forward to helping with the many challenges present in the current environment.” As CFO of the CIB, de Best oversees Finance, Business Management and Controls for our Global Banking, Markets, Payments and Securities Services businesses. Prior to that, she was co-head of Global Corporate Banking, which serves large corporates, financial institutions and public-sector organizations. Previously, she held other senior roles in investment banking and markets in the U.K. and Asia.\nInvestor Contact: Mikael Grubb Media Contact: Joseph Evangelisti jpmcinvestorrelations@jpmchase.com joseph.evangelisti@jpmchase.com “Bregje is an extraordinary leader with outstanding experience both in finance and our businesses across the CIB,” said Jamie Dimon. “She has a deep understanding of how our company operates as well as extensive client- facing experience, and she can communicate our company story in a clear and compelling way. I’m very excited she will become our company’s next CFO.” Early next year, the company will announce a successor to de Best as CFO of the CIB. JPMorgan Chase & Co. (NYSE: JPM) is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $5.1 trillion in assets and $372 billion in stockholders’ equity as of September 30, 2026. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally. Information about JPMorgan Chase & Co. is available at www.jpmorganchase.com. # # #"
+    },
+    {
+     "type": "8-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm",
+     "text": "UNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\nFORM 8-K\nCURRENT REPORT\nPursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934\nDate of Report (date of earliest event reported): November 17, 2026\nJPMorgan Chase & Co.\n(Exact name of registrant as specified in its charter)\nDelaware 1-5805 13-2624428\n(State or other jurisdiction of\nincorporation or organization) (Commission File Number) (I.R.S. employer\nidentification no.)\n270 Park Avenue,\nNew York, New York 10017\n(Address of principal executive offices) (Zip Code)\nRegistrant’s telephone number, including area code: (212) 270-6000\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n☐ Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of the Act:\nTitle of each class Trading Symbol(s) Name of each exchange on which registered\nCommon stock JPM The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 5.75% Non-Cumulative Preferred Stock, Series DD JPM PR D The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 6.00% Non-Cumulative Preferred Stock, Series EE JPM PR C The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.75% Non-Cumulative Preferred Stock, Series GG JPM PR J The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.55% Non-Cumulative Preferred Stock, Series JJ JPM PR K The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.625% Non-Cumulative Preferred Stock, Series LL JPM PR L The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.20% Non-Cumulative Preferred Stock, Series MM JPM PR M The New York Stock Exchange\nGuarantee of Callable Fixed Rate Notes due June 10, 2032 of JPMorgan Chase Financial Company LLC\nJPM/32 The New York Stock Exchange\nGuarantee of Alerian MLP Index ETNs due January 28, 2044 of JPMorgan Chase Financial Company LLC AMJB NYSE Arca, Inc.\nGuarantee of Inverse VIX Short-Term Futures ETNs due March 22, 2045 of JPMorgan Chase Financial Company LLC VYLD NYSE Arca, Inc.\nIndicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth company ☐\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐\nItem 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\nOn November 17, 2026, JPMorgan Chase & Co. (\"JPMorganChase\" or the “Firm”) announced that Bregje de Best, 43, will succeed Jeremy Barnum as Chief Financial Officer (“CFO”) of the Firm, following its first-quarter 2027 financial reporting. At that time, Ms. de Best will join the Firm's Operating Committee, and Mr. Barnum will become a Vice Chairman of the Firm.\nMs. de Best currently serves as the CFO of the Commercial & Investment Bank (“CIB”), a position she has held since June 2025. Prior to her role as the CFO of CIB, Ms. de Best was the co-head of Global Corporate Banking from March 2024 to June 2025. Previously, Ms. de Best was co-head of Global Corporate Derivatives for the Firm’s Investment Bank from 2019 to 2024. Before that, she held other senior roles in investment banking and markets in the United Kingdom and Asia. Ms. de Best joined the Firm in 2006.\nA copy of the press release related to this announcement is attached hereto as Exhibit 99.1.\nItem 9.01 Financial Statements and Exhibits\n(d) Exhibit\nExhibit No. Description of Exhibit\n99.1\nJPMorgan Chase & Co. Press Release dated November 17, 2026\n101 Pursuant to Rule 406 of Regulation S-T, the cover page is formatted in Inline XBRL (Inline eXtensible Business Reporting Language).\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document and included in Exhibit 101).\nSIGNATURE\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nJPMorgan Chase & Co.\n(Registrant)\nBy: /s/ Reid R. Broda\nReid R. Broda\nCorporate Secretary\nDated: November 17, 2026\n2"
+    }
+   ]
+  }
+ ],
+ "insider_window_days": 30,
+ "insider_summary": [
+  {
+   "symbol": "AAPL",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 2,
+   "sell_value_usd": 35059703.0
+  },
+  {
+   "symbol": "KO",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 4,
+   "sell_value_usd": 16480959.0
+  },
+  {
+   "symbol": "MSFT",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 2,
+   "sell_value_usd": 6631633.0
+  }
+ ],
+ "news_last_days": 3,
+ "news_headlines": [
+  {
+   "symbol": "AAPL",
+   "published_utc": "2026-11-20 23:15:09",
+   "source": "Investor's Business Daily",
+   "headline": "Dow Jones Futures: Market Has Worst Week Since Covid Amid Nvidia, Anthropic. Does Fear Gauge Offer Hope?",
+   "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-worst-week-covid-nvidia-anthropic-vix-fear-gauge/?src=A00220&yptr=yahoo"
+  },
+  {
+   "symbol": "AAPL",
+   "published_utc": "2026-11-20 23:02:13",
+   "source": "24/7 Wall St.",
+   "headline": "She Moves $250,000 of Her 401(k) Into a Nasdaq-100 Fund at 60 to Own Anthropic From Its Debut Thursday. Nasdaq’s Fast-Entry Rule Keeps Her Fund From Buying Until Dec. 21, After Any First-Month Pop",
+   "url": "https://247wallst.com/personal-finance/2026/11/20/she-moves-250000-of-her-401k-into-a-nasdaq-100-fund-at-60-to-own-anthropic-from-its-debut-thursday-nasdaqs-fast-entry-rule-keeps-her-fund-from-buying-until-dec-21-after-any-first-month-pop/"
+  },
+  {
+   "symbol": "AAPL",
+   "published_utc": "2026-11-20 22:19:25",
+   "source": "Yahoo Finance Video",
+   "headline": "Tech sees huge sell-off as Anthropic IPO fails to lift the market",
+   "url": "https://finance.yahoo.com/video/tech-sees-huge-sell-off-as-anthropic-ipo-fails-to-lift-the-market-221925316.html"
+  },
+  {
+   "symbol": "JPM",
+   "published_utc": "2026-11-20 19:11:47",
+   "source": "American Banker",
+   "headline": "Exclusive Research: JPMorgan’s AI strategy puts governance to the test",
+   "url": "https://www.americanbanker.com/news/exclusive-research-jpmorgan-s-ai-strategy-puts-governance-to-the-test"
+  },
+  {
+   "symbol": "JPM",
+   "published_utc": "2026-11-20 19:00:58",
+   "source": "The Telegraph",
+   "headline": "Labour’s ‘unfair’ bank tax will have consequences, warns JP Morgan boss",
+   "url": "https://www.telegraph.co.uk/business/2026/11/20/labour-unfair-bank-tax-consequences-jp-morgan/"
+  },
+  {
+   "symbol": "JPM",
+   "published_utc": "2026-11-20 19:00:58",
+   "source": "The Telegraph",
+   "headline": "Labour’s ‘unfair’ bank tax will have consequences, warns JP Morgan boss",
+   "url": "https://uk.finance.yahoo.com/news/labour-unfair-bank-tax-consequences-190058863.html"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-20 22:25:00",
+   "source": "Motley Fool",
+   "headline": "Is Coca-Cola a Millionaire-Maker Stock?",
+   "url": "https://www.fool.com/investing/2026/11/20/is-coca-cola-a-millionaire-maker-stock/"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-20 20:42:00",
+   "source": "Zacks",
+   "headline": "Top Research Reports for Coca-Cola, Medtronic & Palo Alto Networks",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/top-research-reports-coca-cola-204200577.html"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-20 20:13:20",
+   "source": "Simply Wall St.",
+   "headline": "Coca-Cola (KO) After ETF Selling Is It Still Fairly Valued",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/coca-cola-ko-etf-selling-201320830.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-20 23:25:00",
+   "source": "Barrons.com",
+   "headline": "Nvidia Can Rebound to $200, Analyst Says. Plus, L3Harris and 4 More Stocks.",
+   "url": "https://www.barrons.com/articles/nvidia-can-rebound-to-200-analyst-says-plus-l3harris-and-4-more-stocks-3c840464?siteid=yhoof2&yptr=yahoo"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-20 23:14:52",
+   "source": "Simply Wall St.",
+   "headline": "International Business Machines (IBM) Opens Lightwell Access On Microsoft Marketplace, Is It Still Undervalued?",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/international-business-machines-ibm-opens-231452605.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-20 22:26:38",
+   "source": "TIKR",
+   "headline": "Andrew Ross Sorkin Doubts OpenAI Will Be “Worth More Than Anthropic.” That’s a Problem for Microsoft",
+   "url": "https://www.tikr.com/blog/andrew-ross-sorkin-doubts-openai-will-be-worth-more-than-anthropic-thats-a-problem-for-microsoft?ref=yahoofinance&tlnk=yf-261120-j5jvg3r4"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-20 23:38:12",
+   "source": "Stocktwits",
+   "headline": "NVDA Stock Clocks Worst Week In 18 Years As SEC Reportedly Probes Its Accounting Practices",
+   "url": "https://stocktwits.com/news-articles/markets/equity/nvda-stock-clocks-worst-week-in-18-years-as-sec-reportedly-probes-its-accounting-practices/cNbSDIWR91Q"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-20 23:28:00",
+   "source": "Barrons.com",
+   "headline": "At AI Summit, Industry Titans Wave Off Market Woes—and Defend Jensen Huang",
+   "url": "https://www.barrons.com/articles/ai-trade-stocks-bull-bear-anthropic-ipo-4139cf71?siteid=yhoof2&yptr=yahoo"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-20 23:25:54",
+   "source": "24/7 Wall St.",
+   "headline": "Data Center AI Chips Could Change the Winners: Broadcom and Marvell",
+   "url": "https://247wallst.com/investing/2026/11/20/data-center-ai-chips-could-change-the-winners-broadcom-and-marvell/"
+  }
+ ],
+ "largest_insider_trades": [
+  {
+   "symbol": "AAPL",
+   "insider": "LEVINSON ARTHUR D",
+   "title": "Director",
+   "type": "sell",
+   "date": "2026-11-16",
+   "value_usd": 18805303.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "LEVINSON ARTHUR D",
+   "title": "Director",
+   "type": "sell",
+   "date": "2026-11-16",
+   "value_usd": 12960350.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "Newstead Jennifer",
+   "title": "SVP, GC and Government Affairs",
+   "type": "sell",
+   "date": "2026-11-17",
+   "value_usd": 845942.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "Newstead Jennifer",
+   "title": "SVP, GC and Government Affairs",
+   "type": "sell",
+   "date": "2026-11-10",
+   "value_usd": 842913.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "Newstead Jennifer",
+   "title": "SVP, GC and Government Affairs",
+   "type": "sell",
+   "date": "2026-10-27",
+   "value_usd": 823721.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "ARROYO MANUEL",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-17",
+   "value_usd": 5723834.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "Perez Beatriz R",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-02",
+   "value_usd": 2909829.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "Perez Beatriz R",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-02",
+   "value_usd": 2552808.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "QUAN NANCY",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-05",
+   "value_usd": 1968406.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "QUAN NANCY",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-12",
+   "value_usd": 1470000.0
+  },
+  {
+   "symbol": "MSFT",
+   "insider": "Hood Amy",
+   "title": "EVP, Chief Financial Officer",
+   "type": "sell",
+   "date": "2026-11-09",
+   "value_usd": 3217523.0
+  },
+  {
+   "symbol": "MSFT",
+   "insider": "Numoto Takeshi",
+   "title": "EVP, Chief Marketing Officer",
+   "type": "sell",
+   "date": "2026-11-10",
+   "value_usd": 2655000.0
+  },
+  {
+   "symbol": "MSFT",
+   "insider": "Hood Amy",
+   "title": "EVP, Chief Financial Officer",
+   "type": "sell",
+   "date": "2026-11-09",
+   "value_usd": 759111.0
+  }
+ ],
+ "sentiment": [
+  {
+   "symbol": "KO",
+   "note": "building baseline (0/20 days, 0 headlines)"
+  },
+  {
+   "symbol": "AAPL",
+   "note": "building baseline (0/20 days, 0 headlines)"
+  },
+  {
+   "symbol": "NVDA",
+   "note": "building baseline (0/20 days, 0 headlines)"
+  },
+  {
+   "symbol": "MSFT",
+   "note": "building baseline (0/20 days, 0 headlines)"
+  },
+  {
+   "symbol": "JPM",
+   "note": "building baseline (0/20 days, 0 headlines)"
+  }
+ ],
+ "digest_text": "MARKET DIGEST · Sat 21 Nov 2026, 03:46 Asia/Tbilisi\n\nTODAY IN BRIEF\nThe market is in a BEAR regime: SPY closed 5.5% below its 200-day\naverage. SPY is down 8.6% over 5 days. Worth a look today: NVDA, JPM.\n\nWHAT MATTERS\n1. NVDA  125.53 · -14.0% today · -22.9% 5d · vol 2.4x\n   NVDA moved -14.0% on the day, -22.9% over 5 days, on 2.4x normal\n   volume (SPY -8.6% over 5 days)\n   What: Filed an 8-K (2.02 results of operations). From the filing:\n   \"•Revenue of $115.8 billion, up 103% from a year ago\" \"•Data Center\n   revenue of $107.6 billion, up 110% from a year ago\" \"SANTA CLARA,\n   Calif.—Nov. 17, 2026―NVIDIA (NASDAQ: NVDA) today reported revenue for\n   the third quarter ended October 25, 2026, of $115.8 billion, up 20%\n   from the previous quarter and up 103% from a year ago.\"\n   Why it may matter: The move came right after an earnings filing, so\n   the results or guidance are the likely cause.\n   Check next: Read the full filing (and its press release, exhibit\n   99.1, if any).\n   Source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n   News (21 Nov 03:38, Stocktwits): NVDA Stock Clocks Worst Week In 18\n   Years As SEC Reportedly Probes Its Accounting Practices\n   News (21 Nov 03:28, Barrons.com): At AI Summit, Industry Titans Wave\n   Off Market Woes—and Defend Jensen Huang\n   News (21 Nov 03:25, 24/7 Wall St.): Data Center AI Chips Could Change\n   the Winners: Broadcom and Marvell\n\n2. JPM  310.53 · -3.0% today · -10.3% 5d · vol 1.9x\n   JPM moved -3.0% on the day, -10.3% over 5 days, on 1.9x normal volume\n   (SPY -8.6% over 5 days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"JPMorgan Chase & Co. 270 Park Avenue, NY 10017-2014 NYSE symbol: JPM\n   www.jpmorganchase.com News release: IMMEDIATE JPMorganChase announces\n   Bregje de Best will succeed Jeremy Barnum as Chief Financial Officer\n   following first-quarter 2027 financial reporting.\" \"New York,\n   November 17, 2026 – JPMorganChase announced today that Bregje de\n   Best, Chief Financial Officer (CFO) of the Commercial & Investment\n   Bank (CIB), will succeed Jeremy Barnum as CFO of the company\n   following its first-quarter 2027 financial reporting.\" \"If an\n   emerging growth company, indicate by check mark if the registrant has\n   elected not to use the extended transition period for complying with\n   any new or revised financial accounting standards provided pursuant\n   to Section 13(a) of the Exchange Act. ☐\"\n   Why it may matter: Leadership changes can signal a shift in strategy\n   or a problem.\n   Check next: Read the full filing (and its press release, exhibit\n   99.1, if any).\n   Source: https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n   News (20 Nov 23:11, American Banker): Exclusive Research: JPMorgan’s\n   AI strategy puts governance to the test\n   News (20 Nov 23:00, The Telegraph): Labour’s ‘unfair’ bank tax will\n   have consequences, warns JP Morgan boss\n   News (20 Nov 23:00, The Telegraph): Labour’s ‘unfair’ bank tax will\n   have consequences, warns JP Morgan boss\n\nBACKGROUND\n· KO: -2.3% over 5 days, 6.3 points better than the market. Nothing new\n  filed. Latest headline: \"Is Coca-Cola a Millionaire-Maker Stock?\"\n  (Motley Fool).\n· AAPL: -3.8% over 5 days, 4.7 points better than the market. Nothing\n  new filed. Latest headline: \"Dow Jones Futures: Market Has Worst Week\n  Since Covid Amid Nvidia, Anthropic. Does Fear Gauge Offer Hope?\"\n  (Investor's Business Daily).\n· MSFT: -7.5% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"Nvidia Can Rebound to $200, Analyst Says.\n  Plus, L3Harris and 4 More Stocks.\" (Barrons.com).\n· Insider selling, last 30 days, no buying: AAPL $35.1M (2 people), KO\n  $16.5M (4 people), MSFT $6.6M (2 people). Selling alone is weak\n  evidence: insiders sell for taxes, diversification and pre-planned\n  programs.\n\nNUMBERS (last close 2026-11-20)\n        CLOSE     1D     5D   VOL\nKO      96.99  +0.9%  -2.3%  1.4x\nAAPL   342.56  -1.9%  -3.8%  1.7x\nNVDA   125.53 -14.0% -22.9%  2.4x\nMSFT   484.52  -2.8%  -7.5%  1.7x\nJPM    310.53  -3.0% -10.3%  1.9x\nSPY    689.81  -3.6%  -8.6%  2.9x\nRegime: BEAR (SPY 689.81 vs 200-day avg 730.29)\n\nFILINGS (last 7 days, excluding Form 4)\n18 Nov 01:20 NVDA 8-K 2.02 results of operations\n  https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n17 Nov 17:00 JPM 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n\nNEWS SENTIMENT (FinBERT, vs each stock's own baseline)\nKO    building baseline (0/20 days, 0 headlines)\nAAPL  building baseline (0/20 days, 0 headlines)\nNVDA  building baseline (0/20 days, 0 headlines)\nMSFT  building baseline (0/20 days, 0 headlines)\nJPM   building baseline (0/20 days, 0 headlines)\n\nINSIDER OPEN-MARKET TRADES (last 30 days)\nAAPL: bought $0 (0), sold $35.1M (2)\nKO: bought $0 (0), sold $16.5M (4)\nMSFT: bought $0 (0), sold $6.6M (2)\n\nNotes from fixed rules; quotes are verbatim from the filings.\nDecision support only, not financial advice."
+}
