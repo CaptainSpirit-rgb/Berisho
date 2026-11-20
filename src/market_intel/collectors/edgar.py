@@ -140,6 +140,18 @@ class SecClient:
     def get_text(self, url: str) -> str:
         return self._get(url).text
 
+    def download(self, url: str, dest, chunk_size: int = 1 << 20) -> int:
+        """Stream a large file (e.g. the companyfacts bulk zip) to ``dest``. Returns bytes."""
+        self._throttle()
+        with self._session.get(url, stream=True, timeout=self._timeout) as resp:
+            resp.raise_for_status()
+            n = 0
+            with open(dest, "wb") as fh:
+                for chunk in resp.iter_content(chunk_size):
+                    fh.write(chunk)
+                    n += len(chunk)
+        return n
+
 
 # ------------------------------------------------------------------ filings index
 
