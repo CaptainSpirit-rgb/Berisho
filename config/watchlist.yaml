@@ -1,7 +1,11 @@
-# Test watchlist (5 tickers) for Phase 0/1.
+# Luka's starter watchlist (chosen 2026-11-20). Swap tickers freely.
 # CIK = SEC Central Index Key, used by the EDGAR collectors.
 # Verify CIKs against https://www.sec.gov/files/company_tickers.json before relying on them.
 tickers:
+  - symbol: KO
+    name: The Coca-Cola Company
+    cik: 21344
+    sector_etf: XLP
   - symbol: AAPL
     name: Apple Inc.
     cik: 320193
@@ -10,15 +14,11 @@ tickers:
     name: NVIDIA Corporation
     cik: 1045810
     sector_etf: XLK
-  - symbol: GS
-    name: The Goldman Sachs Group, Inc.
-    cik: 886982
+  - symbol: MSFT
+    name: Microsoft Corporation
+    cik: 789019
+    sector_etf: XLK
+  - symbol: JPM
+    name: JPMorgan Chase & Co.
+    cik: 19617
     sector_etf: XLF
-  - symbol: XOM
-    name: Exxon Mobil Corporation
-    cik: 34088
-    sector_etf: XLE
-  - symbol: DIS
-    name: The Walt Disney Company
-    cik: 1744489
-    sector_etf: XLC

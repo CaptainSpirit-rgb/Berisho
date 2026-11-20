@@ -57,7 +57,7 @@ Long digests are split into several messages to fit Telegram's 4,096-character l
 
 | Path | Purpose |
 |---|---|
-| `config/watchlist.yaml` | Tickers to track (5-ticker test list for now) |
+| `config/watchlist.yaml` | Tickers to track (KO, AAPL, NVDA, MSFT, JPM for now) |
 | `config/settings.yaml` | Thresholds, weights, schedule |
 | `src/market_intel/storage/schema.sql` | DuckDB schema (raw, derived, journal tables) |
 | `src/market_intel/collectors/` | Prices, EDGAR, news, macro (Phase 1) |
