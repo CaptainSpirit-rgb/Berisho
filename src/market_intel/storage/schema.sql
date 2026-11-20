@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS filings (
     period_of_report DATE,
     items        VARCHAR,          -- 8-K item numbers, comma-separated
     primary_doc_url VARCHAR,
+    details_parsed_at TIMESTAMP,       -- set once the document (e.g. Form 4 XML) is parsed
     ingested_at  TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
@@ -53,6 +54,7 @@ CREATE TABLE IF NOT EXISTS insider_transactions (
     insider_title    VARCHAR,
     transaction_date DATE,
     transaction_code VARCHAR,      -- P = open-market purchase, S = sale, ...
+    acquired_disposed VARCHAR,     -- A = acquired, D = disposed
     shares           DOUBLE,
     price            DOUBLE,
     shares_after     DOUBLE,
