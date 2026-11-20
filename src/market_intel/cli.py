@@ -113,8 +113,10 @@ def _deliver_digest(con, args: argparse.Namespace) -> bool:
 
         a, reason = briefs.generate(con, d, settings)
     if a is None:
-        log.warning("Using rule-based notes: %s", reason)
-        a = analysis.rule_based(d, settings, note=reason)
+        from market_intel.collectors.filing_text import filing_text_lookup
+
+        log.info("Using rule-based notes: %s", reason)
+        a = analysis.rule_based(d, settings, note=reason, filing_text=filing_text_lookup(con))
     text = render.render_text(d, a)
     if args.dry_run:
         print(text)

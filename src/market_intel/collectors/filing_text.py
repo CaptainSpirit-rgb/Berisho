@@ -191,3 +191,12 @@ def documents_for(con: duckdb.DuckDBPyConnection, accession_no: str) -> list[dic
     ).fetchall()
     keys = ("doc_name", "doc_type", "description", "url", "text")
     return [dict(zip(keys, r, strict=True)) for r in rows]
+
+
+def filing_text_lookup(con: duckdb.DuckDBPyConnection):
+    """A function accession_no -> the filing's stored text, press release first."""
+
+    def lookup(accession_no: str) -> str:
+        return "\n".join(doc["text"] for doc in documents_for(con, accession_no))
+
+    return lookup

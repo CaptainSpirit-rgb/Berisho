@@ -83,6 +83,6 @@ def test_cli_run_daily_dry_run_offline(tmp_path, monkeypatch, capsys):
     path = tmp_path / "daily.duckdb"
     assert cli.main(["run-daily", "--dry-run", "--db", str(path)]) == 0
     out = capsys.readouterr().out
-    assert "MARKET DIGEST" in out and "TODAY IN BRIEF" in out and "Analysis from fixed rules" in out
+    assert "MARKET DIGEST" in out and "TODAY IN BRIEF" in out and "Notes from fixed rules" in out
     for symbol in ("KO", "AAPL", "NVDA", "MSFT", "JPM"):
         assert symbol in out

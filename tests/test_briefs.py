@@ -59,6 +59,7 @@ class FakeClient:
 def setup(con):
     build(con)
     settings = config.load_settings()
+    settings["llm"]["enabled"] = True
     return con, digest.build_digest(con, WATCH, settings, now=NOW), settings
 
 
@@ -117,7 +118,13 @@ def test_missing_key_and_disabled(setup):
     con, d, settings = setup
     assert briefs.generate(con, d, settings) == (None, "ANTHROPIC_API_KEY is not set in .env")
     settings["llm"]["enabled"] = False
-    assert briefs.generate(con, d, settings, client=FakeClient())[0] is None
+    client = FakeClient()
+    assert briefs.generate(con, d, settings, client=client) == (None, "")
+    assert client.calls == []
+
+
+def test_claude_is_off_by_default():
+    assert config.load_settings()["llm"]["enabled"] is False
 
 
 def _status_error(cls, code):

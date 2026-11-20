@@ -28,7 +28,7 @@ market-intel collect-filings             # EDGAR filings, Form 4 trades, recent 
 market-intel digest --dry-run            # print the digest from stored data
 market-intel run-daily --dry-run         # all three in one go, printed to the console
 market-intel run-daily                   # all three, digest sent to Telegram
-market-intel digest --dry-run --no-llm   # skip Claude: rule-based notes, no API cost
+market-intel digest --dry-run --no-llm   # force the free notes even if Claude is enabled
 ```
 
 Collectors are incremental and idempotent: re-running upserts by natural key. The first
@@ -45,14 +45,17 @@ volume spikes, fresh 8-Ks, 13D filings and insider cluster buys using thresholds
 3. **Background**: one line for every other watchlist stock, and insider selling.
 4. **Numbers, filings, insider totals** as reference, in a table narrow enough for a phone.
 
-Sections 1–3 are written by Claude when `ANTHROPIC_API_KEY` is set in `.env`. The app
-sends Claude the numbers it computed plus the text of recent 8-Ks and their press releases
-(fetched from SEC), and Claude must use only those numbers and cite its sources. It is one
-call per digest (model and effort in `config/settings.yaml`, section `llm`), cached in the
-`briefs` table so re-running on the same data is free; tokens and cost are logged and
-stored per call. Expect roughly $0.10–0.15 per digest; the footer shows the actual cost.
-If the key is missing or the call fails, the digest still goes out with plainer
-rule-based notes, and the footer says why Claude wasn't used.
+**By default the digest is free.** Sections 1–3 come from fixed rules: big or
+market-beating moves, what each new 8-K is about, and key sentences quoted word for word
+from the filing and its press release (fetched from SEC), e.g. the revenue and outlook
+lines of an earnings release or who was appointed in an officer change.
+
+**Optional, paid: Claude-written analysis.** Set `llm.enabled: true` in
+`config/settings.yaml` and `ANTHROPIC_API_KEY` in `.env`, and Claude writes sections 1–3
+instead (why it may matter, bull/bear case, what to check). It uses only the numbers and
+filing text the app sends and cites its sources. One call per digest, cached so re-runs
+are free; cost is logged and shown in the footer. Roughly $3/month on Opus, $1.50 on
+Sonnet, $0.10 on Haiku (change `llm.model`). If a call fails, the free notes are used.
 
 Not covered yet: news headlines. A move with no filing behind it is reported as such.
 

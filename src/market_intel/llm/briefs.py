@@ -273,8 +273,8 @@ def generate(
     """Claude's analysis for this digest, from cache when the data hasn't changed.
     Returns (analysis, "") or (None, reason it wasn't available)."""
     llm = settings.get("llm", {})
-    if not llm.get("enabled", True):
-        return None, "Claude briefs are turned off in settings"
+    if not llm.get("enabled", False):
+        return None, ""
     model = llm.get("model", DEFAULT_MODEL)
     payload = build_payload(con, d, settings)
     key = cache_key(model, payload)

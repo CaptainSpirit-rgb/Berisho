@@ -1,6 +1,7 @@
 from scenario import JPM_8K, NOW, NVDA_8K, WATCH, build
 
 from market_intel import config
+from market_intel.collectors.filing_text import filing_text_lookup
 from market_intel.delivery import analysis, digest, render
 
 
@@ -51,7 +52,7 @@ def test_render_text_layout(con):
     assert "Fri 20 Nov 2026, 17:00 Asia/Tbilisi" in text
     assert "1. NVDA  125.50 · -14.0% today · -23.0% 5d · vol 2.4x" in text
     assert "18 Nov 01:20 NVDA 8-K 2.02 results of operations" in text  # Tbilisi time
-    assert "Claude not used: no key." in text and "not financial advice" in text
+    assert "Claude not used: no key." in " ".join(text.split()) and "not financial advice" in text
     table = text[text.index("NUMBERS") :].splitlines()[1:6]
     assert max(len(line) for line in table) <= 40  # fits a phone
     assert table[-1].startswith("SPY")
@@ -66,3 +67,28 @@ def test_render_html_for_telegram(con):
     assert "Revenue &lt;fell&gt; &amp; guidance cut" in out
     assert f'<a href="{NVDA_8K}">filing 1</a>' in out
     assert "<pre>" in out and out.count("<pre>") == out.count("</pre>") == 1
+
+
+def test_rule_based_quotes_the_press_release(con):
+    d, settings = make(con)
+    a = analysis.rule_based(d, settings, filing_text=filing_text_lookup(con))
+    nvda = a.items[0]
+    assert 'From the filing: "NVIDIA reports revenue of $10.0 billion."' in nvda.what
+    assert '"Outlook: revenue expected to decline."' in nvda.what
+    jpm = a.items[1]
+    assert "From the filing" not in jpm.what  # no text fetched for it
+
+
+def test_highlights_pick_item_keywords_verbatim():
+    text = (
+        "Forward-looking statements are subject to risks and uncertainties of many kinds.\n"
+        "On November 17, 2026, Jane Roe informed the Board that she will retire as CFO. "
+        "The Board appointed John Doe as Chief Financial Officer, effective January 1, 2027.\n"
+        "Short line."
+    )
+    assert analysis.highlights(text, "5.02,9.01") == [
+        "On November 17, 2026, Jane Roe informed the Board that she will retire as CFO.",
+        "The Board appointed John Doe as Chief Financial Officer, effective January 1, 2027.",
+    ]
+    assert analysis.highlights(text, "9.01") == []
+    assert analysis.highlights("", "2.02") == []

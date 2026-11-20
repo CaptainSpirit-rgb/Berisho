@@ -12,6 +12,8 @@ Neither invents numbers: every figure comes from the stored data.
 
 from __future__ import annotations
 
+import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -94,6 +96,52 @@ def _money(v: float | None) -> str:
     return f"${v:.0f}"
 
 
+# Words that mark the sentences worth quoting from a filing, by 8-K item.
+HIGHLIGHT_WORDS = {
+    "2.02": (
+        "revenue",
+        "net income",
+        "net loss",
+        "earnings per share",
+        "per diluted share",
+        "gross margin",
+        "outlook",
+        "guidance",
+        "expects",
+        "expected to",
+    ),
+    "5.02": ("resign", "retire", "appoint", "elected", "named", "succeed", "depart", "terminat"),
+    "1.01": ("agreement", "acquire", "merger"),
+    "2.01": ("acquisition", "completed", "disposition"),
+    "2.05": ("restructuring", "workforce", "charges"),
+    "2.06": ("impairment",),
+}
+_SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\"])")
+
+
+def highlights(
+    text: str, items: str | None, max_sentences: int = 3, max_len: int = 300
+) -> list[str]:
+    """The first few sentences of a filing that mention the item's key words (e.g. revenue
+    and outlook for results). Quoted verbatim, so nothing is invented."""
+    words: tuple[str, ...] = ()
+    for code in (c.strip() for c in (items or "").split(",")):
+        words += HIGHLIGHT_WORDS.get(code, ())
+    if not words or not text:
+        return []
+    picked = []
+    for line in text.splitlines():
+        for sentence in _SENTENCE.split(line):
+            sentence = sentence.strip()
+            low = sentence.lower()
+            if 25 <= len(sentence) <= max_len and any(w in low for w in words):
+                if sentence not in picked:
+                    picked.append(sentence)
+            if len(picked) >= max_sentences:
+                return picked
+    return picked
+
+
 def _move_text(row: TickerRow, market: TickerRow | None) -> str:
     parts = [f"{_pct(row.change_1d_pct)} on the day", f"{_pct(row.change_5d_pct)} over 5 days"]
     text = ", ".join(parts)
@@ -104,7 +152,14 @@ def _move_text(row: TickerRow, market: TickerRow | None) -> str:
     return text
 
 
-def rule_based(d: Digest, settings: dict[str, Any], note: str = "") -> Analysis:
+def rule_based(
+    d: Digest,
+    settings: dict[str, Any],
+    note: str = "",
+    filing_text: Callable[[str], str] | None = None,
+) -> Analysis:
+    """Notes from fixed rules. ``filing_text(accession_no)`` returns a filing's stored
+    text (press release first); when given, key sentences are quoted from it."""
     dig = settings.get("digest", {})
     big_move = float(dig.get("big_move_pct", 5.0))
     rel_move = float(dig.get("relative_move_pct", 8.0))
@@ -142,6 +197,9 @@ def rule_based(d: Digest, settings: dict[str, Any], note: str = "") -> Analysis:
         for f in eight_ks:
             desc = describe_items(f["items"]) or "no item numbers"
             what.append(f"Filed an {f['form_type']} ({desc}).")
+            quotes = highlights(filing_text(f["accession_no"]), f["items"]) if filing_text else []
+            if quotes:
+                what.append("From the filing: " + " ".join(f'"{q}"' for q in quotes))
             if f["url"]:
                 sources.append(f["url"])
         if buys:
@@ -175,7 +233,7 @@ def rule_based(d: Digest, settings: dict[str, Any], note: str = "") -> Analysis:
                 "Insiders buying with their own money is one of the stronger insider signals."
             )
         if eight_ks:
-            check.append("Read the filing (and its press release, exhibit 99.1, if any).")
+            check.append("Read the full filing (and its press release, exhibit 99.1, if any).")
         if big and not eight_ks:
             check.append("Look for news explaining the move.")
 

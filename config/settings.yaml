@@ -39,7 +39,8 @@ digest:
   send_time_local: "17:00"   # before the US open (17:30 Tbilisi); confirm
 
 llm:
-  enabled: true              # false = always use the rule-based notes
+  enabled: false             # true = Claude writes the analysis (paid API, ~$1-3/month);
+                             # false = free rule-based notes with quotes from filings
   model: claude-opus-5-5
   effort: medium             # low | medium | high: more effort = deeper, costlier
   max_tokens: 16000

@@ -80,7 +80,7 @@ def _footer(a: Analysis) -> str:
         cost = "cached, no cost" if a.cached else f"cost ${a.cost_usd or 0:.3f}"
         return f"Analysis written by Claude ({a.model}, {cost}). Numbers come from the data."
     reason = f" Claude not used: {a.note}." if a.note else ""
-    return f"Analysis from fixed rules.{reason}"
+    return f"Notes from fixed rules; quotes are verbatim from the filings.{reason}"
 
 
 def _row(d: Digest, symbol: str) -> TickerRow | None:
