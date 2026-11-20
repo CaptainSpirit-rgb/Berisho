@@ -129,6 +129,38 @@ def _export_data(con, d, a, settings: dict) -> bool:
     return True
 
 
+def _score_sentiment(con, settings: dict, required: bool = False) -> bool:
+    """FinBERT-score new headlines, rebuild the daily summary and write sentiment signals.
+    Without the optional FinBERT install this is skipped (an error only if ``required``)."""
+    from market_intel.signals import regime, sentiment
+
+    cfg = sentiment.sentiment_settings(settings)
+    if not cfg["enabled"] and not required:
+        return True
+    pending = con.execute("SELECT count(*) FROM news WHERE sentiment_score IS NULL").fetchone()[0]
+    if pending:
+        if not sentiment.finbert_available():
+            msg = "FinBERT isn't installed (pip install -e .[sentiment]); %d headlines unscored"
+            (log.error if required else log.info)(msg, pending)
+            if required:
+                return False
+        else:
+            scorer = sentiment.FinBertScorer(cfg["model"], int(cfg["batch_size"]))
+            sentiment.score_unscored(con, scorer)
+    sentiment.refresh_daily(con)
+    bench = settings.get("benchmark", {})
+    reg = regime.current_regime(
+        con, bench.get("symbol", "SPY"), int(bench.get("regime_ma_days", 200))
+    )
+    symbols = [s.symbol for s in config.load_watchlist()]
+    results = sentiment.detect(con, symbols, settings, regime=reg)
+    for r in results:
+        log.info("Sentiment %-6s %s", r.symbol, sentiment.describe(r, cfg))
+        for sig in r.signals:
+            log.info("  SIGNAL %s", sentiment.flag_text(sig))
+    return True
+
+
 def _build(con, args: argparse.Namespace):
     from market_intel.delivery import analysis, digest
 
@@ -246,6 +278,13 @@ def cmd_collect_filings(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_score_sentiment(args: argparse.Namespace) -> int:
+    con = _open_db(args)
+    ok = _score_sentiment(con, config.load_settings(), required=True)
+    con.close()
+    return 0 if ok else 1
+
+
 def cmd_digest(args: argparse.Namespace) -> int:
     con = _open_db(args)
     ok = _deliver_digest(con, args)
@@ -262,9 +301,10 @@ def cmd_run_daily(args: argparse.Namespace) -> int:
     ok_prices = _collect_prices(con, settings)
     ok_filings = _collect_filings(con, settings)
     ok_news = _collect_news(con)
+    ok_sentiment = _score_sentiment(con, settings)
     ok_sent = _deliver_digest(con, args, export=True)
     con.close()
-    return 0 if ok_prices and ok_filings and ok_news and ok_sent else 1
+    return 0 if ok_prices and ok_filings and ok_news and ok_sentiment and ok_sent else 1
 
 
 def cmd_collect_news(args: argparse.Namespace) -> int:
@@ -312,6 +352,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("--db", help="Override the database path")
     p.set_defaults(func=cmd_export_data)
+
+    p = sub.add_parser(
+        "score-sentiment",
+        help="FinBERT-score new headlines and detect sentiment shifts / news-volume spikes",
+    )
+    p.add_argument("--db", help="Override the database path")
+    p.set_defaults(func=cmd_score_sentiment)
 
     for name, func, help_ in (
         ("digest", cmd_digest, "Send the digest built from stored data to Telegram"),

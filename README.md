@@ -82,6 +82,32 @@ schtasks /Create /TN "Berisho daily" /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST 16:00
 
 The PC must be on (awake) at 16:00. Check a run with `schtasks /Run /TN "Berisho daily"`.
 
+## News sentiment (Phase 3, thesis pipeline)
+
+FinBERT (`ProsusAI/finbert`, as in the thesis) scores every collected headline on your
+PC, for free: `sentiment_score` = P(positive) − P(negative), from −1 to +1.
+
+```bash
+pip install -e .[sentiment]              # torch + transformers; the model (~440 MB)
+                                         # downloads from Hugging Face on first use
+market-intel score-sentiment             # score new headlines, rebuild daily summary,
+                                         # write sentiment signals
+```
+
+`run-daily` runs this step automatically after the collectors (and skips it, with a log
+line, if FinBERT isn't installed). Following the thesis, the signal is not the raw level:
+
+* **Sentiment shift**: mean score of the last 24 h vs the stock's own previous 60 days,
+  as a z-score of the mean; flagged at |z| ≥ 2.
+* **News volume spike**: headlines in the last 24 h at ≥ 3× the stock's usual daily count.
+* In a bear market (SPY below its 200-day MA) both signals get half weight.
+
+A stock needs 20 days of collection and 30 scored headlines before it can raise a signal;
+until then the digest shows "building baseline (n/20 days)". Headlines published before
+collection started are scored but don't count as history. All thresholds are under
+`sentiment:` in `config/settings.yaml`. Per-day counts and means are in the
+`sentiment_daily` table, signals in `signals`.
+
 ## Telegram setup
 
 The digest is sent by your own Telegram bot to your own chat. One-time setup:

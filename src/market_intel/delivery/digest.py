@@ -71,6 +71,8 @@ class Digest:
     def headlines(self, symbol: str) -> list[dict[str, Any]]:
         return [n for n in self.news if n["symbol"] == symbol]
 
+    sentiment: list[tuple[str, str]] = field(default_factory=list)  # (symbol, line); [] = no news
+
     @property
     def as_of(self) -> dt.date | None:
         dates = [r.trade_date for r in self.rows if r.trade_date]
@@ -280,6 +282,7 @@ def build_digest(
         now_naive - dt.timedelta(days=int(dig.get("news_days", 3))),
         int(dig.get("news_per_symbol", 3)),
     )
+    sentiment_lines = _sentiment(con, symbols, settings, now, regime, flags)
 
     order = {s: i for i, s in enumerate(symbols)}
     flags.sort(key=lambda f: order.get(f[0], len(order)))
@@ -300,7 +303,31 @@ def build_digest(
         names={sec.symbol: sec.name for sec in securities},
         insider_trades=insider_trades,
         news=news,
+        sentiment=sentiment_lines,
     )
+
+
+def _sentiment(
+    con: duckdb.DuckDBPyConnection,
+    symbols: list[str],
+    settings: dict[str, Any],
+    now: dt.datetime,
+    regime: dict[str, Any] | None,
+    flags: list[tuple[str, str]],
+) -> list[tuple[str, str]]:
+    """News-sentiment lines per ticker, and flags for any shift or volume spike. Read-only
+    (signals are written by `score-sentiment`); empty while no news has been collected."""
+    from market_intel.signals import sentiment
+
+    cfg = sentiment.sentiment_settings(settings)
+    if not cfg["enabled"] or not con.execute("SELECT count(*) FROM news").fetchone()[0]:
+        return []
+    results = sentiment.detect(
+        con, symbols, settings, now=now, regime=(regime or {}).get("regime"), write=False
+    )
+    for r in results:
+        flags += [(r.symbol, sentiment.flag_text(s)) for s in r.signals]
+    return [(r.symbol, sentiment.describe(r, cfg)) for r in results]
 
 
 def _pct(v: float | None) -> str:
