@@ -127,25 +127,25 @@ def cli_env(monkeypatch, tmp_path):
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "42")
     sent = []
 
-    def fake_send_text(self, text):
+    def fake_send_html(self, text):
         sent.append(text)
         return 1
 
-    monkeypatch.setattr(telegram.TelegramClient, "send_text", fake_send_text)
+    monkeypatch.setattr(telegram.TelegramClient, "send_html", fake_send_html)
     return str(tmp_path / "t.duckdb"), sent
 
 
 def test_dry_run_prints_and_does_not_send(cli_env, capsys):
     db, sent = cli_env
     assert cli.main(["digest", "--dry-run", "--db", db]) == 0
-    assert "MARKET INTEL DIGEST" in capsys.readouterr().out
+    assert "MARKET DIGEST" in capsys.readouterr().out
     assert sent == []
 
 
 def test_digest_is_sent_to_telegram(cli_env, capsys):
     db, sent = cli_env
     assert cli.main(["digest", "--db", db]) == 0
-    assert len(sent) == 1 and "MARKET INTEL DIGEST" in sent[0]
+    assert len(sent) == 1 and "<b>Market digest</b>" in sent[0]
     assert capsys.readouterr().out == ""
 
 
@@ -153,5 +153,20 @@ def test_missing_config_prints_digest_and_fails(cli_env, monkeypatch, capsys):
     db, sent = cli_env
     monkeypatch.delenv("TELEGRAM_CHAT_ID")
     assert cli.main(["digest", "--db", db]) == 1
-    assert "MARKET INTEL DIGEST" in capsys.readouterr().out
+    assert "MARKET DIGEST" in capsys.readouterr().out
     assert sent == []
+
+
+def test_split_html_keeps_blocks_whole():
+    blocks = [f"<b>Block {i}</b>\n" + "x" * 1500 for i in range(5)]
+    msgs = telegram.split_html("\n\n".join(blocks))
+    assert len(msgs) == 3
+    assert all(len(m) <= telegram.MAX_MESSAGE_CHARS for m in msgs)
+    assert all(m.count("<b>") == m.count("</b>") for m in msgs)
+    assert "".join(msgs).count("<b>Block") == 5
+
+
+def test_split_html_oversized_block_becomes_plain_pre():
+    msgs = telegram.split_html("<b>small</b>\n\n<i>" + "y" * 5000 + "</i>")
+    assert msgs[0] == "<b>small</b>"
+    assert all(m.startswith("(") and "<pre>" in m and "<i>" not in m for m in msgs[1:])

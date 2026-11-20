@@ -172,3 +172,17 @@ CREATE TABLE IF NOT EXISTS journal_outcomes (
     computed_at    TIMESTAMP NOT NULL DEFAULT current_timestamp,
     PRIMARY KEY (idea_id, horizon_days)
 );
+
+-- ---------------------------------------------------------------- filing text
+-- Plain text of a filing's main document and press-release exhibits (EX-99.x), fetched
+-- for recent 8-Ks so the brief can say what a filing actually says.
+CREATE TABLE IF NOT EXISTS filing_documents (
+    accession_no VARCHAR NOT NULL,
+    doc_name     VARCHAR NOT NULL,
+    doc_type     VARCHAR,              -- 8-K, EX-99.1, ...
+    description  VARCHAR,
+    url          VARCHAR,
+    text         VARCHAR,
+    fetched_at   TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    PRIMARY KEY (accession_no, doc_name)
+);

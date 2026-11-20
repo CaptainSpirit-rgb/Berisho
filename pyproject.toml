@@ -5,6 +5,7 @@ description = "Personal market intelligence: event detection, LLM briefs and a d
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "anthropic>=2.12",
     "duckdb>=1.1",
     "pyyaml>=6.0",
     "python-dotenv>=1.0",
@@ -30,7 +31,7 @@ packages = ["src/market_intel"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "tests"]
 
 [tool.ruff]
 line-length = 100

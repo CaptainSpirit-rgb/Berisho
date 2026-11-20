@@ -1,9 +1,10 @@
 """Send text to a Telegram chat through the Bot API.
 
 The bot token and chat id come from ``TELEGRAM_BOT_TOKEN`` and ``TELEGRAM_CHAT_ID`` in
-``.env`` (never committed). The digest is plain text laid out in columns, so each message
-is wrapped in ``<pre>`` (HTML parse mode) to keep a monospace font, and long digests are
-split on line boundaries to stay under Telegram's 4096-character message limit.
+``.env`` (never committed). The digest is sent as Telegram HTML (``send_html``): bold
+headings, links, and a ``<pre>`` block for the numbers table, split on blank lines to
+stay under Telegram's 4096-character message limit. ``send_text`` sends plain text in
+``<pre>`` (monospace), split on line boundaries.
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ from __future__ import annotations
 import html
 import logging
 import os
+import re
 import time
 from dataclasses import dataclass
 from typing import Any
@@ -96,6 +98,34 @@ def format_messages(text: str) -> list[str]:
     return out
 
 
+_TAGS = re.compile(r"<[^>]+>")
+
+
+def split_html(html_text: str, limit: int = _CHUNK_BUDGET) -> list[str]:
+    """Split Telegram HTML into messages on blank lines (block boundaries), so no tag is
+    cut in half. A single block longer than the limit (very unusual) is sent as plain
+    monospace text instead."""
+    messages: list[str] = []
+    current = ""
+    for block in html_text.split("\n\n"):
+        if len(block) > limit:
+            if current:
+                messages.append(current)
+                current = ""
+            plain = html.unescape(_TAGS.sub("", block))
+            messages += format_messages(plain)
+            continue
+        candidate = f"{current}\n\n{block}" if current else block
+        if len(candidate) > limit:
+            messages.append(current)
+            current = block
+        else:
+            current = candidate
+    if current:
+        messages.append(current)
+    return messages or [""]
+
+
 class TelegramClient:
     def __init__(
         self,
@@ -160,6 +190,15 @@ class TelegramClient:
         for i, msg in enumerate(messages):
             if i:
                 self._sleep(1)  # stay well under Telegram's per-chat rate limit
+            self.send_message(msg)
+        return len(messages)
+
+    def send_html(self, html_text: str) -> int:
+        """Send Telegram-HTML text, split on block boundaries. Returns the message count."""
+        messages = split_html(html_text)
+        for i, msg in enumerate(messages):
+            if i:
+                self._sleep(1)
             self.send_message(msg)
         return len(messages)
 
