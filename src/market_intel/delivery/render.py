@@ -137,6 +137,9 @@ def render_text(d: Digest, a: Analysis, width: int = 72) -> str:
         out.append(text)
         if url:
             out.append(f"  {url}")
+    if d.sentiment:
+        out += ["", "NEWS SENTIMENT (FinBERT, vs each stock's own baseline)"]
+        out += [f"{sym:<6}{text}" for sym, text in d.sentiment]
     insiders = _insider_lines(d)
     if insiders:
         out += ["", f"INSIDER OPEN-MARKET TRADES (last {d.windows.get('insiders')} days)"]
@@ -199,6 +202,11 @@ def render_html(d: Digest, a: Analysis) -> str:
         blocks.append(
             f"<b>Filings</b> (last {d.windows.get('filings')} days)\n"
             + "\n".join(_link(text, url) if url else _e(text) for text, url in filings)
+        )
+    if d.sentiment:
+        blocks.append(
+            "<b>News sentiment</b> (vs each stock's usual)\n"
+            + "\n".join(f"<b>{_e(sym)}</b> {_e(text)}" for sym, text in d.sentiment)
         )
     insiders = _insider_lines(d)
     if insiders:
