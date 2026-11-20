@@ -98,6 +98,37 @@ def _collect_filings(con, settings: dict) -> bool:
     return not failed
 
 
+def _collect_news(con) -> bool:
+    from market_intel.collectors import news
+
+    results = news.collect_news(con, [s.symbol for s in config.load_watchlist()])
+    failed = [s for s, n in results.items() if n < 0]
+    log.info("Stored %d new headline(s)", sum(n for n in results.values() if n > 0))
+    if failed:
+        log.error("News collection failed for: %s", ", ".join(failed))
+    return not failed
+
+
+def _export_data(con, d, a, settings: dict) -> bool:
+    """Push the day's data file to the digest-data branch for the scheduled Claude run."""
+    from market_intel.delivery import export
+
+    exp = settings.get("export", {})
+    files = export.export_files(export.build_export(con, d, a, settings))
+    try:
+        commit = export.push_to_branch(
+            config.REPO_ROOT,
+            files,
+            branch=exp.get("branch", "digest-data"),
+            message=f"Digest data {d.as_of or ''}".strip(),
+        )
+    except (export.GitPushError, OSError) as exc:
+        log.error("Could not push the digest data file: %s", exc)
+        return False
+    log.info("Digest data pushed to %s (%s)", exp.get("branch", "digest-data"), commit[:8])
+    return True
+
+
 def _score_sentiment(con, settings: dict, required: bool = False) -> bool:
     """FinBERT-score new headlines, rebuild the daily summary and write sentiment signals.
     Without the optional FinBERT install this is skipped (an error only if ``required``)."""
@@ -130,10 +161,8 @@ def _score_sentiment(con, settings: dict, required: bool = False) -> bool:
     return True
 
 
-def _deliver_digest(con, args: argparse.Namespace) -> bool:
-    """Print the digest (--dry-run) or send it to Telegram. If sending fails, the digest is
-    printed to the console instead so the run's output isn't lost, and False is returned."""
-    from market_intel.delivery import analysis, digest, render
+def _build(con, args: argparse.Namespace):
+    from market_intel.delivery import analysis, digest
 
     config.load_env()
     settings = config.load_settings()
@@ -149,6 +178,19 @@ def _deliver_digest(con, args: argparse.Namespace) -> bool:
 
         log.info("Using rule-based notes: %s", reason)
         a = analysis.rule_based(d, settings, note=reason, filing_text=filing_text_lookup(con))
+    return d, a, settings
+
+
+def _deliver_digest(con, args: argparse.Namespace, export: bool = False) -> bool:
+    """Print the digest (--dry-run) or send it to Telegram. If sending fails, the digest is
+    printed to the console instead so the run's output isn't lost, and False is returned.
+    With ``export`` (run-daily, not dry run), the day's data file is also pushed."""
+    from market_intel.delivery import render
+
+    d, a, settings = _build(con, args)
+    exported = True
+    if export and not args.dry_run and settings.get("export", {}).get("push", False):
+        exported = _export_data(con, d, a, settings)
     text = render.render_text(d, a)
     if args.dry_run:
         print(text)
@@ -165,7 +207,7 @@ def _deliver_digest(con, args: argparse.Namespace) -> bool:
         print(text)
         return False
     log.info("Digest sent to Telegram (%d message%s)", n, "" if n == 1 else "s")
-    return True
+    return exported
 
 
 def _telegram_client():
@@ -258,10 +300,27 @@ def cmd_run_daily(args: argparse.Namespace) -> int:
     con = _open_db(args)
     ok_prices = _collect_prices(con, settings)
     ok_filings = _collect_filings(con, settings)
+    ok_news = _collect_news(con)
     ok_sentiment = _score_sentiment(con, settings)
-    ok_sent = _deliver_digest(con, args)
+    ok_sent = _deliver_digest(con, args, export=True)
     con.close()
-    return 0 if ok_prices and ok_filings and ok_sentiment and ok_sent else 1
+    return 0 if ok_prices and ok_filings and ok_news and ok_sentiment and ok_sent else 1
+
+
+def cmd_collect_news(args: argparse.Namespace) -> int:
+    con = _open_db(args)
+    ok = _collect_news(con)
+    con.close()
+    return 0 if ok else 1
+
+
+def cmd_export_data(args: argparse.Namespace) -> int:
+    """Build the digest from stored data and push the day's data file (no Telegram)."""
+    con = _open_db(args)
+    d, a, settings = _build(con, args)
+    ok = _export_data(con, d, a, settings)
+    con.close()
+    return 0 if ok else 1
 
 
 # ------------------------------------------------------------------ weekly screener
@@ -461,6 +520,16 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--db", help="Override the database path")
     p.set_defaults(func=cmd_collect_filings)
 
+    p = sub.add_parser("collect-news", help="Fetch Yahoo Finance headlines for the watchlist")
+    p.add_argument("--db", help="Override the database path")
+    p.set_defaults(func=cmd_collect_news)
+
+    p = sub.add_parser(
+        "export-data", help="Push today's digest data file to the digest-data branch"
+    )
+    p.add_argument("--db", help="Override the database path")
+    p.set_defaults(func=cmd_export_data)
+
     p = sub.add_parser(
         "score-sentiment",
         help="FinBERT-score new headlines and detect sentiment shifts / news-volume spikes",
@@ -470,7 +539,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     for name, func, help_ in (
         ("digest", cmd_digest, "Send the digest built from stored data to Telegram"),
-        ("run-daily", cmd_run_daily, "Collect prices and filings, then send the digest"),
+        ("run-daily", cmd_run_daily, "Collect prices, filings, news; send digest; push data"),
     ):
         p = sub.add_parser(name, help=help_)
         p.add_argument("--db", help="Override the database path")

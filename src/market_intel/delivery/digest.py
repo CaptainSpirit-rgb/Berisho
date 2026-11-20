@@ -66,6 +66,11 @@ class Digest:
     market: TickerRow | None = None  # the regime benchmark (SPY), for "vs the market"
     names: dict[str, str] = field(default_factory=dict)
     insider_trades: list[dict[str, Any]] = field(default_factory=list)  # largest first
+    news: list[dict[str, Any]] = field(default_factory=list)  # newest first per symbol
+
+    def headlines(self, symbol: str) -> list[dict[str, Any]]:
+        return [n for n in self.news if n["symbol"] == symbol]
+
     sentiment: list[tuple[str, str]] = field(default_factory=list)  # (symbol, line); [] = no news
 
     @property
@@ -269,6 +274,14 @@ def build_digest(
         ).fetchall()
     ]
 
+    from market_intel.collectors.news import recent_headlines
+
+    news = recent_headlines(
+        con,
+        symbols,
+        now_naive - dt.timedelta(days=int(dig.get("news_days", 3))),
+        int(dig.get("news_per_symbol", 3)),
+    )
     sentiment_lines = _sentiment(con, symbols, settings, now, regime, flags)
 
     order = {s: i for i, s in enumerate(symbols)}
@@ -281,10 +294,15 @@ def build_digest(
         flags=flags,
         filings=filings,
         insiders=insiders,
-        windows={"filings": filings_days, "insiders": insider_days},
+        windows={
+            "filings": filings_days,
+            "insiders": insider_days,
+            "news": int(dig.get("news_days", 3)),
+        },
         market=market if market.close is not None else None,
         names={sec.symbol: sec.name for sec in securities},
         insider_trades=insider_trades,
+        news=news,
         sentiment=sentiment_lines,
     )
 

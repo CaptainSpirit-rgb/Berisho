@@ -29,7 +29,7 @@ from market_intel.delivery.digest import Digest, describe_items
 
 log = logging.getLogger(__name__)
 
-PROMPT_VERSION = "2026-11-21.1"
+PROMPT_VERSION = "2026-11-21.2"
 DEFAULT_MODEL = "claude-opus-5-5"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
@@ -44,14 +44,17 @@ You get a JSON object with everything the app knows today: the market regime (S&
 ETF vs its 200-day average), each watchlist stock's close, 1-day and 5-day change,
 volume vs its 20-day average, its 5-day change relative to the market, recent SEC
 filings (8-K item codes, and for 8-Ks the text of the filing and its press-release
-exhibits), the app's rule-based flags, and insider open-market trades.
+exhibits), recent news headlines per stock, the app's rule-based flags, and insider
+open-market trades.
 
 Rules:
 - Use only numbers that appear in the data. Never invent or estimate figures, dates,
   names or events. If the data doesn't explain something, say so plainly (for example
   "no filing explains this; check the news").
-- Every item must cite the URL of each filing it relies on in "sources" (copy the URL
-  exactly from the data). Items based on price data alone have empty sources.
+- Every item must cite the URL of each filing or headline it relies on in "sources" (copy
+  the URL exactly from the data). Items based on price data alone have empty sources.
+- Headlines are only headlines: say what they report, not more. Don't treat one
+  headline as proof of why a stock moved.
 - Separate a stock-specific move from the market: compare with the market's move.
 - Insider selling is weak evidence on its own (taxes, diversification, planned
   programs); insider buying is stronger. Don't assume a trade was pre-planned unless the
@@ -205,6 +208,17 @@ def build_payload(
                 "sell_value_usd": _r(i["sell_value"] or 0, 0),
             }
             for i in d.insiders
+        ],
+        "news_last_days": d.windows.get("news"),
+        "news_headlines": [
+            {
+                "symbol": n["symbol"],
+                "published_utc": str(n["published_at"]),
+                "source": n["source"],
+                "headline": n["headline"],
+                "url": n["url"],
+            }
+            for n in d.news
         ],
         "largest_insider_trades": [
             {

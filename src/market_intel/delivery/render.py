@@ -120,6 +120,10 @@ def render_text(d: Digest, a: Analysis, width: int = 72) -> str:
             out += sub.wrap(f"{label}: {text}")
         for url in item.sources:
             out.append(f"   Source: {url}")
+        for n_ in d.headlines(item.symbol):
+            out += sub.wrap(
+                f"News ({_local(n_['published_at'], tz)}, {n_['source']}): {n_['headline']}"
+            )
         out.append("")
     if a.items:
         out.pop()
@@ -183,6 +187,9 @@ def render_html(d: Digest, a: Analysis) -> str:
             if item.sources:
                 links = ", ".join(_link(f"filing {i}", u) for i, u in enumerate(item.sources, 1))
                 lines.append(f"<b>Source:</b> {links}")
+            for n_ in d.headlines(item.symbol):
+                label = f"{n_['headline']} ({n_['source']})"
+                lines.append("📰 " + (_link(label, n_["url"]) if n_["url"] else _e(label)))
             blocks.append("\n".join(lines))
     else:
         blocks.append("<b>What matters</b>\nNothing stands out today.")

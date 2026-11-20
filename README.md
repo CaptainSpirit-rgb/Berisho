@@ -25,9 +25,11 @@ requests without a contact email.
 ```bash
 market-intel collect-prices              # yfinance daily bars for the watchlist + SPY
 market-intel collect-filings             # EDGAR filings, Form 4 trades, recent 8-K text
+market-intel collect-news                # Yahoo Finance headlines for the watchlist (free)
 market-intel digest --dry-run            # print the digest from stored data
-market-intel run-daily --dry-run         # all three in one go, printed to the console
-market-intel run-daily                   # all three, digest sent to Telegram
+market-intel run-daily --dry-run         # collect everything, print the digest
+market-intel run-daily                   # collect, send to Telegram, push the data file
+market-intel export-data                 # only push today's data file
 market-intel digest --dry-run --no-llm   # force the free notes even if Claude is enabled
 ```
 
@@ -57,7 +59,28 @@ filing text the app sends and cites its sources. One call per digest, cached so 
 are free; cost is logged and shown in the footer. Roughly $3/month on Opus, $1.50 on
 Sonnet, $0.10 on Haiku (change `llm.model`). If a call fails, the free notes are used.
 
-Not covered yet: news headlines. A move with no filing behind it is reported as such.
+Headlines come from Yahoo Finance via yfinance (free, no key): the latest few per stock
+are shown under each item and as "Latest headline" in the background lines.
+
+## Daily Claude analysis (free, through the Claude subscription)
+
+`run-daily` also writes the day's data (numbers, filing quotes, headlines, insider
+trades and the digest text) as JSON and pushes it to the **`digest-data`** branch of this
+repo (`daily/<date>.json` and `latest.json`). It uses git plumbing, so your working tree
+and current branch are never touched; it needs only the git access you already have.
+A scheduled Claude run in the project reads `latest.json` at 16:30 Tbilisi on weekdays
+and writes the analysis in the Claude app. Turn the push off with `export.push: false`.
+
+### Run it automatically at 16:00 on weekdays (Windows)
+
+In PowerShell, adjusting the path to your virtualenv if it differs:
+
+```powershell
+schtasks /Create /TN "Berisho daily" /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST 16:00 `
+  /TR "C:\Users\lukar\Berisho\.venv\Scripts\market-intel.exe run-daily"
+```
+
+The PC must be on (awake) at 16:00. Check a run with `schtasks /Run /TN "Berisho daily"`.
 
 ## News sentiment (Phase 3, thesis pipeline)
 

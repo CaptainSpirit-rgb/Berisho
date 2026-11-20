@@ -219,10 +219,12 @@ def rule_based(
             )
         elif big and eight_ks:
             why.append("A large move next to a fresh company filing; the filing may explain it.")
+        elif big and d.headlines(row.symbol):
+            why.append("No company filing explains this move; the recent headlines below may.")
         elif big:
             why.append(
-                "No company filing explains this move. It may come from news, the sector or "
-                "analyst actions, which this digest doesn't cover yet."
+                "Neither a filing nor a recent headline explains this move. It may come "
+                "from the sector or analyst actions."
             )
         if "5.02" in items_codes:
             why.append("Leadership changes can signal a shift in strategy or a problem.")
@@ -235,7 +237,7 @@ def rule_based(
         if eight_ks:
             check.append("Read the full filing (and its press release, exhibit 99.1, if any).")
         if big and not eight_ks:
-            check.append("Look for news explaining the move.")
+            check.append("Read the headlines to see what drove the move.")
 
         headline = what[0].rstrip(".")
         items.append(
@@ -264,11 +266,15 @@ def rule_based(
             how = ", roughly in line with the market"
         else:
             how = f", {abs(rel):.1f} points {'better' if rel > 0 else 'worse'} than the market"
-        background.append(
+        line = (
             f"{row.symbol}: {_pct(row.change_5d_pct)} over 5 days{how}. Nothing new filed."
             if not filings_by.get(row.symbol)
             else f"{row.symbol}: {_pct(row.change_5d_pct)} over 5 days{how}."
         )
+        news = d.headlines(row.symbol)
+        if news:
+            line += f' Latest headline: "{news[0]["headline"]}" ({news[0]["source"]}).'
+        background.append(line)
     sellers = [i for i in d.insiders if i["sellers"] and not i["buyers"]]
     if sellers:
         listing = ", ".join(
