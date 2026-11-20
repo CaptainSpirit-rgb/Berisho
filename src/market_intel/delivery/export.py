@@ -43,6 +43,8 @@ def build_export(
         "generated_at_utc": d.generated_at.astimezone(dt.UTC).isoformat(timespec="seconds"),
         "display_timezone": d.display_tz.key,
         **data,
+        # FinBERT sentiment vs each stock's own baseline (thesis model), when scored.
+        "sentiment": [{"symbol": sym, "note": line} for sym, line in d.sentiment],
         "digest_text": render_text(d, a),
     }
 
