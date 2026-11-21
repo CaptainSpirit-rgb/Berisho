@@ -97,4 +97,4 @@ def test_sentiment_note_says_when_finbert_is_missing(con, monkeypatch):
     ).replace("\n", " ")
     monkeypatch.setattr(sentiment, "finbert_available", lambda: True)
     d = digest.build_digest(con, WATCH, config.load_settings(), now=NOW)
-    assert "signals begin after 20 days" in d.sentiment_note
+    assert "signals start after 20 days" in d.sentiment_note

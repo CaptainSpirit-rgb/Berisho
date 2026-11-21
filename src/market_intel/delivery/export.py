@@ -45,6 +45,16 @@ def build_export(
         **data,
         # FinBERT sentiment vs each stock's own baseline (thesis model), when scored.
         "sentiment": [{"symbol": sym, "note": line} for sym, line in d.sentiment],
+        # Latest weekly screen (S&P 500 candidates), reused daily; run_date null = none yet.
+        "candidates": (
+            {
+                "run_date": d.candidates.run_date,
+                "age_days": d.candidates.age_days,
+                "picks": d.candidates.picks,
+            }
+            if d.candidates
+            else None
+        ),
         "digest_text": render_text(d, a),
     }
 

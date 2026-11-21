@@ -162,7 +162,7 @@ def test_sentiment_section_and_flag(con):
     d = digest.build_digest(con, WATCH, settings(), now=NOW)
     lines = dict(d.sentiment)
     assert "z " in lines["AAPL"]
-    assert "building baseline (0/20 days" in lines["NVDA"]
+    assert "positive +0.50 (1 headline, last 24h) · baseline 0/20 days" in lines["NVDA"]
     aapl_flags = [t for s, t in d.flags if s == "AAPL"]
     assert any("turned negative" in t for t in aapl_flags)
     assert any(t.startswith("news volume ") for t in aapl_flags), aapl_flags

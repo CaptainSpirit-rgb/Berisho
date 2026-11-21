@@ -54,6 +54,8 @@ digest:
   max_items: 5               # "What matters" items at most
   news_days: 3               # headlines this recent are shown
   news_per_symbol: 3
+  candidates_top_n: 5        # picks from the latest weekly screen shown in the daily message
+  candidates_max_age_days: 10  # older than this, the message says to run run-weekly
   big_move_pct: 5.0          # rule-based notes: a 1-day move this big is worth a look
   relative_move_pct: 8.0     # ...or a 5-day move this far from the market (points)
   instant_alert_min_score: 0.8

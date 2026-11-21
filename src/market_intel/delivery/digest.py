@@ -10,6 +10,7 @@ will replace them. Times are stored in UTC and shown in Tbilisi time.
 from __future__ import annotations
 
 import datetime as dt
+import json
 from dataclasses import dataclass, field
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -54,6 +55,17 @@ class TickerRow:
 
 
 @dataclass
+class Candidates:
+    """The latest saved weekly screen, shown in the daily message (not re-run daily)."""
+
+    run_date: dt.date | None  # None = the screener has never been run
+    age_days: int = 0
+    stale: bool = False  # older than digest.candidates_max_age_days
+    picks: list[dict[str, Any]] = field(default_factory=list)  # best first
+    total_saved: int = 0
+
+
+@dataclass
 class Digest:
     generated_at: dt.datetime  # aware, UTC
     display_tz: ZoneInfo
@@ -73,6 +85,7 @@ class Digest:
 
     sentiment: list[tuple[str, str]] = field(default_factory=list)  # (symbol, line); [] = no news
     sentiment_note: str = ""  # e.g. FinBERT not installed, or baselines still building
+    candidates: Candidates | None = None  # latest saved weekly screen
 
     @property
     def as_of(self) -> dt.date | None:
@@ -283,8 +296,12 @@ def build_digest(
         now_naive - dt.timedelta(days=int(dig.get("news_days", 3))),
         int(dig.get("news_per_symbol", 3)),
     )
-    sentiment_lines = _sentiment(con, symbols, settings, now, regime, flags)
-    sentiment_note = _sentiment_note(con, settings) if sentiment_lines else ""
+    sentiment_results = _sentiment(con, symbols, settings, now, regime, flags)
+    sentiment_lines = [(r.symbol, r.line) for r in sentiment_results]
+    sentiment_note = (
+        _sentiment_note(con, settings, sentiment_results, now) if sentiment_results else ""
+    )
+    candidates = latest_candidates(con, symbols, settings, now)
 
     order = {s: i for i, s in enumerate(symbols)}
     flags.sort(key=lambda f: order.get(f[0], len(order)))
@@ -307,6 +324,7 @@ def build_digest(
         news=news,
         sentiment=sentiment_lines,
         sentiment_note=sentiment_note,
+        candidates=candidates,
     )
 
 
@@ -317,9 +335,10 @@ def _sentiment(
     now: dt.datetime,
     regime: dict[str, Any] | None,
     flags: list[tuple[str, str]],
-) -> list[tuple[str, str]]:
-    """News-sentiment lines per ticker, and flags for any shift or volume spike. Read-only
-    (signals are written by `score-sentiment`); empty while no news has been collected."""
+) -> list[Any]:
+    """Sentiment per ticker (each with a ``line`` for the digest), and flags for any shift
+    or volume spike. Read-only (signals are written by `score-sentiment`); empty while no
+    news has been collected."""
     from market_intel.signals import sentiment
 
     cfg = sentiment.sentiment_settings(settings)
@@ -330,11 +349,14 @@ def _sentiment(
     )
     for r in results:
         flags += [(r.symbol, sentiment.flag_text(s)) for s in r.signals]
-    return [(r.symbol, sentiment.describe(r, cfg)) for r in results]
+        r.line = sentiment.describe(r, cfg)
+    return results
 
 
-def _sentiment_note(con: duckdb.DuckDBPyConnection, settings: dict[str, Any]) -> str:
-    """Why the sentiment lines may show no scored headlines."""
+def _sentiment_note(
+    con: duckdb.DuckDBPyConnection, settings: dict[str, Any], results: list[Any], now: dt.datetime
+) -> str:
+    """Why the sentiment lines show raw tone or no scores, and when signals start."""
     from market_intel.signals import sentiment
 
     total, unscored = con.execute(
@@ -346,9 +368,86 @@ def _sentiment_note(con: duckdb.DuckDBPyConnection, settings: dict[str, Any]) ->
             f"FinBERT isn't installed, so {unscored} of {total} collected headlines aren't "
             "scored. Install it once with: pip install -e .[sentiment]"
         )
+    warming = [r for r in results if r.status == "warming_up"]
+    if not warming:
+        return ""
+    days_left = need - max(min(r.history_days, need) for r in warming)
+    start = (now + dt.timedelta(days=max(days_left, 0))).strftime("%d %b").lstrip("0")
     return (
-        f"Each stock's baseline counts only headlines from the day collection started, so "
-        f"signals begin after {need} days of daily runs."
+        f"Baselines are still building: signals start after {need} days of headlines "
+        f"(the first around {start}). Until then the number is today's raw FinBERT tone "
+        "(-1 to +1), which on its own says little."
+    )
+
+
+def latest_candidates(
+    con: duckdb.DuckDBPyConnection,
+    watchlist: list[str],
+    settings: dict[str, Any],
+    now: dt.datetime,
+) -> Candidates | None:
+    """The newest saved screen from ``screen_results``. The screener runs weekly
+    (`run-weekly`); the daily message reuses its last list instead of re-running it.
+    ``run_date`` is None when no screen has been saved yet."""
+    exists = con.execute(
+        "SELECT count(*) FROM information_schema.tables WHERE table_name = 'screen_results'"
+    ).fetchone()[0]
+    if not exists:
+        return Candidates(run_date=None)  # screener never run on this database
+    dig = settings.get("digest", {})
+    top_n = int(dig.get("candidates_top_n", 5))
+    max_age = int(dig.get("candidates_max_age_days", 10))
+    run_date = con.execute("SELECT max(run_date) FROM screen_results").fetchone()[0]
+    if run_date is None:
+        return Candidates(run_date=None)
+    prev = con.execute(
+        "SELECT max(run_date) FROM screen_results WHERE run_date < ?", [run_date]
+    ).fetchone()[0]
+    prev_tickers = (
+        {
+            r[0]
+            for r in con.execute(
+                "SELECT ticker FROM screen_results WHERE run_date = ?", [prev]
+            ).fetchall()
+        }
+        if prev
+        else set()
+    )
+    rows = con.execute(
+        """
+        SELECT r.rank, r.ticker, r.name, r.cik, r.score, r.metrics, r.reasons, r.warnings,
+               coalesce(u.sector, u.sic_description)
+        FROM screen_results r LEFT JOIN screen_universe u ON u.cik = r.cik
+        WHERE r.run_date = ? ORDER BY r.rank
+        """,
+        [run_date],
+    ).fetchall()
+    watch = set(watchlist)
+    picks = []
+    for rank, ticker, name, cik, score, metrics, reasons, warnings, sector in rows[:top_n]:
+        m = json.loads(metrics) if metrics else {}
+        picks.append(
+            {
+                "rank": rank,
+                "ticker": ticker,
+                "name": name or "",
+                "cik": cik,
+                "score": score,
+                "market_cap": m.get("market_cap"),
+                "sector": sector,
+                "reasons": json.loads(reasons) if reasons else [],
+                "warnings": json.loads(warnings) if warnings else [],
+                "new": bool(prev_tickers) and ticker not in prev_tickers,
+                "on_watchlist": ticker in watch,
+            }
+        )
+    age = (now.astimezone(dt.UTC).date() - run_date).days
+    return Candidates(
+        run_date=run_date,
+        age_days=age,
+        stale=age > max_age,
+        picks=picks,
+        total_saved=len(rows),
     )
 
 

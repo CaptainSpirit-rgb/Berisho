@@ -164,9 +164,14 @@ def test_split_html_keeps_blocks_whole():
     assert all(len(m) <= telegram.MAX_MESSAGE_CHARS for m in msgs)
     assert all(m.count("<b>") == m.count("</b>") for m in msgs)
     assert "".join(msgs).count("<b>Block") == 5
+    assert [m.split("\n", 1)[0] for m in msgs] == ["(1/3)", "(2/3)", "(3/3)"]
 
 
 def test_split_html_oversized_block_becomes_plain_pre():
     msgs = telegram.split_html("<b>small</b>\n\n<i>" + "y" * 5000 + "</i>")
-    assert msgs[0] == "<b>small</b>"
+    assert msgs[0] == f"(1/{len(msgs)})\n<b>small</b>"
     assert all(m.startswith("(") and "<pre>" in m and "<i>" not in m for m in msgs[1:])
+
+
+def test_split_html_single_message_has_no_part_marker():
+    assert telegram.split_html("<b>a</b>\n\nb") == ["<b>a</b>\n\nb"]

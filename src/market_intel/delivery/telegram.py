@@ -103,8 +103,8 @@ _TAGS = re.compile(r"<[^>]+>")
 
 def split_html(html_text: str, limit: int = _CHUNK_BUDGET) -> list[str]:
     """Split Telegram HTML into messages on blank lines (block boundaries), so no tag is
-    cut in half. A single block longer than the limit (very unusual) is sent as plain
-    monospace text instead."""
+    cut in half, numbering the parts when there are several. A single block longer than
+    the limit (very unusual) is sent as plain monospace text instead."""
     messages: list[str] = []
     current = ""
     for block in html_text.split("\n\n"):
@@ -113,7 +113,7 @@ def split_html(html_text: str, limit: int = _CHUNK_BUDGET) -> list[str]:
                 messages.append(current)
                 current = ""
             plain = html.unescape(_TAGS.sub("", block))
-            messages += format_messages(plain)
+            messages += [f"<pre>{html.escape(c, quote=False)}</pre>" for c in split_text(plain)]
             continue
         candidate = f"{current}\n\n{block}" if current else block
         if len(candidate) > limit:
@@ -123,6 +123,8 @@ def split_html(html_text: str, limit: int = _CHUNK_BUDGET) -> list[str]:
             current = candidate
     if current:
         messages.append(current)
+    if len(messages) > 1:  # say it continues: "(1/2)", "(2/2)"
+        messages = [f"({i}/{len(messages)})\n{m}" for i, m in enumerate(messages, 1)]
     return messages or [""]
 
 
