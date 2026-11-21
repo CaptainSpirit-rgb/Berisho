@@ -45,7 +45,17 @@ volume spikes, fresh 8-Ks, 13D filings and insider cluster buys using thresholds
    a new 8-K, insider buying), each with what happened, why it may matter, bull and bear
    case, what to check next, and links to the filings used.
 3. **Background**: one line for every other watchlist stock, and insider selling.
-4. **Numbers, filings, insider totals** as reference, in a table narrow enough for a phone.
+4. **Numbers and news sentiment**: a table narrow enough for a phone, the market regime,
+   and one FinBERT line per stock (see "News sentiment" below).
+5. **Filings and insider totals** as reference.
+6. **New candidates**: the top 5 from the latest weekly S&P 500 screen (with its date),
+   each with its best reason and main warning, tagged "new this week" or "on your
+   watchlist". The screen isn't re-run daily: the digest reuses the last list saved by
+   `run-weekly`, and says to refresh it once it is more than 10 days old
+   (`digest.candidates_top_n`, `digest.candidates_max_age_days`).
+
+Everything goes out as one Telegram message. If it is ever longer than Telegram's 4096
+characters, it is split between sections and the parts are numbered (1/2), (2/2).
 
 **By default the digest is free.** Sections 1–3 come from fixed rules: big or
 market-beating moves, what each new 8-K is about, and key sentences quoted word for word
@@ -103,7 +113,8 @@ line, if FinBERT isn't installed). Following the thesis, the signal is not the r
 * In a bear market (SPY below its 200-day MA) both signals get half weight.
 
 A stock needs 20 days of collection and 30 scored headlines before it can raise a signal;
-until then the digest shows "building baseline (n/20 days)". Headlines published before
+until then the digest shows today's raw tone, e.g. "negative -0.60 (3 headlines, last
+24h) · baseline 4/20 days", and says roughly when signals start. Headlines published before
 collection started are scored but don't count as history. All thresholds are under
 `sentiment:` in `config/settings.yaml`. Per-day counts and means are in the
 `sentiment_daily` table, signals in `signals`.
