@@ -1,7 +1,7 @@
 -- Screener tables (Phase 2). Kept apart from storage/schema.sql so the screener can
 -- evolve without touching the daily-digest schema. Idempotent like the main schema.
 
--- Candidate universe: every exchange-listed SEC registrant we might screen.
+-- Candidate universe: the companies the screen ranks (S&P 500 members by default).
 CREATE TABLE IF NOT EXISTS screen_universe (
     cik             BIGINT PRIMARY KEY,
     ticker          VARCHAR NOT NULL,
@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS screen_universe (
     sic_description VARCHAR,
     updated_at      TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
+ALTER TABLE screen_universe ADD COLUMN IF NOT EXISTS sector VARCHAR;        -- GICS sector
+ALTER TABLE screen_universe ADD COLUMN IF NOT EXISTS sub_industry VARCHAR;  -- GICS sub-industry
 
 -- XBRL facts from SEC companyfacts, only the concepts the screener uses.
 -- One row per reported value. The same period is usually reported again in later

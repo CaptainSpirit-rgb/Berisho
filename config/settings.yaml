@@ -91,14 +91,16 @@ export:
 
 # Weekly screener for new candidates (Phase 2). See src/market_intel/screener/.
 screener:
-  exchanges: ["NYSE", "Nasdaq"]
-  min_market_cap: 300000000      # $300M  (small/mid cap range, roughly Russell 2000 + S&P 400)
-  max_market_cap: 10000000000    # $10B
+  universe: sp500                # S&P 500 from Wikipedia; "all_listed" = every NYSE/Nasdaq stock
+  exchanges: ["NYSE", "Nasdaq"]  # all_listed only
+  min_market_cap: null           # no size filter for the S&P 500
+  max_market_cap: null
   min_revenue_ttm: 25000000      # skip pre-revenue companies
   require_positive_operating_income: true
   max_staleness_days: 200        # latest report must cover a period this recent
   max_price_age_days: 7
-  exclude_sic_ranges: [[6000, 6799]]  # banks, insurers, REITs, SPACs: their accounts differ
+  exclude_sectors: ["Financials", "Real Estate"]  # banks/insurers/REITs: accounts differ
+  exclude_sic_ranges: [[6000, 6799]]  # same, for the all_listed universe (SIC codes)
   min_industry_peers: 8          # else valuation is ranked against the whole screen
   missing_percentile: 0.4        # score for a metric a company doesn't report
   top_n: 10
@@ -112,4 +114,11 @@ screener:
     rebalance_months: [2, 5, 8, 11]   # a few weeks after quarter ends, once 10-Qs are in
     rebalance_day: 20
     horizons_days: [91, 182, 365]
-    benchmark: IWM
+    benchmark: SPY
+  market:                        # weekly overview at the top of the message
+    indexes:
+      - {symbol: SPY, name: "S&P 500"}
+      - {symbol: QQQ, name: "Nasdaq 100"}
+      - {symbol: DIA, name: "Dow Jones"}
+      - {symbol: IWM, name: "Russell 2000"}
+    # sectors: defaults to the 11 SPDR sector funds (XLK, XLV, XLE, ...)
