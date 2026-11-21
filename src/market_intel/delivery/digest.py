@@ -72,6 +72,7 @@ class Digest:
         return [n for n in self.news if n["symbol"] == symbol]
 
     sentiment: list[tuple[str, str]] = field(default_factory=list)  # (symbol, line); [] = no news
+    sentiment_note: str = ""  # e.g. FinBERT not installed, or baselines still building
 
     @property
     def as_of(self) -> dt.date | None:
@@ -283,6 +284,7 @@ def build_digest(
         int(dig.get("news_per_symbol", 3)),
     )
     sentiment_lines = _sentiment(con, symbols, settings, now, regime, flags)
+    sentiment_note = _sentiment_note(con, settings) if sentiment_lines else ""
 
     order = {s: i for i, s in enumerate(symbols)}
     flags.sort(key=lambda f: order.get(f[0], len(order)))
@@ -304,6 +306,7 @@ def build_digest(
         insider_trades=insider_trades,
         news=news,
         sentiment=sentiment_lines,
+        sentiment_note=sentiment_note,
     )
 
 
@@ -328,6 +331,25 @@ def _sentiment(
     for r in results:
         flags += [(r.symbol, sentiment.flag_text(s)) for s in r.signals]
     return [(r.symbol, sentiment.describe(r, cfg)) for r in results]
+
+
+def _sentiment_note(con: duckdb.DuckDBPyConnection, settings: dict[str, Any]) -> str:
+    """Why the sentiment lines may show no scored headlines."""
+    from market_intel.signals import sentiment
+
+    total, unscored = con.execute(
+        "SELECT count(*), count(*) FILTER (WHERE sentiment_score IS NULL) FROM news"
+    ).fetchone()
+    need = int(sentiment.sentiment_settings(settings)["min_baseline_days"])
+    if unscored and not sentiment.finbert_available():
+        return (
+            f"FinBERT isn't installed, so {unscored} of {total} collected headlines aren't "
+            "scored. Install it once with: pip install -e .[sentiment]"
+        )
+    return (
+        f"Each stock's baseline counts only headlines from the day collection started, so "
+        f"signals begin after {need} days of daily runs."
+    )
 
 
 def _pct(v: float | None) -> str:

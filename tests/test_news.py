@@ -75,3 +75,26 @@ def test_old_headlines_are_left_out(con):
     news.collect_news(con, ["NVDA"], lambda s: [stale])
     d = digest.build_digest(con, WATCH, config.load_settings(), now=NOW)
     assert d.news == []
+
+
+def test_duplicate_headlines_shown_once(con):
+    dup = {"content": dict(NEW_SHAPE["content"], canonicalUrl={"url": "https://other.test/x"})}
+    news.collect_news(con, ["NVDA"], lambda s: [NEW_SHAPE, dup])
+    assert con.execute("SELECT count(*) FROM news").fetchone()[0] == 2  # both stored
+    d = digest.build_digest(con, WATCH, config.load_settings(), now=NOW)
+    assert len(d.headlines("NVDA")) == 1
+
+
+def test_sentiment_note_says_when_finbert_is_missing(con, monkeypatch):
+    from market_intel.signals import sentiment
+
+    news.collect_news(con, ["NVDA"], lambda s: [NEW_SHAPE])
+    monkeypatch.setattr(sentiment, "finbert_available", lambda: False)
+    d = digest.build_digest(con, WATCH, config.load_settings(), now=NOW)
+    assert "FinBERT isn't installed, so 1 of 1 collected headlines" in d.sentiment_note
+    assert "pip install -e .[sentiment]" in render.render_text(
+        d, analysis.rule_based(d, config.load_settings())
+    ).replace("\n", " ")
+    monkeypatch.setattr(sentiment, "finbert_available", lambda: True)
+    d = digest.build_digest(con, WATCH, config.load_settings(), now=NOW)
+    assert "signals begin after 20 days" in d.sentiment_note

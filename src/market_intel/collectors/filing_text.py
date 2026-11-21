@@ -119,7 +119,9 @@ def html_to_text(page: str) -> str:
     parser = _TextExtractor()
     parser.feed(page)
     parser.close()
-    lines = (" ".join(line.split()) for line in "".join(parser.parts).splitlines())
+    # unescape again: some filings double-escape entities ("&amp;amp;" -> "&amp;")
+    text = html.unescape("".join(parser.parts))
+    lines = (" ".join(line.split()) for line in text.splitlines())
     return "\n".join(line for line in lines if line)
 
 

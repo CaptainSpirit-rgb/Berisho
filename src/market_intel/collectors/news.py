@@ -137,8 +137,14 @@ def recent_headlines(
 ) -> list[dict[str, Any]]:
     rows = con.execute(
         """
-        SELECT symbol, published_at, source, headline, url FROM news
-        WHERE symbol IN (SELECT unnest(?)) AND published_at >= ?
+        WITH unique_headlines AS (  -- the same story is often listed twice (two URLs)
+            SELECT symbol, published_at, source, headline, url FROM news
+            WHERE symbol IN (SELECT unnest(?)) AND published_at >= ?
+            QUALIFY row_number() OVER (
+                PARTITION BY symbol, lower(trim(headline)) ORDER BY published_at DESC
+            ) = 1
+        )
+        SELECT * FROM unique_headlines
         QUALIFY row_number() OVER (PARTITION BY symbol ORDER BY published_at DESC) <= ?
         ORDER BY symbol, published_at DESC
         """,
