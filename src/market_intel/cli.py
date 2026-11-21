@@ -324,6 +324,9 @@ def cmd_export_data(args: argparse.Namespace) -> int:
 
 
 # ------------------------------------------------------------------ weekly screener
+PRICE_LOOKBACK_DAYS = 400  # enough for the 200-day average in the market overview
+
+
 def _open_screen_db(args: argparse.Namespace):
     from market_intel import screener
 
@@ -341,7 +344,8 @@ def _sec_client(settings: dict):
 
 
 def _collect_screen_data(con, settings: dict, zip_path: str | None, download: bool) -> bool:
-    """Universe + SEC financials (bulk zip) + SIC codes."""
+    """Universe + SEC financials. Default universe is the S&P 500 (financials fetched per
+    company); ``screener.universe: all_listed`` uses every listed stock and the bulk zip."""
     from pathlib import Path
 
     from market_intel.collectors import edgar
@@ -353,6 +357,21 @@ def _collect_screen_data(con, settings: dict, zip_path: str | None, download: bo
         log.error("%s", exc)
         return False
     scfg = settings.get("screener", {}) or {}
+    if scfg.get("universe", "sp500") == "sp500":
+        try:
+            n = universe.refresh_sp500(con)
+        except Exception as exc:  # noqa: BLE001 - fall back to last week's list
+            n = con.execute("SELECT count(*) FROM screen_universe").fetchall()[0][0]
+            log.error("S&P 500 list refresh failed (%s); using the stored list of %d", exc, n)
+            if not n:
+                return False
+        else:
+            log.info("Universe: %d S&P 500 companies", n)
+        ciks = [r[0] for r in con.execute("SELECT cik FROM screen_universe").fetchall()]
+        rows, failed = facts.fetch_companies(con, client, ciks)
+        log.info("Financials: %d facts loaded; %d companies failed", rows, len(failed))
+        return len(failed) < len(ciks)
+
     n = universe.refresh(con, client, scfg.get("exchanges") or universe.DEFAULT_EXCHANGES)
     log.info("Universe: %d listed companies", n)
 
@@ -375,9 +394,10 @@ def _collect_screen_data(con, settings: dict, zip_path: str | None, download: bo
 def _collect_screen_prices(con, settings: dict, start) -> bool:
     import datetime as dt
 
-    from market_intel.screener import backtest, prices
+    from market_intel.screener import backtest, market, prices
 
     tickers = [r[0] for r in con.execute("SELECT ticker FROM screen_universe").fetchall()]
+    tickers += market.market_symbols(settings)
     bench = backtest.bt_settings(settings).get("benchmark")
     if bench:
         tickers.append(bench)
@@ -390,7 +410,7 @@ def _collect_screen_prices(con, settings: dict, start) -> bool:
 def _screen_and_deliver(con, args: argparse.Namespace, settings: dict) -> bool:
     import datetime as dt
 
-    from market_intel.screener import screen
+    from market_intel.screener import market, screen
 
     as_of = (
         dt.date.fromisoformat(args.date)
@@ -403,7 +423,11 @@ def _screen_and_deliver(con, args: argparse.Namespace, settings: dict) -> bool:
     previous = screen.previous_tickers(con, as_of)
     screen.save_results(con, result, top_n)
     watch = {s.symbol for s in config.load_watchlist()}
-    text = screen.render_section(result, top_n, previous, watch)
+    text = (
+        market.render_overview(*market.overview(con, as_of, settings))
+        + "\n\n"
+        + screen.render_section(result, top_n, previous, watch)
+    )
     log.info("Screen: %d passed; excluded %s", len(result.candidates), result.excluded)
     if args.dry_run:
         print(text)
@@ -436,7 +460,7 @@ def cmd_screen_prices(args: argparse.Namespace) -> int:
     start = (
         dt.date.fromisoformat(args.start)
         if args.start
-        else dt.datetime.now(dt.UTC).date() - dt.timedelta(days=10)
+        else dt.datetime.now(dt.UTC).date() - dt.timedelta(days=PRICE_LOOKBACK_DAYS)
     )
     ok = _collect_screen_prices(con, config.load_settings(), start)
     con.close()
@@ -458,7 +482,7 @@ def cmd_run_weekly(args: argparse.Namespace) -> int:
     con = _open_screen_db(args)
     ok_data = _collect_screen_data(con, settings, None, download=True)
     ok_px = _collect_screen_prices(
-        con, settings, dt.datetime.now(dt.UTC).date() - dt.timedelta(days=10)
+        con, settings, dt.datetime.now(dt.UTC).date() - dt.timedelta(days=PRICE_LOOKBACK_DAYS)
     )
     ok_sent = _screen_and_deliver(con, args, settings)
     con.close()
@@ -561,17 +585,15 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("telegram-test", help="Send a test message to TELEGRAM_CHAT_ID")
     p.set_defaults(func=cmd_telegram_test)
 
-    p = sub.add_parser(
-        "screen-collect", help="Load the screener universe, SEC financials and industries"
-    )
+    p = sub.add_parser("screen-collect", help="Load the S&P 500 list and its SEC financials")
     p.add_argument("--db", help="Override the database path")
-    p.add_argument("--zip", help="Use this companyfacts.zip instead of data/companyfacts.zip")
-    p.add_argument("--download", action="store_true", help="Download a fresh companyfacts.zip")
+    p.add_argument("--zip", help="all_listed universe only: use this companyfacts.zip")
+    p.add_argument("--download", action="store_true", help="all_listed only: fresh zip")
     p.set_defaults(func=cmd_screen_collect)
 
     p = sub.add_parser("screen-prices", help="Fetch prices for the whole screener universe")
     p.add_argument("--db", help="Override the database path")
-    p.add_argument("--start", help="First date (YYYY-MM-DD); default 10 days ago")
+    p.add_argument("--start", help="First date (YYYY-MM-DD); default 400 days ago")
     p.set_defaults(func=cmd_screen_prices)
 
     for name, func, help_ in (

@@ -108,26 +108,28 @@ collection started are scored but don't count as history. All thresholds are und
 `sentiment:` in `config/settings.yaml`. Per-day counts and means are in the
 `sentiment_daily` table, signals in `signals`.
 
-## Weekly screener: new candidates (Phase 2)
+## Weekly screener: market overview + new candidates (Phase 2)
 
-Finds small and mid caps ($300M to $10B) beyond the watchlist that look good on four
-things at once: **growth** (12-month sales growth, and whether it is speeding up),
-**quality** (operating and free-cash-flow margins, margin trend), **balance sheet** (net
-debt vs EBITDA) and **price** (earnings yield, FCF yield, EV/sales vs its industry). Each
-pick comes with plain-language reasons and warnings. Everything is free: SEC financials
-plus Yahoo prices. Banks, insurers and REITs are left out because their accounts differ.
+Once a week: a **market overview** (S&P 500, Nasdaq 100, Dow and Russell 2000 via SPY, QQQ,
+DIA and IWM, plus the 11 sector funds: 1-week, 1-month, 3-month and year-to-date change,
+and whether each is above its 200-day average), then the **S&P 500 companies** that look
+best on four things at once: **growth** (12-month sales growth, and whether it is speeding
+up), **quality** (operating and free-cash-flow margins, margin trend), **balance sheet**
+(net debt vs EBITDA) and **price** (earnings yield, FCF yield, EV/sales vs its GICS sector).
+Each pick comes with plain-language reasons and warnings. Everything is free: the member
+list and sectors from Wikipedia's S&P 500 page, financials from SEC, prices from Yahoo.
+Financials and Real Estate are left out because bank/insurer/REIT accounts differ.
 
 ```bash
-market-intel screen-collect              # SEC ticker list + companyfacts.zip (>1 GB) + industries
-market-intel screen-prices               # latest prices for the whole universe (bulk Yahoo)
-market-intel screen --dry-run            # print the ranked candidates
-market-intel run-weekly                  # all of it, candidates sent to Telegram
+market-intel screen-collect              # S&P 500 list + SEC financials (~500 calls, a few minutes)
+market-intel screen-prices               # ~400 days of prices for members, index and sector funds
+market-intel screen --dry-run            # print the market overview and ranked candidates
+market-intel run-weekly                  # all of it, sent to Telegram
 ```
 
-The first `screen-collect` takes a while: the bulk download is over 1 GB and industry codes
-are looked up once per company (about 15 minutes at SEC's rate limit). Later runs only look
-up new companies. Thresholds and pillar weights live under `screener:` in
-`config/settings.yaml`.
+Thresholds, weights and the funds in the overview live under `screener:` in
+`config/settings.yaml`. `screener.universe: all_listed` switches back to screening every
+NYSE/Nasdaq stock (uses SEC's 1 GB bulk file; add `min_market_cap`/`max_market_cap`).
 
 ### Backtest before trusting it
 
@@ -138,9 +140,10 @@ market-intel screen-backtest                    # report in data/backtests/
 
 Every quarter since 2015 the screen is replayed using only financials **filed** by that
 date (not period end), and the top 10 are compared with the average of every company that
-passed the filters, and with IWM. Each pillar is also tested alone. Known bias: today's
-ticker list misses companies that went bust or were taken over, so absolute returns look
-better than reality. The excess over the (equally biased) universe is the fairer number.
+passed the filters, and with SPY. Each pillar is also tested alone. Known bias: only
+today's S&P 500 members are known (past lists aren't free), so companies that shrank out of
+the index, went bust or were taken over are missing and absolute returns look better than
+reality. The excess over the (equally biased) universe is the fairer number.
 
 ## Telegram setup
 

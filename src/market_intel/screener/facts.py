@@ -3,10 +3,10 @@
 Source: SEC ``companyfacts``: every XBRL value a company has filed, with the filing
 date of each report, so point-in-time queries are possible. Two ways in:
 
-* **Bulk** (weekly run): ``companyfacts.zip`` from EDGAR, one download holding every
-  company. Free, but large (over 1 GB), so it is downloaded once per run and streamed.
-* **Per company**: ``https://data.sec.gov/api/xbrl/companyfacts/CIK##########.json``,
-  for a handful of companies or for testing.
+* **Per company** (default, S&P 500): one API call per company, see below.
+* **Bulk** (only for the ``all_listed`` universe): ``companyfacts.zip`` from EDGAR, one
+  download holding every company. Free, but over 1 GB, so it is streamed.
+* Per-company URL: ``https://data.sec.gov/api/xbrl/companyfacts/CIK##########.json``.
 
 Only the concepts in ``CONCEPTS`` are kept. Each screener metric lists several XBRL
 concepts in priority order because companies use different tags (and switch tags over
@@ -322,3 +322,22 @@ def fetch_company(con: duckdb.DuckDBPyConnection, client, cik: int) -> int:
     """Fetch and load one company's facts from the API. Returns rows upserted."""
     data = client.get_json(COMPANYFACTS_URL.format(cik=cik))
     return upsert_facts(con, parse_companyfacts(data))
+
+
+def fetch_companies(
+    con: duckdb.DuckDBPyConnection, client, ciks: Iterable[int]
+) -> tuple[int, list[int]]:
+    """Fetch companyfacts for each CIK from the API (about 500 calls for the S&P 500,
+    a minute or two at SEC's rate limit). Returns (rows upserted, CIKs that failed)."""
+    rows = 0
+    failed: list[int] = []
+    ciks = list(ciks)
+    for i, cik in enumerate(ciks, start=1):
+        try:
+            rows += fetch_company(con, client, cik)
+        except Exception as exc:  # noqa: BLE001 - one bad company shouldn't stop the run
+            log.warning("companyfacts failed for CIK %s: %s", cik, exc)
+            failed.append(cik)
+        if i % 100 == 0:
+            log.info("companyfacts: %d/%d companies", i, len(ciks))
+    return rows, failed

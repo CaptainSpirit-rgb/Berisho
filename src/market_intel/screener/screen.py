@@ -1,11 +1,12 @@
-"""The weekly screen: filter to small/mid caps, score, explain.
+"""The weekly screen: filter, score and explain (S&P 500 members by default).
 
 Every number is point-in-time for ``as_of`` (fundamentals filed by then, the last
 close on or before it), so the same function drives the live screen and the backtest.
 
 Scoring is deliberately simple and transparent. Each metric becomes a percentile
 (0 = worst, 1 = best) among the companies that passed the filters; valuation metrics
-are ranked within the company's industry (2-digit SIC) when it has enough peers.
+are ranked within the company's GICS sector (or 2-digit SIC group if no sector is
+known) when it has enough peers.
 Percentiles are averaged into four pillars, and the pillars into one score with weights
 from ``config/settings.yaml``. A high score means "looks good on paper right now", not
 "will go up".
@@ -25,13 +26,14 @@ import duckdb
 from market_intel.screener.metrics import company_metrics
 
 DEFAULTS: dict[str, Any] = {
-    "min_market_cap": 300e6,
-    "max_market_cap": 10e9,
+    "min_market_cap": None,  # no size filter by default (the S&P 500 is already large caps)
+    "max_market_cap": None,
     "min_revenue_ttm": 25e6,
     "require_positive_operating_income": True,
     "max_staleness_days": 200,
     "max_price_age_days": 7,
-    "exclude_sic_ranges": [[6000, 6799]],  # banks, insurers, REITs, SPACs
+    "exclude_sectors": ["Financials", "Real Estate"],  # their accounts don't fit these metrics
+    "exclude_sic_ranges": [[6000, 6799]],  # same idea when only SIC is known
     "min_industry_peers": 8,
     "missing_percentile": 0.4,
     "top_n": 10,
@@ -70,6 +72,7 @@ class Candidate:
     sic: int | None
     sic_description: str | None
     metrics: dict[str, Any]
+    sector: str | None = None
     percentiles: dict[str, float] = field(default_factory=dict)
     pillars: dict[str, float] = field(default_factory=dict)
     score: float = 0.0
@@ -77,8 +80,15 @@ class Candidate:
     warnings: list[str] = field(default_factory=list)
 
     @property
-    def industry(self) -> int | None:
+    def industry(self) -> str | int | None:
+        """Peer group for relative valuation: GICS sector, else 2-digit SIC."""
+        if self.sector:
+            return self.sector
         return self.sic // 100 if self.sic else None
+
+    @property
+    def industry_label(self) -> str | None:
+        return self.sector or self.sic_description
 
 
 @dataclass
@@ -87,7 +97,7 @@ class ScreenResult:
     candidates: list[Candidate]  # every company that passed the filters, best first
     excluded: dict[str, int]  # reason -> count
     universe_size: int
-    industry_medians: dict[tuple[int | None, str], float] = field(default_factory=dict)
+    industry_medians: dict[tuple[Any, str], float] = field(default_factory=dict)
 
 
 def latest_prices(
@@ -144,7 +154,7 @@ def run_screen(
 ) -> ScreenResult:
     cfg = screen_settings(settings)
     universe = con.execute(
-        "SELECT cik, ticker, name, sic, sic_description FROM screen_universe"
+        "SELECT cik, ticker, name, sic, sic_description, sector FROM screen_universe"
     ).fetchall()
     fundamentals = company_metrics(
         con, as_of, [u[0] for u in universe], int(cfg["max_staleness_days"])
@@ -153,8 +163,11 @@ def run_screen(
 
     excluded: dict[str, int] = defaultdict(int)
     passed: list[Candidate] = []
-    for cik, ticker, name, sic, sic_desc in universe:
-        if _excluded_sic(sic, cfg["exclude_sic_ranges"]):
+    excluded_sectors = {x.lower() for x in cfg.get("exclude_sectors") or []}
+    for cik, ticker, name, sic, sic_desc, sector in universe:
+        if (sector and sector.lower() in excluded_sectors) or _excluded_sic(
+            sic, cfg["exclude_sic_ranges"]
+        ):
             excluded["financials/REITs (different accounts)"] += 1
             continue
         m = fundamentals.get(cik)
@@ -168,7 +181,8 @@ def run_screen(
         m = dict(m)
         m["price"], m["price_date"] = price
         m["market_cap"] = m["price"] * m["shares"]
-        if not cfg["min_market_cap"] <= m["market_cap"] <= cfg["max_market_cap"]:
+        lo, hi = cfg.get("min_market_cap"), cfg.get("max_market_cap")
+        if (lo is not None and m["market_cap"] < lo) or (hi is not None and m["market_cap"] > hi):
             excluded["outside the market-cap range"] += 1
             continue
         if m["revenue_ttm"] < cfg["min_revenue_ttm"]:
@@ -188,7 +202,7 @@ def run_screen(
         m["earnings_yield"] = m["operating_income_ttm"] / ev if ev > 0 else None
         m["fcf_yield"] = m["fcf_ttm"] / m["market_cap"] if m.get("fcf_ttm") is not None else None
         m["ev_to_sales"] = ev / m["revenue_ttm"] if ev > 0 and m["revenue_ttm"] > 0 else None
-        passed.append(Candidate(cik, ticker, name or "", sic, sic_desc, m))
+        passed.append(Candidate(cik, ticker, name or "", sic, sic_desc, m, sector))
 
     _score(passed, cfg)
     medians = _industry_medians(passed, int(cfg["min_industry_peers"]))
@@ -201,7 +215,7 @@ def run_screen(
 def _score(cands: list[Candidate], cfg: dict[str, Any]) -> None:
     min_peers = int(cfg["min_industry_peers"])
     missing = float(cfg["missing_percentile"])
-    by_industry: dict[int | None, list[Candidate]] = defaultdict(list)
+    by_industry: dict[Any, list[Candidate]] = defaultdict(list)
     for c in cands:
         by_industry[c.industry].append(c)
 
@@ -242,11 +256,9 @@ def _score(cands: list[Candidate], cfg: dict[str, Any]) -> None:
         c.score = sum(c.pillars[p] * float(weights.get(p, 0)) for p in PILLARS) / total_w
 
 
-def _industry_medians(
-    cands: list[Candidate], min_peers: int
-) -> dict[tuple[int | None, str], float]:
-    out: dict[tuple[int | None, str], float] = {}
-    by_industry: dict[int | None, list[Candidate]] = defaultdict(list)
+def _industry_medians(cands: list[Candidate], min_peers: int) -> dict[tuple[Any, str], float]:
+    out: dict[tuple[Any, str], float] = {}
+    by_industry: dict[Any, list[Candidate]] = defaultdict(list)
     for c in cands:
         by_industry[c.industry].append(c)
     for ind, group in by_industry.items():
@@ -276,9 +288,7 @@ def fmt_money(v: float | None) -> str:
     return f"{sign}${a:,.0f}"
 
 
-def explain(
-    c: Candidate, medians: dict[tuple[int | None, str], float]
-) -> tuple[list[str], list[str]]:
+def explain(c: Candidate, medians: dict[tuple[Any, str], float]) -> tuple[list[str], list[str]]:
     m, p = c.metrics, c.percentiles
     reasons: list[str] = []
     warnings: list[str] = []
@@ -324,7 +334,7 @@ def explain(
     evs = m.get("ev_to_sales")
     med = medians.get((c.industry, "ev_to_sales"))
     if evs is not None and med and p.get("ev_to_sales", 0) >= 0.7:
-        reasons.append(f"Cheap vs its industry: EV/sales {evs:.1f}x vs industry median {med:.1f}x")
+        reasons.append(f"Cheap vs its sector: EV/sales {evs:.1f}x vs sector median {med:.1f}x")
     ey = m.get("earnings_yield")
     if ey is not None and p.get("earnings_yield", 0) >= 0.7:
         reasons.append(f"Earnings yield {fmt_pct(ey, signed=False)} (operating profit / EV)")
@@ -406,8 +416,8 @@ def render_section(
     picks = result.candidates[:top_n]
     lines = [
         f"NEW CANDIDATES (weekly screen, data as of {result.as_of})",
-        f"{len(result.candidates)} of {result.universe_size} listed companies passed the "
-        "filters (small/mid cap, profitable, recent filings). Top "
+        f"{len(result.candidates)} of {result.universe_size} companies passed the "
+        "filters (profitable, recent filings, no banks/insurers/REITs). Top "
         f"{len(picks)} by growth, quality, balance sheet and price:",
         "",
     ]
@@ -421,7 +431,7 @@ def render_section(
         if c.ticker in watchlist:
             tags.append("on your watchlist")
         tag = f" [{', '.join(tags)}]" if tags else ""
-        industry = f", {c.sic_description}" if c.sic_description else ""
+        industry = f", {c.industry_label}" if c.industry_label else ""
         lines.append(f"{i}. {c.ticker} {c.name} ({fmt_money(m['market_cap'])}{industry}){tag}")
         lines.append(
             "   Score {:.2f} | growth {:.2f} quality {:.2f} balance {:.2f} value {:.2f}".format(

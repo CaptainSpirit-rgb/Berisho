@@ -4,15 +4,16 @@ For each rebalance date D (quarterly by default, a few weeks after quarter ends 
 most 10-Qs are in), the screen runs with fundamentals filed on or before D and the
 last close on or before D. The top N picks are then held for each horizon, and their
 average return is compared with the equal-weighted average of *every company that
-passed the filters on D* (and with IWM, the Russell 2000 ETF, when its prices are
-loaded). Each pillar is also tested on its own, to see which part of the score did
+passed the filters on D* (and with the benchmark ETF, SPY by default, when its prices
+are loaded). Each pillar is also tested on its own, to see which part of the score did
 the work.
 
 Known biases (stated in every report):
 
-* **Survivorship.** The universe comes from today's SEC ticker list and today's Yahoo
-  prices, so companies that went bankrupt, were delisted or were acquired are missing.
-  Comparing with the same survivor-only universe cancels part of this, not all of it.
+* **Survivorship.** The universe is *today's* S&P 500 (past membership lists aren't
+  free), so it holds only companies that did well enough to be in the index now; ones
+  that shrank, went bust or were acquired are missing. Comparing with the same
+  survivor-only universe cancels part of this, not all of it.
 * **Split-adjusted prices.** Yahoo's historical closes are adjusted for later splits
   while share counts are as reported, so market cap can be off for companies that
   split after D. Returns use the adjusted close, which is correct.
@@ -38,7 +39,7 @@ BT_DEFAULTS: dict[str, Any] = {
     "rebalance_months": [2, 5, 8, 11],
     "rebalance_day": 20,
     "horizons_days": [91, 182, 365],
-    "benchmark": "IWM",
+    "benchmark": "SPY",
 }
 
 
@@ -198,6 +199,15 @@ def _p(v: float | None) -> str:
     return "n/a" if v is None else f"{v * 100:+.1f}%"
 
 
+def _size_text(cfg: dict[str, Any]) -> str:
+    lo, hi = cfg.get("min_market_cap"), cfg.get("max_market_cap")
+    if lo is None and hi is None:
+        return ""
+    lo_t = f"${lo / 1e9:,.1f}B" if lo is not None else "any"
+    hi_t = f"${hi / 1e9:,.1f}B" if hi is not None else "any"
+    return f"market cap {lo_t} to {hi_t}, "
+
+
 def render_report(
     periods: list[PeriodResult], summary: dict[str, Any], top_n: int, settings: dict | None
 ) -> str:
@@ -207,13 +217,12 @@ def render_report(
         "",
         f"Generated {dt.date.today()}. {len(periods)} rebalance dates"
         + (f", {periods[0].as_of} to {periods[-1].as_of}." if periods else "."),
-        f"Top {top_n} picks per date, equal weight. Filters: market cap "
-        f"${cfg['min_market_cap'] / 1e6:,.0f}M to ${cfg['max_market_cap'] / 1e9:,.0f}B, "
-        "profitable, recent filings, no financials/REITs.",
+        f"Top {top_n} picks per date, equal weight. Filters: {_size_text(cfg)}"
+        "profitable, recent filings, no banks/insurers/REITs.",
         "",
-        "**Read this first.** The universe is today's listed companies, so firms that went "
-        "bust or were taken over since are missing (survivorship bias): absolute returns are "
-        "flattering. The fairer test is the *excess over the universe* column, because the "
+        "**Read this first.** The universe is today's index members, so firms that shrank, "
+        "went bust or were taken over since are missing (survivorship bias): absolute returns "
+        "are flattering. The fairer test is the *excess over the universe* column, because the "
         "universe has the same bias. ~40 overlapping periods is a small sample; a few "
         "percent either way is noise. Past results don't predict future ones.",
         "",
@@ -231,7 +240,7 @@ def render_report(
             label = {
                 "score": "Full score (what the digest uses)",
                 "universe": "Universe (all that passed filters)",
-                "benchmark": "IWM (Russell 2000 ETF)",
+                "benchmark": f"{bt_settings(settings).get('benchmark')} (benchmark ETF)",
             }.get(name, f"{name.capitalize()} pillar only")
             beat = "n/a" if s["beat_rate"] is None else f"{s['beat_rate'] * 100:.0f}%"
             excess = "" if name == "universe" else _p(s["avg_excess_vs_universe"])

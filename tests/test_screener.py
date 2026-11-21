@@ -10,6 +10,7 @@ from market_intel.collectors.prices import upsert_bars
 from market_intel.screener import facts, metrics, prices, screen, universe
 
 AS_OF = dt.date(2025, 11, 20)  # Q3 2025 10-Qs (filed ~Nov 9) are known
+SIZED = {"screener": {"min_market_cap": 300e6, "max_market_cap": 10e9}}
 
 
 @pytest.fixture
@@ -224,7 +225,7 @@ def build_universe(con):
 
 def test_screen_filters_ranks_and_explains(scon):
     build_universe(scon)
-    res = screen.run_screen(scon, AS_OF, {})
+    res = screen.run_screen(scon, AS_OF, SIZED)
     assert [c.ticker for c in res.candidates][0] == "GOOD"
     assert {c.ticker for c in res.candidates} == {"GOOD", "SLOW", "MID"}
     assert res.excluded == {
@@ -254,9 +255,9 @@ def test_screen_respects_config_overrides(scon):
 
 def test_save_render_and_new_this_week(scon):
     build_universe(scon)
-    first = screen.run_screen(scon, AS_OF - dt.timedelta(days=7), {})
+    first = screen.run_screen(scon, AS_OF - dt.timedelta(days=7), SIZED)
     screen.save_results(scon, first, top_n=1)
-    res = screen.run_screen(scon, AS_OF, {})
+    res = screen.run_screen(scon, AS_OF, SIZED)
     prev = screen.previous_tickers(scon, AS_OF)
     assert prev == {first.candidates[0].ticker}
     screen.save_results(scon, res, top_n=3)
@@ -316,4 +317,19 @@ def test_cli_screen_dry_run_prints_candidates(tmp_path, capsys):
     out = capsys.readouterr().out
     assert "NEW CANDIDATES" in out and "GOOD" in out
     con = dbmod.connect(path)
-    assert con.execute("SELECT count(*) FROM screen_results").fetchone()[0] == 3
+    # Default settings: no size filter, so HUGE and TINY pass too.
+    assert con.execute("SELECT count(*) FROM screen_results").fetchone()[0] == 5
+    assert "MARKET (weekly)" in out
+
+
+def test_default_settings_have_no_size_filter_and_exclude_by_sector(scon):
+    build_universe(scon)
+    scon.execute("UPDATE screen_universe SET sector = 'Information Technology'")
+    scon.execute("UPDATE screen_universe SET sector = 'Financials' WHERE ticker = 'MID'")
+    res = screen.run_screen(scon, AS_OF, {})
+    tickers = {c.ticker for c in res.candidates}
+    assert {"HUGE", "TINY", "GOOD", "SLOW"} <= tickers
+    assert "MID" not in tickers and "BANK" not in tickers
+    assert res.candidates[0].industry == "Information Technology"
+    text = screen.render_section(res, 2)
+    assert "Information Technology" in text
