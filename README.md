@@ -129,7 +129,7 @@ first week and lower `research.max_tickers` if needed.
 ```powershell
 git pull
 pip install -e ".[dev]"
-copy config\portfolio.example.yaml config\portfolio.yaml   # your positions; gitignored
+copy config\portfolio.example.yaml config\portfolio.yaml   # then put your positions in it
 # Install Claude Code (https://claude.com/claude-code), run `claude` once and log in
 # with your Claude subscription (not an API key).
 market-intel run-daily --dry-run      # also collects the sector-fund prices now
