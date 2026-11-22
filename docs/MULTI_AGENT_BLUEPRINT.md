@@ -15,6 +15,47 @@ for two weeks next to the current digest to see whether the reports are actually
 
 ---
 
+## 0. What Luka gets (final output, agreed 22 Nov 2026)
+
+Luka chose a **mix of explanation and clear stances**: every item leads with the reasons
+and trends, and a stance is added **only when the evidence supports one**. **Position
+sizing and weights are Luka's job**, not the agents'. The app never places trades.
+
+### Daily "Research desk" message (weekdays, after the digest)
+
+1. **Portfolio today:** value, today's and since-purchase change vs the S&P 500, sector
+   mix, market regime (bull/bear). Facts only, no weight advice.
+2. **What changed and what to consider** (only stocks where something changed):
+   - **Why:** 2–3 reasons, each linked to its source (filing, financials, headline).
+   - **Trend:** price vs 50- and 200-day averages, 3-month change vs SPY and sector,
+     earnings/margin trend, news-sentiment trend.
+   - **Bull case / bear case.**
+   - **Stance, when earned:** held stocks *Add / Hold / Trim / Review to sell*; others
+     *Consider buying / Watch / Avoid*. Given only if confidence is at least medium **and**
+     the reasons rest on at least two independent sources. Otherwise the item says
+     **"No stance: monitoring"** and explains what evidence is missing.
+   - **What would change the view:** a concrete event or level.
+   - **Confidence and horizon** (months).
+3. **Thesis check:** for every holding, Luka's one-line reason for owning it, marked
+   *intact / weakening / broken*, with the evidence.
+4. **New ideas:** 1–2 S&P 500 screener candidates, same format.
+5. **Coming up:** earnings dates and known events for holdings in the next 2 weeks.
+
+### Weekly review (weekend)
+
+Sector and factor exposure, how closely holdings move together, drawdowns, thesis-check
+summary, and the **stance scorecard**: every stance ever given, with its return vs SPY
+after 1 and 3 months, by stance type and by agent. This is how Luka learns whether the
+stances deserve trust (the thesis found headline signals weak, so trust must be earned).
+
+### Portfolio input
+
+`config/portfolio.yaml`, **gitignored, stays on the PC**: per position the ticker, shares,
+average buy price, buy date and a one-line thesis. Holdings are always researched (§4.8)
+and get a thesis check daily.
+
+---
+
 ## 1. What I'd keep, change or push back on in the proposal
 
 | Proposal | Verdict | Why |
@@ -131,8 +172,8 @@ allowed tools. The main session plays the CIO and calls them.
   It must mark each headline as *new information*, *repeat of a filing* or *commentary*. It
   doesn't judge valuation.
 - **CIO** reads the specialists' reports and the `quant` section. It doesn't do primary
-  research: if it needs a fact, it asks a specialist (§4.4). It never gives buy or sell
-  advice and doesn't predict prices (guardrail from CLAUDE.md §10).
+  research: if it needs a fact, it asks a specialist (§4.4). It gives a stance only under
+  the rule in §0, never sizes positions, never sets price targets and doesn't predict prices.
 - **Risk Analyst** (Stage 2) reads the same packet plus the specialists' reports and must
   name at least one concrete downside per ticker, each with a source, or say "none found".
 - **Research Auditor** (Stage 2) receives only the CIO's draft claims and the **raw
@@ -197,7 +238,9 @@ Confidence, materiality and priority are separate fields, as the proposal asks. 
 used instead of 0.92-style decimals, because an LLM's decimals are not calibrated.
 
 CIO final report (`final.json`): per ticker, a one-line headline, what happened, why it
-may matter, the bull and bear points (each with `source_ids`), **disagreements** (who said
+may matter, trend, the bull and bear points (each with `source_ids`), the `stance` (or
+`null` with `stance_withheld_reason`), what would change the view, confidence, horizon,
+the thesis check for holdings, **disagreements** (who said
 what, resolved or not), what to check next, and missing data. Plus a "today in brief" line
 across tickers. JSON Schemas live in `src/market_intel/research/schemas/`.
 
@@ -219,15 +262,19 @@ across tickers. JSON Schemas live in `src/market_intel/research/schemas/`.
 ### 4.7 CIO decision authority
 
 The CIO may: choose which tickers and findings make the report, set the overall priority,
-ask one follow-up per ticker, and write the plain-language synthesis.
+ask one follow-up per ticker, write the plain-language synthesis, and give a stance when
+the §0 rule is met.
 
 The CIO may not: change or add numbers, drop a disagreement or an Auditor flag, cite
-anything that isn't in the packet, give buy or sell advice or price targets, or override
-the validator.
+anything that isn't in the packet, give a stance the evidence doesn't meet (the validator
+checks confidence and independent-source count), suggest position sizes or weights, set
+price targets, or override the validator. Every stance is stored for the scorecard.
 
 ### 4.8 When to research and when to publish
 
 **Which tickers get researched** (chosen by Python, not by the LLM):
+0. Every holding in `config/portfolio.yaml` gets a light daily thesis check; holdings
+   with news or a flag get full research first.
 1. Watchlist stocks with a digest flag today (gap, volume spike, fresh 8-K, 13D, insider
    cluster buy, sentiment shift), ranked by the existing score.
 2. A 10-Q/10-K filed since the last run.
@@ -263,7 +310,8 @@ Concretely:
 | 4 | Subagents: `fundamental-analyst.md`, `news-filings-analyst.md` | `.claude/agents/` |
 | 5 | CIO instructions as a slash command | `.claude/commands/research.md` |
 | 6 | JSON Schemas + validator (schema, citations, number matching) | `research/schemas/`, `research/validate.py` |
-| 7 | Storage: `research_runs`, `agent_reports` (append-only, never updated in place) | `storage/schema.sql` |
+| 7 | Storage: `research_runs`, `agent_reports`, `stances` (append-only, never updated in place) | `storage/schema.sql` |
+| 7b | Portfolio file + loader (gitignored), holdings section in the packet | `config/portfolio.example.yaml`, `research/portfolio.py` |
 | 8 | Telegram "Research desk" message | `delivery/research.py`, `market-intel research-send` |
 | 9 | Runner script with time cap, `ANTHROPIC_API_KEY` cleared, allowed tools list; Task Scheduler at 16:15 | `scripts/research.ps1`, README |
 | 10 | Tests: packet building, selection, validator (fixtures, no LLM in tests) | `tests/test_research_*.py` |
@@ -289,6 +337,7 @@ the digest.
 - **Company research memory:** each ticker's past `agent_reports` (latest 3, plus every
   high-priority one) go into the packet as `history`, so agents compare with what they said
   before. Append-only with timestamps, so past conclusions are never rewritten.
+- Stance scorecard in the weekly review (needs ~1–3 months of stances first).
 - Decision journal (`journal` table already exists) and +5/+20/+60-day outcomes vs SPY and
   sector ETF; per-agent and per-signal hit rates.
 - Only now consider LangGraph, and only with a local model or an agreed API budget.
@@ -305,4 +354,7 @@ the digest.
 - **Thin news:** headlines only. Article text would need a new free source (RSS, GDELT);
   out of scope for Stage 1.
 - **PC must be on** at 16:00–16:40 on weekdays.
-- **Not financial advice:** the CIO prompt and the validator both block buy/sell language.
+- **Stances are opinions, not guarantees:** the scorecard shows their real track record;
+  the app never trades and never sizes positions.
+- **Thin research capacity vs portfolio size:** if Luka holds many positions, the daily
+  thesis check must stay short to fit the subscription limits.
