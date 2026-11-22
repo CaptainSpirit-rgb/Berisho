@@ -201,3 +201,37 @@ CREATE TABLE IF NOT EXISTS filing_documents (
     fetched_at   TIMESTAMP NOT NULL DEFAULT current_timestamp,
     PRIMARY KEY (accession_no, doc_name)
 );
+
+-- Research desk (multi-agent Stage 1). One run per day; a re-run the same day replaces
+-- that day's rows, earlier days are never changed (company research memory).
+CREATE TABLE IF NOT EXISTS research_runs (
+    run_date    DATE PRIMARY KEY,
+    tickers     JSON,                  -- [{symbol, depth, reasons, held}]
+    status      VARCHAR NOT NULL,      -- sent | dry_run | skipped | failed
+    notes       VARCHAR,
+    validation  JSON,                  -- validator summary
+    created_at  TIMESTAMP NOT NULL DEFAULT current_timestamp
+);
+
+CREATE TABLE IF NOT EXISTS agent_reports (
+    run_date    DATE NOT NULL,
+    agent       VARCHAR NOT NULL,      -- fundamental_analyst, news_filings_analyst, cio
+    ticker      VARCHAR NOT NULL,
+    report      JSON NOT NULL,         -- as validated (unverified claims flagged)
+    issues      JSON,                  -- what the validator found
+    created_at  TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    PRIMARY KEY (run_date, agent, ticker)
+);
+
+-- Every stance given, for the scorecard (returns vs SPY after 1 and 3 months).
+CREATE TABLE IF NOT EXISTS stances (
+    run_date    DATE NOT NULL,
+    ticker      VARCHAR NOT NULL,
+    held        BOOLEAN NOT NULL,
+    stance      VARCHAR NOT NULL,      -- add/hold/trim/review_to_sell/consider_buying/watch/avoid
+    confidence  VARCHAR,
+    close_at_stance DOUBLE,
+    benchmark_close DOUBLE,
+    created_at  TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    PRIMARY KEY (run_date, ticker)
+);

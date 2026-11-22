@@ -82,6 +82,71 @@ schtasks /Create /TN "Berisho daily" /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST 16:00
 
 The PC must be on (awake) at 16:00. Check a run with `schtasks /Run /TN "Berisho daily"`.
 
+## Research desk: multi-agent analysis (Stage 1, free on the Claude subscription)
+
+A second daily message, **"Research desk"**, written by a small team of Claude agents and
+checked by Python. Design: [docs/MULTI_AGENT_BLUEPRINT.md](docs/MULTI_AGENT_BLUEPRINT.md).
+
+```
+market-intel research-run            packets -> agents -> checks -> Telegram
+market-intel research-run --dry-run  same, but print instead of sending
+```
+
+What happens, step by step:
+
+1. **Python picks the stocks** (`research-packets`): every holding in
+   `config/portfolio.yaml` gets a thesis check, plus up to 3 watchlist stocks with
+   something new (a flag in the digest, a new 10-Q/10-K), or one stock in rotation on a
+   quiet day.
+2. **Python builds a research packet per stock** in `data/research/<date>/`: price trend
+   (vs 50/200-day averages, S&P 500 and sector fund), SEC financials (growth, margins,
+   cash flow, debt, valuation), recent filings with their text, insider trades,
+   headlines, your position and its return vs the S&P 500. Every fact has a source id.
+3. **The agents** run in Claude Code, headless, logged in with your Claude subscription:
+   the *Fundamental Analyst* and the *News & Filings Analyst* (`.claude/agents/`) each
+   report on every stock independently; the *Chief Intelligence Officer*
+   (`.claude/commands/research.md`) asks at most one follow-up per stock and writes the
+   final report.
+4. **Python checks it** (`research-validate`): every claim must cite a source from the
+   packet and every number must appear in the data, or the claim is removed. A stance
+   (Add / Hold / Trim / Review to sell, or Consider buying / Watch / Avoid) is kept only
+   with at least medium confidence and two independent sources; otherwise it says
+   "No stance: monitoring". No position sizes or price targets, ever.
+5. **Telegram** (`research-send`), and everything is stored in DuckDB (`research_runs`,
+   `agent_reports`, and `stances` for the future scorecard).
+
+If the agents fail (Claude Code missing, usage limit, timeout), Telegram gets a one-line
+"Research desk skipped" note; the normal digest never depends on the agents.
+
+**Cost: free, inside your plan's usage limits.** Nothing calls the paid API. Claude Code
+would bill the API if `ANTHROPIC_API_KEY` were set, so `research-run` removes it from
+the agents' environment. Claude Code prints an "API-equivalent cost" in the log; on a
+subscription that isn't charged. Watch how much of your usage limit a run takes in the
+first week and lower `research.max_tickers` if needed.
+
+### One-time setup on the PC
+
+```powershell
+git pull
+pip install -e ".[dev]"
+copy config\portfolio.example.yaml config\portfolio.yaml   # your positions; gitignored
+# Install Claude Code (https://claude.com/claude-code), run `claude` once and log in
+# with your Claude subscription (not an API key).
+market-intel run-daily --dry-run      # also collects the sector-fund prices now
+market-intel research-run --dry-run   # first full run, printed only (takes a few minutes)
+```
+
+Then schedule it 15 minutes after the daily run:
+
+```powershell
+schtasks /Create /TN "Berisho research" /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST 16:15 `
+  /TR "C:\Users\lukar\Berisho\.venv\Scripts\market-intel.exe research-run"
+```
+
+Run the steps one at a time when you want to look inside: `research-packets`, then
+`claude` and `/research data/research/<date>` interactively, then `research-validate`
+and `research-send --dry-run`. Settings are under `research:` in `config/settings.yaml`.
+
 ## News sentiment (Phase 3, thesis pipeline)
 
 FinBERT (`ProsusAI/finbert`, as in the thesis) scores every collected headline on your

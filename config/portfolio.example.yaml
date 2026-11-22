@@ -1,0 +1,18 @@
+# Copy to config/portfolio.yaml (gitignored, stays on your PC) and fill in.
+# Amounts in USD. Shares are worked out from the close on buy_date, so fractional
+# dollar positions work. Returns are price-only and compared with the S&P 500 (SPY)
+# over the same dates. The research desk checks each holding's thesis every weekday.
+# Position sizing stays yours: the agents never suggest weights.
+
+positions:
+  - symbol: KO
+    invested_usd: 5.00
+    buy_date: 2026-01-12
+    source: bought            # bought | gift
+    thesis: "Expected the stock to grow."
+
+  - symbol: AAPL
+    invested_usd: 2.00
+    buy_date: 2026-09-30
+    source: gift
+    thesis: "Held ahead of the iPhone 18 release, expecting it to lift the stock."

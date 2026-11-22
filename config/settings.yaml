@@ -74,6 +74,28 @@ llm:
     cache_write: 5.0
     cache_read: 0.2
 
+# Research desk (multi-agent Stage 1, docs/MULTI_AGENT_BLUEPRINT.md). Agents run as
+# Claude Code subagents on the PC under the Claude subscription: free, but each run uses
+# part of the plan's usage limit. `market-intel research-run` does the whole run.
+research:
+  max_tickers: 3               # full research per day; holdings also get a light check
+  portfolio_file: config/portfolio.yaml   # gitignored; see config/portfolio.example.yaml
+  out_dir: data/research       # one folder per day: packets, filing text, reports
+  new_report_days: 7           # a 10-Q/10-K this recent puts a stock on the list
+  filings_days: 120            # filings shown in a packet
+  insider_days: 90
+  news_days: 14
+  news_per_symbol: 15
+  max_chars_per_document: 20000
+  fetch_fundamentals: true     # fetch SEC financials for selected stocks that have none
+  stance:                      # a stance (add/hold/trim/...) only when evidence earns it
+    min_confidence: medium
+    min_independent_sources: 2
+  claude_command: claude       # Claude Code CLI
+  model: null                  # null = Claude Code's default for your plan
+  max_turns: 80
+  timeout_minutes: 20
+
 prices:
   lookback_days: 400         # first fetch for a new symbol; enough for the 200-day MA
 

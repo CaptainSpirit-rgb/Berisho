@@ -300,6 +300,11 @@ Quant desk**. The old Phase 4 (journal) moves to Stage 4.
 
 ### Stage 1: three-role prototype (2 weekends + a 2-week trial)
 
+> **Status (22 Nov 2026):** built in PR #14: `market-intel research-run` (see README).
+> Not built yet: recording 👍/👎 ratings (rate in the project chat during the trial),
+> new-idea and upcoming-earnings sections (Stage 3), and the scorecard report (Stage 4;
+> stances are already stored). First live run happens on the PC.
+
 Concretely:
 
 | # | Deliverable | Where |

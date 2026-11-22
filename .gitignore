@@ -19,3 +19,6 @@ build/
 
 # Notebooks
 .ipynb_checkpoints/
+
+# Personal positions (never committed); template: config/portfolio.example.yaml
+config/portfolio.yaml
