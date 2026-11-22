@@ -136,7 +136,7 @@ def test_no_news_and_warming_up(con):
     assert res["AAPL"].status == "warming_up"
     assert res["AAPL"].history_days == 10
     cfg = sentiment.sentiment_settings(SETTINGS)
-    assert "building baseline (10/20 days" in sentiment.describe(res["AAPL"], cfg)
+    assert "baseline 10/20 days" in sentiment.describe(res["AAPL"], cfg)
     assert con.execute("SELECT count(*) FROM signals").fetchone()[0] == 0
 
 

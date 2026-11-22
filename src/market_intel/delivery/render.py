@@ -13,7 +13,16 @@ import html
 import textwrap
 
 from market_intel.delivery.analysis import Analysis, Item
-from market_intel.delivery.digest import Digest, TickerRow, _local, _money, _pct, describe_items
+from market_intel.delivery.digest import (
+    Candidates,
+    Digest,
+    TickerRow,
+    _local,
+    _money,
+    _pct,
+    describe_items,
+)
+from market_intel.screener.screen import fmt_money
 
 DISCLAIMER = "Decision support only, not financial advice."
 
@@ -75,6 +84,57 @@ def _insider_lines(d: Digest) -> list[str]:
     ]
 
 
+REFRESH_HINT = "market-intel run-weekly"
+
+
+def _candidates_heading(c: Candidates) -> str:
+    return f"from the weekly S&P 500 screen of {c.run_date.day} {c.run_date:%b}" + (
+        f", top {len(c.picks)} of {c.total_saved}" if c.total_saved > len(c.picks) else ""
+    )
+
+
+def _candidate_title(p: dict) -> str:
+    bits = [fmt_money(p["market_cap"])] if p.get("market_cap") else []
+    if p.get("sector"):
+        bits.append(p["sector"])
+    tags = [
+        t for t, on in (("new this week", p["new"]), ("on your watchlist", p["on_watchlist"])) if on
+    ]
+    return (
+        f"{p['rank']}. {p['ticker']} {p['name']}"
+        + (f" ({', '.join(bits)})" if bits else "")
+        + f" · score {p['score']:.2f}"
+        + (f" [{', '.join(tags)}]" if tags else "")
+    )
+
+
+def _candidate_notes(p: dict) -> list[str]:
+    """The top reason and the top warning: enough to decide whether to read more."""
+    notes = [f"+ {p['reasons'][0]}"] if p["reasons"] else []
+    if p["warnings"]:
+        notes.append(f"! {p['warnings'][0]}")
+    return notes
+
+
+def _candidates_footnote(c: Candidates) -> str:
+    if c.stale:
+        return (
+            f"This list is {c.age_days} days old. Run {REFRESH_HINT} to refresh it. "
+            "A screen ranks how companies look on paper; it doesn't predict prices."
+        )
+    return (
+        "Full reasons and warnings are in the weekly screen message. A screen ranks how "
+        "companies look on paper; it doesn't predict prices."
+    )
+
+
+def _no_candidates_text(c: Candidates) -> str:
+    return (
+        f"No screen saved yet. Run {REFRESH_HINT} once (it fetches the S&P 500 "
+        "financials from SEC and takes a few minutes) and the top picks will show here every day."
+    )
+
+
 def _footer(a: Analysis) -> str:
     if a.source == "claude":
         cost = "cached, no cost" if a.cached else f"cost ${a.cost_usd or 0:.3f}"
@@ -134,6 +194,11 @@ def render_text(d: Digest, a: Analysis, width: int = 72) -> str:
             out += textwrap.wrap(line, width, initial_indent="· ", subsequent_indent="  ")
 
     out += ["", f"NUMBERS (last close {d.as_of or '-'})", *_table(d), _regime_line(d)]
+    if d.sentiment:
+        out += ["", "NEWS SENTIMENT (FinBERT, vs each stock's own baseline)"]
+        out += [f"{sym:<6}{text}" for sym, text in d.sentiment]
+        if d.sentiment_note:
+            out += textwrap.wrap(d.sentiment_note, width)
 
     filings = _filing_lines(d)
     out += ["", f"FILINGS (last {d.windows.get('filings')} days, excluding Form 4)"]
@@ -141,15 +206,24 @@ def render_text(d: Digest, a: Analysis, width: int = 72) -> str:
         out.append(text)
         if url:
             out.append(f"  {url}")
-    if d.sentiment:
-        out += ["", "NEWS SENTIMENT (FinBERT, vs each stock's own baseline)"]
-        out += [f"{sym:<6}{text}" for sym, text in d.sentiment]
-        if d.sentiment_note:
-            out += textwrap.wrap(d.sentiment_note, width)
     insiders = _insider_lines(d)
     if insiders:
         out += ["", f"INSIDER OPEN-MARKET TRADES (last {d.windows.get('insiders')} days)"]
         out += insiders
+
+    c = d.candidates
+    if c is not None:
+        out += ["", "NEW CANDIDATES" + (f" ({_candidates_heading(c)})" if c.run_date else "")]
+        if c.run_date is None:
+            out += wrap.wrap(_no_candidates_text(c))
+        elif not c.picks:
+            out.append("The last screen saved no candidates.")
+        for p in c.picks:
+            out += textwrap.wrap(_candidate_title(p), width, subsequent_indent="   ")
+            for note in _candidate_notes(p):
+                out += sub.wrap(note)
+        if c.picks:
+            out += wrap.wrap(_candidates_footnote(c))
 
     out += ["", *wrap.wrap(_footer(a)), DISCLAIMER]
     return "\n".join(out)
@@ -205,6 +279,12 @@ def render_html(d: Digest, a: Analysis) -> str:
         + "</pre>\n"
         + _e(_regime_line(d))
     )
+    if d.sentiment:
+        blocks.append(
+            "<b>News sentiment</b> (vs each stock's usual)\n"
+            + "\n".join(f"<b>{_e(sym)}</b> {_e(text)}" for sym, text in d.sentiment)
+            + (f"\n<i>{_e(d.sentiment_note)}</i>" if d.sentiment_note else "")
+        )
 
     filings = _filing_lines(d)
     if filings:
@@ -212,17 +292,29 @@ def render_html(d: Digest, a: Analysis) -> str:
             f"<b>Filings</b> (last {d.windows.get('filings')} days)\n"
             + "\n".join(_link(text, url) if url else _e(text) for text, url in filings)
         )
-    if d.sentiment:
-        blocks.append(
-            "<b>News sentiment</b> (vs each stock's usual)\n"
-            + "\n".join(f"<b>{_e(sym)}</b> {_e(text)}" for sym, text in d.sentiment)
-            + (f"\n<i>{_e(d.sentiment_note)}</i>" if d.sentiment_note else "")
-        )
     insiders = _insider_lines(d)
     if insiders:
         blocks.append(
             f"<b>Insider trades</b> (last {d.windows.get('insiders')} days)\n"
             + _e("\n".join(insiders))
         )
-    blocks.append(f"<i>{_e(_footer(a))}\n{_e(DISCLAIMER)}</i>")
+    c = d.candidates
+    if c is not None:
+        if c.run_date is None:
+            blocks.append(f"<b>New candidates</b>\n{_e(_no_candidates_text(c))}")
+        else:
+            lines = [f"<b>New candidates</b> ({_e(_candidates_heading(c))})"]
+            if not c.picks:
+                lines.append("The last screen saved no candidates.")
+            for p in c.picks:
+                title = _e(_candidate_title(p)).replace(
+                    f"{p['rank']}. {_e(p['ticker'])}", f"{p['rank']}. <b>{_e(p['ticker'])}</b>", 1
+                )
+                lines.append(title)
+                lines += [f"   {_e(n)}" for n in _candidate_notes(p)]
+            if c.picks:
+                lines.append(f"<i>{_e(_candidates_footnote(c))}</i>")
+            blocks.append("\n".join(lines))
+    # Keep the footer with the last section, so a split never sends it on its own.
+    blocks[-1] += f"\n\n<i>{_e(_footer(a))}\n{_e(DISCLAIMER)}</i>".replace("\n\n", "\n", 1)
     return "\n\n".join(blocks)

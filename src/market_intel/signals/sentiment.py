@@ -197,6 +197,7 @@ class TickerSentiment:
     daily_avg_count: float | None = None
     volume_ratio: float | None = None
     signals: list[dict[str, Any]] = field(default_factory=list)
+    line: str = ""  # plain-language summary, filled in by the digest
 
 
 def _stats(values: list[float]) -> tuple[float, float]:
@@ -355,21 +356,33 @@ def detect(
     return results
 
 
+def tone(score: float) -> str:
+    """Plain word for a FinBERT score in [-1, 1]."""
+    if score >= 0.15:
+        return "positive"
+    if score <= -0.15:
+        return "negative"
+    return "neutral"
+
+
 def describe(ts: TickerSentiment, cfg: dict[str, Any]) -> str:
     """One plain-language line for the digest."""
     if ts.status == "no_news":
         return "no headlines collected yet"
     if ts.status == "warming_up":
+        # No baseline yet, so show today's raw tone: the only honest number available.
         need = int(cfg["min_baseline_days"])
-        return (
-            f"building baseline ({min(ts.history_days, need)}/{need} days, "
-            f"{ts.baseline_headlines} headlines)"
-            + (
-                f"; last {cfg['current_window_hours']}h: {ts.current_n} headlines"
-                if ts.current_n
-                else ""
+        hours = cfg["current_window_hours"]
+        if ts.current_mean is not None:
+            today = (
+                f"{tone(ts.current_mean)} {ts.current_mean:+.2f} "
+                f"({ts.current_n} headline{'s' if ts.current_n != 1 else ''}, last {hours}h)"
             )
-        )
+        elif ts.current_n:
+            today = f"{ts.current_n} headlines in the last {hours}h, not scored yet"
+        else:
+            today = f"no headlines in the last {hours}h"
+        return f"{today} · baseline {min(ts.history_days, need)}/{need} days"
     parts = [f"last {cfg['current_window_hours']}h: {ts.current_n} headlines"]
     if ts.current_mean is not None:
         parts.append(f"mean {ts.current_mean:+.2f} vs usual {ts.baseline_mean:+.2f}")
