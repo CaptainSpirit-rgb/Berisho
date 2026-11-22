@@ -1,0 +1,19 @@
+# Copy to config/portfolio.yaml (gitignored, stays on your PC) and fill in your own
+# positions. The values below are examples.
+# Amounts in USD. Shares are worked out from the close on buy_date, so fractional
+# dollar positions work. Returns are price-only and compared with the S&P 500 (SPY)
+# over the same dates. The research desk checks each holding's thesis every weekday.
+# Position sizing stays yours: the agents never suggest weights.
+
+positions:
+  - symbol: MSFT
+    invested_usd: 10.00
+    buy_date: 2026-03-02
+    source: bought            # bought | gift
+    thesis: "Cloud and AI revenue keep growing faster than the market."
+
+  - symbol: JPM
+    invested_usd: 3.00
+    buy_date: 2026-06-15
+    source: gift
+    thesis: null              # no reason yet: the desk gives a plain keep/review view

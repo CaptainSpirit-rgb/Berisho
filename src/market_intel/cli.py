@@ -36,10 +36,28 @@ def _open_db(args: argparse.Namespace):
 
 
 def _price_symbols(settings: dict) -> list[str]:
-    """Watchlist plus the regime benchmark (SPY by default)."""
-    symbols = [s.symbol for s in config.load_watchlist()]
+    """Watchlist, holdings from the portfolio file, the regime benchmark (SPY by default)
+    and the watchlist's sector funds (for the research desk's sector comparison)."""
+    watchlist = config.load_watchlist()
+    symbols = [s.symbol for s in watchlist]
+    symbols += [p.symbol for p in _positions(settings)]
     benchmark = settings.get("benchmark", {}).get("symbol")
-    return symbols + ([benchmark] if benchmark and benchmark not in symbols else [])
+    if benchmark:
+        symbols.append(benchmark)
+    symbols += [s.sector_etf for s in watchlist if s.sector_etf]
+    return list(dict.fromkeys(symbols))
+
+
+def _positions(settings: dict):
+    from market_intel.research.packet import research_settings
+    from market_intel.research.portfolio import load_portfolio
+
+    path = config.REPO_ROOT / research_settings(settings)["portfolio_file"]
+    try:
+        return load_portfolio(path)
+    except (ValueError, KeyError, TypeError) as exc:
+        log.error("Could not read %s: %s", path, exc)
+        return []
 
 
 def _collect_prices(con, settings: dict) -> bool:
@@ -524,6 +542,171 @@ def cmd_screen_backtest(args: argparse.Namespace) -> int:
     return 0
 
 
+# ------------------------------------------------------------------ research desk
+def _research_root(settings: dict):
+    from market_intel.research.packet import research_settings
+
+    root = config.REPO_ROOT / research_settings(settings)["out_dir"]
+    return root
+
+
+def _research_dir(settings: dict, date: str | None, newest: bool = False):
+    import datetime as dt
+
+    root = _research_root(settings)
+    if date:
+        return root / date
+    if newest:
+        runs = sorted(p for p in root.glob("????-??-??") if p.is_dir()) if root.exists() else []
+        if runs:
+            return runs[-1]
+    return root / dt.datetime.now(dt.UTC).date().isoformat()
+
+
+def _build_packets(con, settings: dict, run_dir, fetch: bool):
+    from market_intel import screener
+    from market_intel.research import packet
+
+    screener.init_schema(con)  # xbrl_facts lives in the screener tables
+    client = None
+    if fetch:
+        from market_intel.collectors import edgar
+
+        try:
+            client = _sec_client(settings)
+        except edgar.MissingUserAgentError as exc:
+            log.warning("Not fetching SEC financials: %s", exc)
+    manifest = packet.build_run(
+        con, config.load_watchlist(), _positions(settings), settings, run_dir, sec_client=client
+    )
+    for t in manifest["tickers"]:
+        log.info("Research %-5s %-5s %s", t["symbol"], t["depth"], "; ".join(t["reasons"]))
+    if manifest["holdings_not_on_watchlist"]:
+        log.warning(
+            "Holdings not on the watchlist get no filings or news: %s (add them to "
+            "config/watchlist.yaml)", ", ".join(manifest["holdings_not_on_watchlist"])
+        )
+    return manifest
+
+
+def cmd_research_packets(args: argparse.Namespace) -> int:
+    settings = config.load_settings()
+    con = _open_db(args)
+    run_dir = _research_dir(settings, args.date)
+    manifest = _build_packets(con, settings, run_dir, fetch=not args.no_fetch)
+    con.close()
+    print(f"Research packets for {len(manifest['tickers'])} ticker(s) in {run_dir}")
+    return 0
+
+
+def cmd_research_validate(args: argparse.Namespace) -> int:
+    from market_intel.research.validate import validate_run
+
+    run_dir = _research_dir(config.load_settings(), args.date, newest=True)
+    final, validation = validate_run(run_dir)
+    s = validation["summary"]
+    print(
+        f"{run_dir}: {s['claims_total']} claims, {s['claims_removed']} removed, "
+        f"{s['prose_flagged']} prose flags, {s['stances_given']} stance(s) given, "
+        f"{s['stances_withheld']} withheld, publishable: {s['publishable']}"
+    )
+    for issue in validation["issues"][:30]:
+        print(f"  - {issue['where']}: {issue['problem']}")
+    return 0 if s["publishable"] else 1
+
+
+def _send_research(con, settings: dict, run_dir, dry_run: bool) -> bool:
+    import json
+
+    from market_intel.delivery import research as render
+    from market_intel.research.store import save_run
+
+    manifest = json.loads((run_dir / "index.json").read_text(encoding="utf-8"))
+    final_path = run_dir / "reports" / "final.validated.json"
+    if not final_path.exists():
+        log.error("No validated report in %s; run research-validate first", run_dir)
+        return False
+    final = json.loads(final_path.read_text(encoding="utf-8"))
+    validation = json.loads((run_dir / "validation.json").read_text(encoding="utf-8"))
+    bench = settings.get("benchmark", {}).get("symbol", "SPY")
+    if dry_run:
+        print(render.render(final, manifest.get("portfolio"), as_html=False))
+        save_run(con, manifest, final, validation, "dry_run", benchmark=bench)
+        return True
+    from market_intel.delivery import telegram
+
+    try:
+        client = telegram.TelegramClient(telegram.TelegramConfig.from_env())
+        n = client.send_html(render.render(final, manifest.get("portfolio"), as_html=True))
+    except telegram.TelegramError as exc:
+        log.error("%s", exc)
+        print(render.render(final, manifest.get("portfolio"), as_html=False))
+        save_run(con, manifest, final, validation, "failed", f"Telegram: {exc}", bench)
+        return False
+    log.info("Research desk sent to Telegram (%d message%s)", n, "" if n == 1 else "s")
+    save_run(con, manifest, final, validation, "sent", benchmark=bench)
+    return True
+
+
+def cmd_research_send(args: argparse.Namespace) -> int:
+    settings = config.load_settings()
+    con = _open_db(args)
+    ok = _send_research(con, settings, _research_dir(settings, args.date, newest=True),
+                        args.dry_run)
+    con.close()
+    return 0 if ok else 1
+
+
+def _skip_research(con, settings: dict, manifest: dict, reason: str, dry_run: bool) -> None:
+    from market_intel.delivery import research as render
+    from market_intel.research.store import save_run
+
+    log.error("Research desk skipped: %s", reason)
+    save_run(con, manifest, None, None, "skipped", reason)
+    if dry_run:
+        return
+    from market_intel.delivery import telegram
+
+    try:
+        telegram.TelegramClient(telegram.TelegramConfig.from_env()).send_text(
+            render.render_skipped(manifest["run_date"], reason)
+        )
+    except telegram.TelegramError as exc:
+        log.error("%s", exc)
+
+
+def cmd_research_run(args: argparse.Namespace) -> int:
+    """Packets -> agents (Claude Code, headless, subscription) -> validator -> Telegram."""
+    from market_intel.research.packet import research_settings
+    from market_intel.research.runner import run_agents
+    from market_intel.research.validate import validate_run
+
+    settings = config.load_settings()
+    cfg = research_settings(settings)
+    con = _open_db(args)
+    run_dir = _research_dir(settings, None)
+    manifest = _build_packets(con, settings, run_dir, fetch=not args.no_fetch)
+    if not manifest["tickers"]:
+        _skip_research(con, settings, manifest, "nothing to research", args.dry_run)
+        con.close()
+        return 0
+    con.close()  # the agents only read files; don't hold the database open for 20 minutes
+    result = run_agents(run_dir, config.REPO_ROOT, cfg)
+    con = _open_db(args)
+    if not result.ok:
+        _skip_research(con, settings, manifest, result.reason, args.dry_run)
+        con.close()
+        return 1
+    final, validation = validate_run(run_dir)
+    if not validation["summary"]["publishable"]:
+        _skip_research(con, settings, manifest, "no claims passed the checks", args.dry_run)
+        con.close()
+        return 1
+    ok = _send_research(con, settings, run_dir, args.dry_run)
+    con.close()
+    return 0 if ok else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="market-intel", description=__doc__)
     parser.add_argument("-v", "--verbose", action="store_true")
@@ -614,6 +797,30 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--top-n", type=int, help="Picks per date (default from settings)")
     p.add_argument("--out", help="Where to write the Markdown report")
     p.set_defaults(func=cmd_screen_backtest)
+
+    p = sub.add_parser("research-packets", help="Pick tickers and build the research packets")
+    p.add_argument("--db", help="Override the database path")
+    p.add_argument("--date", help="Run folder name (default: today, UTC)")
+    p.add_argument("--no-fetch", action="store_true", help="Don't fetch missing SEC financials")
+    p.set_defaults(func=cmd_research_packets)
+
+    p = sub.add_parser("research-validate", help="Check the agents' reports (citations, numbers)")
+    p.add_argument("--date", help="Run folder (default: newest)")
+    p.set_defaults(func=cmd_research_validate)
+
+    p = sub.add_parser("research-send", help="Send the validated research report to Telegram")
+    p.add_argument("--db", help="Override the database path")
+    p.add_argument("--date", help="Run folder (default: newest)")
+    p.add_argument("--dry-run", action="store_true", help="Print instead of sending")
+    p.set_defaults(func=cmd_research_send)
+
+    p = sub.add_parser(
+        "research-run", help="Packets, agents (Claude Code), checks, then Telegram"
+    )
+    p.add_argument("--db", help="Override the database path")
+    p.add_argument("--dry-run", action="store_true", help="Print instead of sending")
+    p.add_argument("--no-fetch", action="store_true", help="Don't fetch missing SEC financials")
+    p.set_defaults(func=cmd_research_run)
     return parser
 
 
