@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-20T23:46:06+00:00",
+ "generated_at_utc": "2026-11-23T12:00:51+00:00",
  "display_timezone": "Asia/Tbilisi",
  "data_as_of": "2026-11-20",
  "regime": {
@@ -59,7 +59,7 @@
    "change_1d_pct": -2.8,
    "change_5d_pct": -7.5,
    "change_5d_vs_market_pts": 1.0,
-   "opening_gap_pct": -1.0,
+   "opening_gap_pct": -0.9,
    "volume_vs_20d_avg": 1.7
   },
   {
@@ -179,10 +179,10 @@
   },
   {
    "symbol": "JPM",
-   "published_utc": "2026-11-20 19:00:58",
-   "source": "The Telegraph",
-   "headline": "Labour’s ‘unfair’ bank tax will have consequences, warns JP Morgan boss",
-   "url": "https://uk.finance.yahoo.com/news/labour-unfair-bank-tax-consequences-190058863.html"
+   "published_utc": "2026-11-20 19:00:00",
+   "source": "The Real Deal",
+   "headline": "JPMorgan adds Dallas fund-banking hub as Y’all Street private capital ecosystem grows",
+   "url": "https://finance.yahoo.com/real-estate/articles/jpmorgan-adds-dallas-fund-banking-190000985.html"
   },
   {
    "symbol": "KO",
@@ -357,24 +357,24 @@
  "sentiment": [
   {
    "symbol": "KO",
-   "note": "building baseline (0/20 days, 0 headlines)"
+   "note": "building baseline (1/20 days, 0 headlines)"
   },
   {
    "symbol": "AAPL",
-   "note": "building baseline (0/20 days, 0 headlines)"
+   "note": "building baseline (1/20 days, 0 headlines)"
   },
   {
    "symbol": "NVDA",
-   "note": "building baseline (0/20 days, 0 headlines)"
+   "note": "building baseline (1/20 days, 0 headlines)"
   },
   {
    "symbol": "MSFT",
-   "note": "building baseline (0/20 days, 0 headlines)"
+   "note": "building baseline (1/20 days, 0 headlines)"
   },
   {
    "symbol": "JPM",
-   "note": "building baseline (0/20 days, 0 headlines)"
+   "note": "building baseline (1/20 days, 0 headlines)"
   }
  ],
- "digest_text": "MARKET DIGEST · Sat 21 Nov 2026, 03:46 Asia/Tbilisi\n\nTODAY IN BRIEF\nThe market is in a BEAR regime: SPY closed 5.5% below its 200-day\naverage. SPY is down 8.6% over 5 days. Worth a look today: NVDA, JPM.\n\nWHAT MATTERS\n1. NVDA  125.53 · -14.0% today · -22.9% 5d · vol 2.4x\n   NVDA moved -14.0% on the day, -22.9% over 5 days, on 2.4x normal\n   volume (SPY -8.6% over 5 days)\n   What: Filed an 8-K (2.02 results of operations). From the filing:\n   \"•Revenue of $115.8 billion, up 103% from a year ago\" \"•Data Center\n   revenue of $107.6 billion, up 110% from a year ago\" \"SANTA CLARA,\n   Calif.—Nov. 17, 2026―NVIDIA (NASDAQ: NVDA) today reported revenue for\n   the third quarter ended October 25, 2026, of $115.8 billion, up 20%\n   from the previous quarter and up 103% from a year ago.\"\n   Why it may matter: The move came right after an earnings filing, so\n   the results or guidance are the likely cause.\n   Check next: Read the full filing (and its press release, exhibit\n   99.1, if any).\n   Source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n   News (21 Nov 03:38, Stocktwits): NVDA Stock Clocks Worst Week In 18\n   Years As SEC Reportedly Probes Its Accounting Practices\n   News (21 Nov 03:28, Barrons.com): At AI Summit, Industry Titans Wave\n   Off Market Woes—and Defend Jensen Huang\n   News (21 Nov 03:25, 24/7 Wall St.): Data Center AI Chips Could Change\n   the Winners: Broadcom and Marvell\n\n2. JPM  310.53 · -3.0% today · -10.3% 5d · vol 1.9x\n   JPM moved -3.0% on the day, -10.3% over 5 days, on 1.9x normal volume\n   (SPY -8.6% over 5 days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"JPMorgan Chase & Co. 270 Park Avenue, NY 10017-2014 NYSE symbol: JPM\n   www.jpmorganchase.com News release: IMMEDIATE JPMorganChase announces\n   Bregje de Best will succeed Jeremy Barnum as Chief Financial Officer\n   following first-quarter 2027 financial reporting.\" \"New York,\n   November 17, 2026 – JPMorganChase announced today that Bregje de\n   Best, Chief Financial Officer (CFO) of the Commercial & Investment\n   Bank (CIB), will succeed Jeremy Barnum as CFO of the company\n   following its first-quarter 2027 financial reporting.\" \"If an\n   emerging growth company, indicate by check mark if the registrant has\n   elected not to use the extended transition period for complying with\n   any new or revised financial accounting standards provided pursuant\n   to Section 13(a) of the Exchange Act. ☐\"\n   Why it may matter: Leadership changes can signal a shift in strategy\n   or a problem.\n   Check next: Read the full filing (and its press release, exhibit\n   99.1, if any).\n   Source: https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n   News (20 Nov 23:11, American Banker): Exclusive Research: JPMorgan’s\n   AI strategy puts governance to the test\n   News (20 Nov 23:00, The Telegraph): Labour’s ‘unfair’ bank tax will\n   have consequences, warns JP Morgan boss\n   News (20 Nov 23:00, The Telegraph): Labour’s ‘unfair’ bank tax will\n   have consequences, warns JP Morgan boss\n\nBACKGROUND\n· KO: -2.3% over 5 days, 6.3 points better than the market. Nothing new\n  filed. Latest headline: \"Is Coca-Cola a Millionaire-Maker Stock?\"\n  (Motley Fool).\n· AAPL: -3.8% over 5 days, 4.7 points better than the market. Nothing\n  new filed. Latest headline: \"Dow Jones Futures: Market Has Worst Week\n  Since Covid Amid Nvidia, Anthropic. Does Fear Gauge Offer Hope?\"\n  (Investor's Business Daily).\n· MSFT: -7.5% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"Nvidia Can Rebound to $200, Analyst Says.\n  Plus, L3Harris and 4 More Stocks.\" (Barrons.com).\n· Insider selling, last 30 days, no buying: AAPL $35.1M (2 people), KO\n  $16.5M (4 people), MSFT $6.6M (2 people). Selling alone is weak\n  evidence: insiders sell for taxes, diversification and pre-planned\n  programs.\n\nNUMBERS (last close 2026-11-20)\n        CLOSE     1D     5D   VOL\nKO      96.99  +0.9%  -2.3%  1.4x\nAAPL   342.56  -1.9%  -3.8%  1.7x\nNVDA   125.53 -14.0% -22.9%  2.4x\nMSFT   484.52  -2.8%  -7.5%  1.7x\nJPM    310.53  -3.0% -10.3%  1.9x\nSPY    689.81  -3.6%  -8.6%  2.9x\nRegime: BEAR (SPY 689.81 vs 200-day avg 730.29)\n\nFILINGS (last 7 days, excluding Form 4)\n18 Nov 01:20 NVDA 8-K 2.02 results of operations\n  https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n17 Nov 17:00 JPM 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n\nNEWS SENTIMENT (FinBERT, vs each stock's own baseline)\nKO    building baseline (0/20 days, 0 headlines)\nAAPL  building baseline (0/20 days, 0 headlines)\nNVDA  building baseline (0/20 days, 0 headlines)\nMSFT  building baseline (0/20 days, 0 headlines)\nJPM   building baseline (0/20 days, 0 headlines)\n\nINSIDER OPEN-MARKET TRADES (last 30 days)\nAAPL: bought $0 (0), sold $35.1M (2)\nKO: bought $0 (0), sold $16.5M (4)\nMSFT: bought $0 (0), sold $6.6M (2)\n\nNotes from fixed rules; quotes are verbatim from the filings.\nDecision support only, not financial advice."
+ "digest_text": "MARKET DIGEST · Mon 23 Nov 2026, 16:00 Asia/Tbilisi\n\nTODAY IN BRIEF\nThe market is in a BEAR regime: SPY closed 5.5% below its 200-day\naverage. SPY is down 8.6% over 5 days. Worth a look today: NVDA, JPM.\n\nWHAT MATTERS\n1. NVDA  125.53 · -14.0% today · -22.9% 5d · vol 2.4x\n   NVDA moved -14.0% on the day, -22.9% over 5 days, on 2.4x normal\n   volume (SPY -8.6% over 5 days)\n   What: Filed an 8-K (2.02 results of operations). From the filing:\n   \"Revenue of $115.8 billion, up 103% from a year ago\" \"Data Center\n   revenue of $107.6 billion, up 110% from a year ago\" \"SANTA CLARA,\n   Calif.—Nov. 17, 2026―NVIDIA (NASDAQ: NVDA) today reported revenue for\n   the third quarter ended October 25, 2026, of $115.8 billion, up 20%\n   from the previous quarter and up 103% from a year ago.\"\n   Why it may matter: The move came right after an earnings filing, so\n   the results or guidance are the likely cause.\n   Check next: Read the outlook/guidance and margin lines in the press\n   release (exhibit 99.1): a drop after strong headline numbers usually\n   means the outlook or something beneath the headline disappointed.\n   Source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n   News (21 Nov 03:38, Stocktwits): NVDA Stock Clocks Worst Week In 18\n   Years As SEC Reportedly Probes Its Accounting Practices\n   News (21 Nov 03:28, Barrons.com): At AI Summit, Industry Titans Wave\n   Off Market Woes—and Defend Jensen Huang\n   News (21 Nov 03:25, 24/7 Wall St.): Data Center AI Chips Could Change\n   the Winners: Broadcom and Marvell\n\n2. JPM  310.53 · -3.0% today · -10.3% 5d · vol 1.9x\n   JPM moved -3.0% on the day, -10.3% over 5 days, on 1.9x normal volume\n   (SPY -8.6% over 5 days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"JPMorgan Chase & Co. 270 Park Avenue, NY 10017-2014 NYSE symbol: JPM\n   www.jpmorganchase.com News release: IMMEDIATE JPMorganChase announces\n   Bregje de Best will succeed Jeremy Barnum as Chief Financial Officer\n   following first-quarter 2027 financial reporting.\" \"New York,\n   November 17, 2026 – JPMorganChase announced today that Bregje de\n   Best, Chief Financial Officer (CFO) of the Commercial & Investment\n   Bank (CIB), will succeed Jeremy Barnum as CFO of the company\n   following its first-quarter 2027 financial reporting.\" \"Item 5.02\n   Departure of Directors or Certain Officers; Election of Directors;\n   Appointment of Certain Officers; Compensatory Arrangements of Certain\n   Officers\"\n   Why it may matter: Leadership changes can signal a shift in strategy\n   or a problem.\n   Check next: Check whether the change is a planned succession or a\n   sudden departure, and whether the filing gives a reason.\n   Source: https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n   News (20 Nov 23:11, American Banker): Exclusive Research: JPMorgan’s\n   AI strategy puts governance to the test\n   News (20 Nov 23:00, The Telegraph): Labour’s ‘unfair’ bank tax will\n   have consequences, warns JP Morgan boss\n   News (20 Nov 23:00, The Real Deal): JPMorgan adds Dallas fund-banking\n   hub as Y’all Street private capital ecosystem grows\n\nBACKGROUND\n· KO: -2.3% over 5 days, 6.3 points better than the market. Nothing new\n  filed. Latest headline: \"Is Coca-Cola a Millionaire-Maker Stock?\"\n  (Motley Fool).\n· AAPL: -3.8% over 5 days, 4.7 points better than the market. Nothing\n  new filed. Latest headline: \"Dow Jones Futures: Market Has Worst Week\n  Since Covid Amid Nvidia, Anthropic. Does Fear Gauge Offer Hope?\"\n  (Investor's Business Daily).\n· MSFT: -7.5% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"Nvidia Can Rebound to $200, Analyst Says.\n  Plus, L3Harris and 4 More Stocks.\" (Barrons.com).\n· Insider selling, last 30 days, no buying: AAPL $35.1M (2 people), KO\n  $16.5M (4 people), MSFT $6.6M (2 people). Selling alone is weak\n  evidence: insiders sell for taxes, diversification and pre-planned\n  programs.\n\nNUMBERS (last close 2026-11-20)\n        CLOSE     1D     5D   VOL\nKO      96.99  +0.9%  -2.3%  1.4x\nAAPL   342.56  -1.9%  -3.8%  1.7x\nNVDA   125.53 -14.0% -22.9%  2.4x\nMSFT   484.52  -2.8%  -7.5%  1.7x\nJPM    310.53  -3.0% -10.3%  1.9x\nSPY    689.81  -3.6%  -8.6%  2.9x\nRegime: BEAR (SPY 689.81 vs 200-day avg 730.29)\n\nFILINGS (last 7 days, excluding Form 4)\n18 Nov 01:20 NVDA 8-K 2.02 results of operations\n  https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n17 Nov 17:00 JPM 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n\nNEWS SENTIMENT (FinBERT, vs each stock's own baseline)\nKO    building baseline (1/20 days, 0 headlines)\nAAPL  building baseline (1/20 days, 0 headlines)\nNVDA  building baseline (1/20 days, 0 headlines)\nMSFT  building baseline (1/20 days, 0 headlines)\nJPM   building baseline (1/20 days, 0 headlines)\nFinBERT isn't installed, so 100 of 100 collected headlines aren't\nscored. Install it once with: pip install -e .[sentiment]\n\nINSIDER OPEN-MARKET TRADES (last 30 days)\nAAPL: bought $0 (0), sold $35.1M (2)\nKO: bought $0 (0), sold $16.5M (4)\nMSFT: bought $0 (0), sold $6.6M (2)\n\nNotes from fixed rules; quotes are verbatim from the filings.\nDecision support only, not financial advice."
 }
