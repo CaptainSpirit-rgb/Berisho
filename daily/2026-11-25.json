@@ -1,0 +1,427 @@
+{
+ "schema_version": 1,
+ "generated_at_utc": "2026-11-27T12:01:15+00:00",
+ "display_timezone": "Asia/Tbilisi",
+ "data_as_of": "2026-11-25",
+ "regime": {
+  "benchmark": "SPY",
+  "regime": "bear",
+  "close": 718.78,
+  "moving_average": 730.62,
+  "moving_average_days": 200,
+  "pct_vs_average": -1.6,
+  "as_of": "2026-11-24"
+ },
+ "market": {
+  "symbol": "SPY",
+  "change_1d_pct": -0.5,
+  "change_5d_pct": -1.9
+ },
+ "watchlist": [
+  {
+   "symbol": "KO",
+   "name": "The Coca-Cola Company",
+   "last_bar": "2026-11-25",
+   "close": 97.59,
+   "change_1d_pct": -0.0,
+   "change_5d_pct": -0.5,
+   "change_5d_vs_market_pts": 1.4,
+   "opening_gap_pct": 0.5,
+   "volume_vs_20d_avg": 1.2
+  },
+  {
+   "symbol": "AAPL",
+   "name": "Apple Inc.",
+   "last_bar": "2026-11-24",
+   "close": 354.07,
+   "change_1d_pct": 1.4,
+   "change_5d_pct": 0.6,
+   "change_5d_vs_market_pts": 2.5,
+   "opening_gap_pct": -0.3,
+   "volume_vs_20d_avg": 0.8
+  },
+  {
+   "symbol": "NVDA",
+   "name": "NVIDIA Corporation",
+   "last_bar": "2026-11-24",
+   "close": 155.38,
+   "change_1d_pct": -5.9,
+   "change_5d_pct": -0.1,
+   "change_5d_vs_market_pts": 1.8,
+   "opening_gap_pct": -3.6,
+   "volume_vs_20d_avg": 1.2
+  },
+  {
+   "symbol": "MSFT",
+   "name": "Microsoft Corporation",
+   "last_bar": "2026-11-24",
+   "close": 496.13,
+   "change_1d_pct": 0.7,
+   "change_5d_pct": -2.0,
+   "change_5d_vs_market_pts": -0.1,
+   "opening_gap_pct": -0.5,
+   "volume_vs_20d_avg": 0.8
+  },
+  {
+   "symbol": "JPM",
+   "name": "JPMorgan Chase & Co.",
+   "last_bar": "2026-11-24",
+   "close": 317.1,
+   "change_1d_pct": 0.1,
+   "change_5d_pct": -3.9,
+   "change_5d_vs_market_pts": -2.0,
+   "opening_gap_pct": -0.6,
+   "volume_vs_20d_avg": 1.0
+  }
+ ],
+ "rule_flags": [],
+ "filings_last_days": 7,
+ "filings": [
+  {
+   "symbol": "KO",
+   "form": "8-K",
+   "accepted_utc": "2026-11-23 21:35:42",
+   "items": "5.02 officer/director change",
+   "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm",
+   "documents": [
+    {
+     "type": "EX-99.1",
+     "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ex99-1.htm",
+     "text": "EX-99.1\n4\ne26458_ex99-1.htm\nExhibit 99.1\nNews Release\nThe Coca-Cola Company Names David Elkins as Incoming Chief Financial Officer\nElkins to Succeed John Murphy, Who Will Continue to Serve as President of the Company\nATLANTA, Nov. 23, 2026 – The Coca-Cola Company today announced that David Elkins, a finance leader\nwith extensive experience across global pharmaceuticals and consumer products companies, will become executive vice president and chief\nfinancial officer of Coca-Cola April 2, 2027, succeeding John Murphy.\nElkins has served as EVP and CFO of Bristol Myers Squibb since 2019, and\nhis past roles include positions with Johnson & Johnson and AstraZeneca.\nMurphy, 64, intends to retire in 2027, with timing determined later to allow\nfor a smooth and orderly leadership transition for the CFO role. Murphy, who has been CFO since 2019, has been working with company leadership\nfor some time to prepare for the succession process.\nMurphy will continue to serve as president, focusing on key enterprise priorities\nin 2027, in addition to the CFO transition. As CFO, Elkins’ oversight will include finance, global strategy and Enterprise Services.\nElkins and Murphy will both report to CEO Henrique Braun.\n“John has been a transformational leader during his 38 years at Coca-Cola,\nespecially through his most recent service as president and CFO,” Braun said. “I am very happy John will ensure a smooth transition\nand provide valuable perspective as we maintain our focus on growing the company.”\n“David comes to Coca-Cola with a track record of success across complex,\nglobal companies,” Braun said. “He brings a strong understanding of finance and has developed future leaders. He will bring\ncomplementary skills to our highly experienced leadership team.”\nMore About David Elkins\nElkins, 58, has been responsible for the Global Business Operations organization\nat Bristol Myers Squibb, which consists of finance, business development, Global Financial Services & Operational Excellence, procurement\nand investor relations.\nElkins joined the company in 2019 when it acquired Celgene, where he was\nserving as EVP and CFO. He joined Celgene in 2018 after several years at Johnson & Johnson, where he was CFO for the consumer products\nand medical device businesses and corporate functions.\nEarlier, Elkins held roles with Becton, Dickinson, a leading global medical\ndevice company, and pharmaceutical and biotechnology company AstraZeneca. He began his career in finance at The Boeing Co.\nElkins is a member of the board of directors of Tapestry Inc.\nElkins earned a bachelor’s degree in economics from the University\nof Delaware, a master’s degree in organizational dynamics from the University of Pennsylvania and an MBA from Drexel University.\nAbout John Murphy\nMurphy was named CFO in 2019 and president in 2022. From 2016 to 2018, he\nserved as president of the company’s Asia Pacific group.\nMurphy began his career with Coca-Cola in 1988 and went on to hold a variety\nof general management, finance and strategic planning roles around the world.\nFor more about Murphy’s background, visit https://www.coca-colacompany.com/about-us/leadership/john-murphy.\nAbout The Coca-Cola Company\nThe Coca-Cola Company (NYSE: KO) is a total beverage company with products\nsold in more than 200 countries and territories. Our company’s purpose is to refresh the world and make a difference. We sell\nmultiple billion-dollar brands across several beverage categories worldwide. Our portfolio of sparkling soft drink brands includes\nCoca-Cola, Sprite and Fanta. Our water, sports, coffee and tea brands include Dasani, smartwater, vitaminwater, Topo Chico, BODYARMOR,\nPowerade, Costa, Georgia, Fuze Tea, Gold Peak and Ayataka. Our juice, value-added dairy and plant-based beverage brands include Minute\nMaid, Simply, innocent, Del Valle, fairlife and Santa Clara. We’re constantly transforming our portfolio, from reducing sugar in\nour drinks to bringing innovative new products to market. We seek to positively impact people’s lives, communities and the planet\nthrough water replenishment, packaging recycling, sustainable sourcing practices and carbon emissions reductions across our value chain.\nTogether with our bottling partners, we employ more than 700,000 people, helping bring economic opportunity to local communities worldwide.\nLearn more at www.coca-colacompany.com and follow us on Instagram, Facebook and LinkedIn.\nContacts:\nInvestors and Analysts: Todd Beiger, koinvestorrelations@coca-cola.com\nMedia: Scott Leith, sleith@coca-cola.com\nForward-Looking Statements\nThis press release may contain statements, estimates or projections that\nconstitute “forward-looking statements” as defined under U.S. federal securities laws. Generally, the words “believe,”\n“opportunity,” “ahead,” “expect,” “intend,” “estimate,” “anticipate,”\n“project,” “will” and similar expressions identify forward-looking statements, which generally are not historical\nin nature. Forward-looking statements are subject to certain risks and uncertainties that could cause The Coca-Cola Company’s actual\nresults to differ materially from its historical experience and our present expectations or projections. These risks include, but are\nnot limited to, unfavorable economic and geopolitical conditions, including the direct or indirect negative impacts of geopolitical conflicts;\nincreased competition; an inability to be successful in our innovation activities; changes in the retail landscape or the loss of key\ncustomers; an inability to expand our business in emerging and developing markets; an inability to successfully manage the potential negative\nconsequences of our productivity initiatives; an inability to attract, retain and inspire outstanding talent; disruption of our supply\nchain, including increased commodity, raw material, packaging, energy, transportation and other input costs; an inability to successfully\nintegrate and manage our acquired businesses, brands or bottling operations or an inability to realize a significant portion of the anticipated\nbenefits of our joint ventures or strategic relationships; failure by our third-party service providers and business partners to satisfactorily\nfulfill their commitments and responsibilities, or such third parties experience adverse events; an inability to renew collective bargaining\nagreements on satisfactory terms, or we or our bottling partners experience strikes, work stoppages, labor shortages or labor unrest;\nobesity and other health-related concerns; evolving consumer product and shopping preferences; product safety and quality concerns; perceived\nnegative health consequences of processing and of certain ingredients, such as nutritive and non-nutritive sweeteners, color additives\nand biotechnology-derived substances, and of other substances present in our beverage products or packaging materials; failure to digitalize\nthe Coca-Cola system; damage to our brand image, corporate reputation and social license to operate from negative publicity, whether or\nnot warranted, concerning product safety or quality, workplace and human rights, obesity or other issues; an inability to successfully\nmanage new product launches; an inability to maintain good relationships with our bottling partners; deterioration in our bottling partners’\nfinancial condition; an inability to successfully manage our refranchising activities or divestitures of certain brands or businesses;\nincreases in income tax rates, changes in income tax laws or the unfavorable resolution of tax matters, including the outcome of our ongoing\ntax dispute or any related disputes with the U.S. Internal Revenue Service (“IRS”); the possibility that the assumptions used\nto calculate our estimated aggregate incremental tax and interest liability related to the potential unfavorable outcome of the ongoing\ntax dispute with the IRS could significantly change; increased or new indirect taxes; changes in laws and regulations relating to beverage\ncontainers and packaging; significant additional labeling or warning requirements or limitations on the marketing or sale of our products;\nlitigation claims or legal proceedings; conducting business in markets with high-risk legal compliance environments; failure to adequately\nprotect, or disputes relating to, trademarks, formulas and other intellectual property rights; changes in, or failure to comply with,\nthe laws and regulations applicable to our products or our business operations; fluctuations in foreign currency exchange rates; interest\nrate increases; an inability to achieve our overall long-term growth objectives; default by or failure of one or more of our counterparty\nfinancial institutions; impairment charges; an inability to protect our information systems against service interruption, misappropriation\nof data or cybersecurity incidents; failure to comply with privacy and data protection laws; evolving sustainability regulatory requirements\nand expectations; increasing concerns about the environmental impact of plastic bottles and other packaging materials; water scarcity\nand poor quality; increased demand for food products, decreased agricultural productivity and increased regulation of ingredient sourcing\ndue diligence; climate change and legal or regulatory responses thereto; adverse weather conditions; and other risks discussed in our\nfilings with the Securities and Exchange Commission (“SEC”), including our Annual Report on Form 10-K for the year ended December 31,\n2025 and subsequently filed Quarterly Reports on Form 10-Q, which are available from the SEC. You should not place undue reliance on forward-looking\nstatements, which speak only as of the date they are made. We undertake no obligation to publicly update or revise any forward-looking\nstatements."
+    },
+    {
+     "type": "8-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm",
+     "text": "UNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWASHINGTON, D.C. 20549\nFORM 8-K\nCURRENT\nREPORT\nPursuant\nto Section 13 or 15(d) of the Securities Exchange Act of 1934\nDate of Report\n(Date of earliest event reported):\nNovember 23,\n2026 (November 17, 2026)\nCOCA COLA CO\n(Exact name of\nRegistrant as specified in its charter)\nDelaware\n001-02217\n58-0628465\n(State\nor other jurisdiction of incorporation)\n(Commission\nFile Number)\n(I.R.S.\nEmployer Identification No.)\nOne\nCoca-Cola Plaza\nAtlanta,\nGeorgia\n30313\n(Address\nof principal executive offices)\n(Zip\nCode)\nRegistrant’s\ntelephone number, including area code: (404) 676-2121\nCheck the appropriate\nbox below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the Registrant under any of the following\nprovisions:\n☐ Written communications pursuant\nto Rule 425 under the Securities Act (17 CFR 230.425)\n☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17\nCFR 240.14a-12)\n☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange\nAct (17 CFR 240.14d-2(b))\n☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered\npursuant to Section 12(b) of the Act:\nTitle\nof each class\nTrading\nSymbol(s)\nName\nof each exchange on which registered\nCommon\nStock, $0.25 Par Value\nKO\nNew\nYork Stock Exchange\n1.875%\nNotes Due 2026\nKO26\nNew\nYork Stock Exchange\n0.750%\nNotes Due 2026\nKO26C\nNew\nYork Stock Exchange\n1.125%\nNotes Due 2027\nKO27\nNew\nYork Stock Exchange\n0.125%\nNotes Due 2029\nKO29A\nNew\nYork Stock Exchange\n0.125%\nNotes Due 2029\nKO29B\nNew\nYork Stock Exchange\n0.400%\nNotes Due 2030\nKO30B\nNew\nYork Stock Exchange\n1.250%\nNotes Due 2031\nKO31\nNew\nYork Stock Exchange\n3.125% Notes Due 2032\nKO32\nNew York Stock Exchange\n0.375%\nNotes Due 2033\nKO33\nNew\nYork Stock Exchange\n0.500%\nNotes Due 2033\nKO33A\nNew\nYork Stock Exchange\n1.625%\nNotes Due 2035\nKO35\nNew\nYork Stock Exchange\n1.100%\nNotes Due 2036\nKO36\nNew\nYork Stock Exchange\n0.950%\nNotes Due 2036\nKO36A\nNew\nYork Stock Exchange\n3.375% Notes Due 2037\nKO37\nNew York Stock Exchange\n0.800%\nNotes Due 2040\nKO40B\nNew\nYork Stock Exchange\n1.000%\nNotes Due 2041\nKO41\nNew\nYork Stock Exchange\n3.500% Notes Due 2044\nKO44\nNew York Stock Exchange\n3.750% Notes Due 2053\nKO53\nNew York Stock Exchange\nIndicate by check\nmark whether the Registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this\nchapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth\ncompany ☐\nIf an emerging growth\ncompany, indicate by check mark if the Registrant has elected not to use the extended transition period for complying with any new or\nrevised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐\nItem\n5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory\nArrangements of Certain Officers.\nOn November 23, 2026, The Coca-Cola Company (the “Company”)\nannounced that David V. Elkins will succeed John Murphy as Executive Vice President and Chief Financial Officer, effective April 2, 2027.\nMr. Murphy will continue to serve as President of the Company. Mr. Murphy intends to retire at a later date in 2027.\nMr. Elkins, age 58, has served as Executive Vice President\nand Chief Financial Officer of Bristol Myers Squibb Company (“BMS”) since 2019. He joined BMS in connection with its acquisition\nof Celgene Corporation, where he served as Executive Vice President and Chief Financial Officer. Before joining Celgene Corporation, Mr.\nElkins held senior finance positions at Johnson & Johnson. His prior experience also includes roles at Becton, Dickinson and Company\nand AstraZeneca PLC. He began his career in finance at The Boeing Company.\nIn connection with Mr. Elkins’ appointment, the\nCompany provided Mr. Elkins a letter setting forth the primary compensation elements that will be effective upon the commencement of his\nemployment and the Company and Mr. Elkins separately entered into a deferred cash agreement providing for the replacement of certain compensation\nhe will forfeit from BMS.\nPursuant to Mr. Elkins’ letter, his base salary\nwill be $1,180,000. Mr. Elkins will be eligible to participate in the Company’s annual and long-term incentive programs, and his\ntarget annual incentive will be 135% of his annual base salary.\nFollowing the commencement of Mr. Elkins’ employment,\nthe Company will present to the Talent and Compensation Committee of the Company’s Board of Directors for approval one-time awards\nintended to replace equity that Mr. Elkins will forfeit from BMS upon joining the Company, which one-time awards consist of (i) restricted\nstock units with an approximate grant-date value of $5,400,000, expected to vest in two equal installments in February 2028 and February\n2029, and (ii) deferred cash in the aggregate amount of $5,400,000, expected to be paid in two equal installments in February 2028 and\nFebruary 2029, in each case subject to continued employment through the vesting or payment dates, as applicable, as well as the other terms\nand conditions of the applicable agreement.\nPursuant to the deferred cash agreement, Mr. Elkins\nwill also be eligible to receive a one-time cash payment in 2028, intended to replace the annual incentive he forfeits for the portion\nof 2027 during which he was employed by BMS. The amount of the payment will be based on BMS’s 2027 performance and prorated for\nthe portion of 2027 during which Mr. Elkins was employed by BMS, subject to the terms and conditions of the deferred cash agreement.\nThe letter also provides that Mr. Elkins may receive\na one-time cash payment of $300,000 if he does not receive certain one-time contributions from BMS under its retirement and deferred compensation\nprograms. In addition, the letter provides for make-whole compensation if, as a result of his employment with the Company, Mr. Elkins\nforfeits his 2026 annual incentive award or certain BMS equity scheduled to vest in March 2027.\nMr. Elkins will be subject to the Company’s share\nownership guidelines, and he will receive certain additional benefits described in his letter.\nThe foregoing descriptions of Mr. Elkins’ letter\nand deferred cash agreement are qualified in their entirety by the terms of such letter and agreement, copies of which are attached hereto\nas Exhibits 10.1 and 10.2, respectively, and incorporated herein by reference. Details regarding the Company’s annual and long-term\nincentive programs are included in the Compensation Discussion and Analysis section of the Company’s definitive proxy statement\nfor the 2026 Annual Meeting of Shareowners filed with the Securities and Exchange Commission on March 16, 2026.\nThere are no arrangements or understandings between\nMr. Elkins and any other person pursuant to which he was selected as an officer of the Company. Mr. Elkins does not have any family relationship\nwith any director or executive officer of the Company and is not a party to any transaction requiring disclosure under Item 404(a) of\nRegulation S-K.\nA copy of the Company’s press release announcing\nthese changes is furnished to this report as Exhibit 99.1.\nItem\n9.01(d). Financial\nStatements and Exhibits.\nEXHIBIT INDEX\nExhibit\nNo.\nDescription\nExhibit 10.1\nLetter, dated November 13, 2026, from The Coca-Cola Company to David V. Elkins.\nExhibit 10.2\nDeferred Cash Agreement, dated November 14, 2026, between The Coca-Cola Company and David V. Elkins.\nExhibit\n99.1\nPress Release of The Coca-Cola Company, dated November 23, 2026.\nExhibit\n104\nCover Page Interactive Data File (the cover page XBRL tags are embedded\nwithin the iXBRL document).\nSIGNATURES\nPursuant to the requirements of the Securities Exchange Act of 1934, the\nRegistrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nTHE\nCOCA-COLA COMPANY\n(REGISTRANT)\nDate:\nNovember 23, 2026\nBy:\n/s/\nMonica\nHoward Douglas\nMonica\nHoward Douglas\nExecutive Vice President and Global General Counsel"
+    }
+   ]
+  },
+  {
+   "symbol": "NVDA",
+   "form": "8-K",
+   "accepted_utc": "2026-11-23 13:57:54",
+   "items": "5.02 officer/director change",
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm",
+   "documents": [
+    {
+     "type": "EX-99.1",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nov23pressrelease.htm",
+     "text": "EX-99.1\n2\nnov23pressrelease.htm\nEX-99.1\nNVIDIA Board Reinstates Jensen Huang as President, CEO and Board Director\nSANTA CLARA, Calif.—November 23, 2026—NVIDIA (NASDAQ: NVDA) today announced that effective immediately, Jensen Huang has been reinstated as President and Chief Executive Officer, and as a member of the Board. The Board of Directors voted unanimously to reinstate Mr. Huang following a series of discussions and meetings with Mr. Huang, after which the Board was satisfied with respect to Mr. Huang’s candor and ability to lead NVIDIA. In the process of reaching its decision, the Board received input from senior levels of the United States government, and based on that input, the Board is confident that Mr. Huang’s reinstatement poses no national security risk.\n\"The Board believes Jensen is the right person to lead NVIDIA, and that his reinstatement is in the best interests of our stockholders, employees, partners, and customers,” said Harvey C. Jones, Chair of the Board. “We have every confidence in Jensen and look forward to working with him as he resumes his leadership of the Company. We are grateful to Colette Kress for her outstanding service as interim CEO, in addition to her continuing responsibilities as NVIDIA's Chief Financial Officer.\" Mr. Jones will continue to serve as Board chair.\n“I am honored to return to NVIDIA and lead one of the most consequential technology companies in the world at the beginning of a new industrial revolution,” said Jensen Huang. “I take this responsibility with the greatest humility and renewed commitment. I want to thank the NVIDIA Board for its confidence and deliberation through this process. I am especially grateful to Harvey Jones for his leadership as Chair, and to Colette Kress and our executive staff for leading NVIDIA during this period. I am also deeply thankful to our employees, shareholders, leaders across the industry, and partners around the world for their extraordinary support. Above all, I am grateful for the love and support of my family. I can’t wait to get back to work.”\nAs previously announced, in light of recent reporting that Mr. Huang has been the target of a foreign intelligence effort, the Board formed a committee comprised solely of independent directors to investigate, and the committee retained independent counsel to assist it in that investigation. The Board reiterated that the committee’s investigation will proceed to conclusion. Mr. Huang fully supports the investigation and is committed to cooperating with it.\nThe Board also recently formed a National Security and Export Control Committee comprised solely of independent directors to oversee trade compliance and national security risks. The committee is engaging counsel with experience in national security matters, and such counsel will be retaining advisors with expertise in national security matters. NVIDIA is commencing a search to fill a new position,\nChief Compliance Officer, to oversee compliance across NVIDIA and report to the Nominating and Corporate Governance Committee. NVIDIA will continue to cooperate with ongoing government investigations and inquiries.\n# # #\nFor further information, contact:\nMylene Mangalindan\nCorporate Communications\nNVIDIA Corporation\npress@nvidia.com\nToshiya Hari\nInvestor Relations\nNVIDIA Corporation\nir@nvidia.com"
+    },
+    {
+     "type": "8-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm",
+     "text": "UNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWASHINGTON, DC 20549\n______________\nFORM 8-K\nCURRENT REPORT\nPURSUANT TO SECTION 13 OR 15(d) OF\nTHE SECURITIES EXCHANGE ACT OF 1934\nDate of Report (Date of earliest event reported): November 22, 2026\nNVIDIA CORPORATION\n(Exact name of registrant as specified in its charter)\nDelaware 0-23985 94-3177549\n(State or other jurisdiction (Commission (IRS Employer\nof incorporation) File Number) Identification No.)\n2788 San Tomas Expressway, Santa Clara, CA 95051\n(Address of principal executive offices) (Zip Code)\nRegistrant’s telephone number, including area code: (408) 486-2000\nNot Applicable\n(Former name or former address, if changed since last report)\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n☐ Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of the Act:\nTitle of each class Trading Symbol(s) Name of each exchange on which registered\nCommon Stock, $0.001 par value per share NVDA The Nasdaq Global Select Market\nIndicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging Growth Company ☐\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐\nItem 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\nOn November 22, 2026, the Board of Directors of NVIDIA Corporation reinstated Jen-Hsun Huang as NVIDIA’s President, Chief Executive Officer and member of the Board of Directors, effective immediately.\nFollowing the reinstatement of Mr. Huang, Ms. Kress will continue to serve as NVIDIA’s Executive Vice President and Chief Financial Officer.\nA copy of the press release announcing the above is attached as Exhibit 99.1 to this Current Report on Form 8-K.\nItem 9.01. Financial Statements and Exhibits.\n(d) Exhibits\nExhibit Description\n99.1\nPress Release, dated November 23, 2026\n104 The cover page of this Current Report on Form 8-K, formatted in inline XBRL (included as Exhibit 101)\nSIGNATURE\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nNVIDIA Corporation\nDate: November 23, 2026 By: /s/ Colette M. Kress\nColette M. Kress\nExecutive Vice President and Chief Financial Officer"
+    }
+   ]
+  }
+ ],
+ "insider_window_days": 30,
+ "insider_summary": [
+  {
+   "symbol": "AAPL",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 2,
+   "sell_value_usd": 35069432.0
+  },
+  {
+   "symbol": "KO",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 4,
+   "sell_value_usd": 16480959.0
+  },
+  {
+   "symbol": "MSFT",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 2,
+   "sell_value_usd": 6631633.0
+  },
+  {
+   "symbol": "NVDA",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 1,
+   "sell_value_usd": 4542781.0
+  }
+ ],
+ "news_last_days": 3,
+ "news_headlines": [
+  {
+   "symbol": "AAPL",
+   "published_utc": "2026-11-27 11:05:13",
+   "source": "GuruFocus.com",
+   "headline": "iShares Russell 3000 ETF (IWV) Adds Apple and Microsoft on Nov. 25",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-russell-3000-etf-iwv-110513086.html"
+  },
+  {
+   "symbol": "AAPL",
+   "published_utc": "2026-11-27 11:05:06",
+   "source": "GuruFocus.com",
+   "headline": "iShares S&P 500 Growth (IVW) Adds Microsoft and Nvidia on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-p-500-growth-ivw-110506557.html"
+  },
+  {
+   "symbol": "AAPL",
+   "published_utc": "2026-11-27 11:04:55",
+   "source": "GuruFocus.com",
+   "headline": "iShares Paris-Aligned Climate (PABU) Buys $9.4 Million More Apple on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-paris-aligned-climate-pabu-110455750.html"
+  },
+  {
+   "symbol": "JPM",
+   "published_utc": "2026-11-27 11:10:53",
+   "source": "Simply Wall St.",
+   "headline": "Banco Bradesco (BOVESPA:BBDC4) Stock Sees Fair Value Cut As Analysts Turn More Cautious",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/banco-bradesco-bovespa-bbdc4-stock-111053785.html"
+  },
+  {
+   "symbol": "JPM",
+   "published_utc": "2026-11-27 11:09:54",
+   "source": "Simply Wall St.",
+   "headline": "3 Great Dividend Stocks To Own In November 2026",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/3-great-dividend-stocks-own-110954380.html"
+  },
+  {
+   "symbol": "JPM",
+   "published_utc": "2026-11-27 03:33:52",
+   "source": "Benzinga",
+   "headline": "AI Risk Is 'Moving Somewhere Harder to See': Citigroup, JPMorgan Reportedly Look to Offload AI Debt as Investors Grow Wary of Buildout",
+   "url": "https://finance.yahoo.com/technology/ai/articles/ai-risk-moving-somewhere-harder-033352825.html"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-27 10:26:02",
+   "source": "Motley Fool",
+   "headline": "Warren Buffett's Successor, Greg Abel, Has 47% of Berkshire Hathaway's $346 Billion Portfolio Invested in 3 Proven Winners",
+   "url": "https://www.fool.com/investing/2026/11/27/warren-buffett-successor-greg-abel-has-47-berkshire-hathaway-346-billion-portfolio-invested-3-proven-winners/"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-26 21:33:02",
+   "source": "Motley Fool",
+   "headline": "The Nasdaq Composite Is in a Correction, but These 3 Dividend Stocks Are Near 52-Week Highs. Here's Why They're Still Worth Buying Right Now.",
+   "url": "https://www.fool.com/investing/2026/11/26/the-nasdaq-composite-is-in-a-correction-but-these-3-dividend-stocks-are-near-52-week-highs-here-s-why-they-re-still-worth-buying-right-now/"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-26 15:30:14",
+   "source": "Zacks",
+   "headline": "Coca-Cola (KO) Up 6.4% Since Last Earnings Report: Can It Continue?",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/coca-cola-ko-6-4-153014132.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-27 11:05:13",
+   "source": "GuruFocus.com",
+   "headline": "iShares Russell 3000 ETF (IWV) Adds Apple and Microsoft on Nov. 25",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-russell-3000-etf-iwv-110513086.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-27 11:05:06",
+   "source": "GuruFocus.com",
+   "headline": "iShares S&P 500 Growth (IVW) Adds Microsoft and Nvidia on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-p-500-growth-ivw-110506557.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-27 11:04:55",
+   "source": "GuruFocus.com",
+   "headline": "iShares Paris-Aligned Climate (PABU) Buys $9.4 Million More Apple on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-paris-aligned-climate-pabu-110455750.html"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-27 11:56:50",
+   "source": "Investor's Business Daily",
+   "headline": "Dow Jones Futures Rise; Look For This Bullish Market Signal On Black Friday",
+   "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-wild-ride-nasdaq-nvidia-slash-losses-anthropic-higher/?src=A00220&yptr=yahoo"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-27 11:46:02",
+   "source": "Motley Fool",
+   "headline": "If You Put $10,000 in the Schwab U.S. Dividend Equity ETF 10 Years Ago, Here’s What You’d Have Now",
+   "url": "https://www.fool.com/investing/2026/11/27/if-you-put-usd10-000-in-the-schwab-u-s-dividend-equity-etf-10-years-ago-here-s-what-you-d-have-now/"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-27 11:37:19",
+   "source": "Simply Wall St.",
+   "headline": "AI Chips Update - AI Surge Accelerates Semiconductor Growth Through 2026",
+   "url": "https://finance.yahoo.com/technology/ai/articles/ai-chips-ai-surge-accelerates-113719623.html"
+  }
+ ],
+ "largest_insider_trades": [
+  {
+   "symbol": "AAPL",
+   "insider": "LEVINSON ARTHUR D",
+   "title": "Director",
+   "type": "sell",
+   "date": "2026-11-16",
+   "value_usd": 18805303.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "LEVINSON ARTHUR D",
+   "title": "Director",
+   "type": "sell",
+   "date": "2026-11-16",
+   "value_usd": 12960350.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "Newstead Jennifer",
+   "title": "SVP, GC and Government Affairs",
+   "type": "sell",
+   "date": "2026-11-17",
+   "value_usd": 845942.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "Newstead Jennifer",
+   "title": "SVP, GC and Government Affairs",
+   "type": "sell",
+   "date": "2026-11-10",
+   "value_usd": 842913.0
+  },
+  {
+   "symbol": "AAPL",
+   "insider": "Newstead Jennifer",
+   "title": "SVP, GC and Government Affairs",
+   "type": "sell",
+   "date": "2026-11-24",
+   "value_usd": 833449.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "ARROYO MANUEL",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-17",
+   "value_usd": 5723834.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "Perez Beatriz R",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-02",
+   "value_usd": 2909829.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "Perez Beatriz R",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-02",
+   "value_usd": 2552808.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "QUAN NANCY",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-05",
+   "value_usd": 1968406.0
+  },
+  {
+   "symbol": "KO",
+   "insider": "QUAN NANCY",
+   "title": "Executive Vice President",
+   "type": "sell",
+   "date": "2026-11-12",
+   "value_usd": 1470000.0
+  },
+  {
+   "symbol": "MSFT",
+   "insider": "Hood Amy",
+   "title": "EVP, Chief Financial Officer",
+   "type": "sell",
+   "date": "2026-11-09",
+   "value_usd": 3217523.0
+  },
+  {
+   "symbol": "MSFT",
+   "insider": "Numoto Takeshi",
+   "title": "EVP, Chief Marketing Officer",
+   "type": "sell",
+   "date": "2026-11-10",
+   "value_usd": 2655000.0
+  },
+  {
+   "symbol": "MSFT",
+   "insider": "Hood Amy",
+   "title": "EVP, Chief Financial Officer",
+   "type": "sell",
+   "date": "2026-11-09",
+   "value_usd": 759111.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 721615.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 626671.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 620917.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 455649.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 412197.0
+  }
+ ],
+ "sentiment": [
+  {
+   "symbol": "KO",
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 8 headlines"
+  },
+  {
+   "symbol": "AAPL",
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 20 headlines"
+  },
+  {
+   "symbol": "NVDA",
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 20 headlines"
+  },
+  {
+   "symbol": "MSFT",
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 20 headlines"
+  },
+  {
+   "symbol": "JPM",
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 7 headlines"
+  }
+ ],
+ "digest_text": "MARKET DIGEST · Fri 27 Nov 2026, 16:01 Asia/Tbilisi\n\nTODAY IN BRIEF\nThe market is in a BEAR regime: SPY closed 1.6% below its 200-day\naverage. SPY is down 1.9% over 5 days. Worth a look today: NVDA, KO.\n\nWHAT MATTERS\n1. NVDA  155.38 · -5.9% today · -0.1% 5d · vol 1.2x\n   NVDA moved -5.9% on the day, -0.1% over 5 days (SPY -1.9% over 5\n   days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"Departure of Directors or Certain Officers; Election of Directors;\n   Appointment of Certain Officers; Compensatory Arrangements of Certain\n   Officers.\"\n   Why it may matter: A large move next to a fresh company filing; the\n   filing may explain it. Leadership changes can signal a shift in\n   strategy or a problem.\n   Check next: Check whether the change is a planned succession or a\n   sudden departure, and whether the filing gives a reason.\n   Source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm\n   News (27 Nov 15:56, Investor's Business Daily): Dow Jones Futures\n   Rise; Look For This Bullish Market Signal On Black Friday\n   News (27 Nov 15:46, Motley Fool): If You Put $10,000 in the Schwab\n   U.S. Dividend Equity ETF 10 Years Ago, Here’s What You’d Have Now\n   News (27 Nov 15:37, Simply Wall St.): AI Chips Update - AI Surge\n   Accelerates Semiconductor Growth Through 2026\n\n2. KO  97.59 · -0.0% today · -0.5% 5d · vol 1.2x\n   KO moved -0.0% on the day, -0.5% over 5 days (SPY -1.9% over 5 days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"Elkins to Succeed John Murphy, Who Will Continue to Serve as\n   President of the Company\" \"financial officer of Coca-Cola April 2,\n   2027, succeeding John Murphy.\" \"Murphy, 64, intends to retire in\n   2027, with timing determined later to allow\"\n   Why it may matter: Leadership changes can signal a shift in strategy\n   or a problem.\n   Check next: Check whether the change is a planned succession or a\n   sudden departure, and whether the filing gives a reason.\n   Source: https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm\n   News (27 Nov 14:26, Motley Fool): Warren Buffett's Successor, Greg\n   Abel, Has 47% of Berkshire Hathaway's $346 Billion Portfolio Invested\n   in 3 Proven Winners\n   News (27 Nov 01:33, Motley Fool): The Nasdaq Composite Is in a\n   Correction, but These 3 Dividend Stocks Are Near 52-Week Highs.\n   Here's Why They're Still Worth Buying Right Now.\n   News (26 Nov 19:30, Zacks): Coca-Cola (KO) Up 6.4% Since Last\n   Earnings Report: Can It Continue?\n\nBACKGROUND\n· AAPL: +0.6% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"iShares Russell 3000 ETF (IWV) Adds Apple and\n  Microsoft on Nov. 25\" (GuruFocus.com).\n· MSFT: -2.0% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"iShares Russell 3000 ETF (IWV) Adds Apple and\n  Microsoft on Nov. 25\" (GuruFocus.com).\n· JPM: -3.9% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"Banco Bradesco (BOVESPA:BBDC4) Stock Sees\n  Fair Value Cut As Analysts Turn More Cautious\" (Simply Wall St.).\n· Insider selling, last 30 days, no buying: AAPL $35.1M (2 people), KO\n  $16.5M (4 people), MSFT $6.6M (2 people), NVDA $4.5M (1 people).\n  Selling alone is weak evidence: insiders sell for taxes,\n  diversification and pre-planned programs.\n\nNUMBERS (last close 2026-11-25)\n        CLOSE     1D     5D   VOL\nKO      97.59  -0.0%  -0.5%  1.2x\nAAPL   354.07  +1.4%  +0.6%  0.8x\nNVDA   155.38  -5.9%  -0.1%  1.2x\nMSFT   496.13  +0.7%  -2.0%  0.8x\nJPM    317.10  +0.1%  -3.9%  1.0x\nSPY    718.78  -0.5%  -1.9%  1.1x\nRegime: BEAR (SPY 718.78 vs 200-day avg 730.62)\n\nFILINGS (last 7 days, excluding Form 4)\n24 Nov 01:35 KO 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm\n23 Nov 17:57 NVDA 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm\n\nNEWS SENTIMENT (FinBERT, vs each stock's own baseline)\nKO    building baseline (5/20 days, 0 headlines); last 24h: 8 headlines\nAAPL  building baseline (5/20 days, 0 headlines); last 24h: 20 headlines\nNVDA  building baseline (5/20 days, 0 headlines); last 24h: 20 headlines\nMSFT  building baseline (5/20 days, 0 headlines); last 24h: 20 headlines\nJPM   building baseline (5/20 days, 0 headlines); last 24h: 7 headlines\nFinBERT isn't installed, so 299 of 299 collected headlines aren't\nscored. Install it once with: pip install -e .[sentiment]\n\nINSIDER OPEN-MARKET TRADES (last 30 days)\nAAPL: bought $0 (0), sold $35.1M (2)\nKO: bought $0 (0), sold $16.5M (4)\nMSFT: bought $0 (0), sold $6.6M (2)\nNVDA: bought $0 (0), sold $4.5M (1)\n\nNotes from fixed rules; quotes are verbatim from the filings.\nDecision support only, not financial advice."
+}

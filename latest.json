@@ -1,117 +1,117 @@
 {
  "schema_version": 1,
- "generated_at_utc": "2026-11-23T12:00:51+00:00",
+ "generated_at_utc": "2026-11-27T12:01:15+00:00",
  "display_timezone": "Asia/Tbilisi",
- "data_as_of": "2026-11-20",
+ "data_as_of": "2026-11-25",
  "regime": {
   "benchmark": "SPY",
   "regime": "bear",
-  "close": 689.81,
-  "moving_average": 730.29,
+  "close": 718.78,
+  "moving_average": 730.62,
   "moving_average_days": 200,
-  "pct_vs_average": -5.5,
-  "as_of": "2026-11-20"
+  "pct_vs_average": -1.6,
+  "as_of": "2026-11-24"
  },
  "market": {
   "symbol": "SPY",
-  "change_1d_pct": -3.6,
-  "change_5d_pct": -8.6
+  "change_1d_pct": -0.5,
+  "change_5d_pct": -1.9
  },
  "watchlist": [
   {
    "symbol": "KO",
    "name": "The Coca-Cola Company",
-   "last_bar": "2026-11-20",
-   "close": 96.99,
-   "change_1d_pct": 0.9,
-   "change_5d_pct": -2.3,
-   "change_5d_vs_market_pts": 6.3,
-   "opening_gap_pct": 0.9,
-   "volume_vs_20d_avg": 1.4
+   "last_bar": "2026-11-25",
+   "close": 97.59,
+   "change_1d_pct": -0.0,
+   "change_5d_pct": -0.5,
+   "change_5d_vs_market_pts": 1.4,
+   "opening_gap_pct": 0.5,
+   "volume_vs_20d_avg": 1.2
   },
   {
    "symbol": "AAPL",
    "name": "Apple Inc.",
-   "last_bar": "2026-11-20",
-   "close": 342.56,
-   "change_1d_pct": -1.9,
-   "change_5d_pct": -3.8,
-   "change_5d_vs_market_pts": 4.7,
-   "opening_gap_pct": 1.0,
-   "volume_vs_20d_avg": 1.7
+   "last_bar": "2026-11-24",
+   "close": 354.07,
+   "change_1d_pct": 1.4,
+   "change_5d_pct": 0.6,
+   "change_5d_vs_market_pts": 2.5,
+   "opening_gap_pct": -0.3,
+   "volume_vs_20d_avg": 0.8
   },
   {
    "symbol": "NVDA",
    "name": "NVIDIA Corporation",
-   "last_bar": "2026-11-20",
-   "close": 125.53,
-   "change_1d_pct": -14.0,
-   "change_5d_pct": -22.9,
-   "change_5d_vs_market_pts": -14.4,
-   "opening_gap_pct": -1.7,
-   "volume_vs_20d_avg": 2.4
+   "last_bar": "2026-11-24",
+   "close": 155.38,
+   "change_1d_pct": -5.9,
+   "change_5d_pct": -0.1,
+   "change_5d_vs_market_pts": 1.8,
+   "opening_gap_pct": -3.6,
+   "volume_vs_20d_avg": 1.2
   },
   {
    "symbol": "MSFT",
    "name": "Microsoft Corporation",
-   "last_bar": "2026-11-20",
-   "close": 484.52,
-   "change_1d_pct": -2.8,
-   "change_5d_pct": -7.5,
-   "change_5d_vs_market_pts": 1.0,
-   "opening_gap_pct": -0.9,
-   "volume_vs_20d_avg": 1.7
+   "last_bar": "2026-11-24",
+   "close": 496.13,
+   "change_1d_pct": 0.7,
+   "change_5d_pct": -2.0,
+   "change_5d_vs_market_pts": -0.1,
+   "opening_gap_pct": -0.5,
+   "volume_vs_20d_avg": 0.8
   },
   {
    "symbol": "JPM",
    "name": "JPMorgan Chase & Co.",
-   "last_bar": "2026-11-20",
-   "close": 310.53,
-   "change_1d_pct": -3.0,
-   "change_5d_pct": -10.3,
-   "change_5d_vs_market_pts": -1.7,
-   "opening_gap_pct": -0.1,
-   "volume_vs_20d_avg": 1.9
+   "last_bar": "2026-11-24",
+   "close": 317.1,
+   "change_1d_pct": 0.1,
+   "change_5d_pct": -3.9,
+   "change_5d_vs_market_pts": -2.0,
+   "opening_gap_pct": -0.6,
+   "volume_vs_20d_avg": 1.0
   }
  ],
  "rule_flags": [],
  "filings_last_days": 7,
  "filings": [
   {
-   "symbol": "NVDA",
+   "symbol": "KO",
    "form": "8-K",
-   "accepted_utc": "2026-11-17 21:20:51",
-   "items": "2.02 results of operations",
-   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm",
+   "accepted_utc": "2026-11-23 21:35:42",
+   "items": "5.02 officer/director change",
+   "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm",
    "documents": [
     {
      "type": "EX-99.1",
-     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm",
-     "text": "EX-99.1\n2\nq3fy27pr.htm\nEX-99.1\nNVIDIA Announces Financial Results for Third Quarter Fiscal 2027\n•Revenue of $115.8 billion, up 103% from a year ago\n•Data Center revenue of $107.6 billion, up 110% from a year ago\n•Vera Rubin NVL72, the most versatile and advanced computing platform ever built, has shipped\nSANTA CLARA, Calif.—Nov. 17, 2026―NVIDIA (NASDAQ: NVDA) today reported revenue for the third quarter ended October 25, 2026, of $115.8 billion, up 20% from the previous quarter and up 103% from a year ago. For the quarter, GAAP and non-GAAP gross margins were 74.8% and 74.9%, respectively. GAAP and non-GAAP earnings per diluted share were $2.70 and $2.68, respectively.\n“Our momentum is real. NVIDIA is an exceptional technology leader, powered by the relentless innovation of our people,” said Colette Kress, interim CEO and executive vice president and chief financial officer of NVIDIA. “Vera Rubin is off to an explosive start, our roadmap is on track and our ambition has never been greater.”\nIn September 2026, NVIDIA’s Board of Directors approved an increase of $150 billion to the company’s share repurchase authorization, without expiration. During the third quarter of fiscal 2027, NVIDIA returned $28.1 billion to shareholders in the form of shares repurchased and cash dividends. As of the end of the third quarter, the company had approximately $227.3 billion remaining under its share repurchase authorization.\nNVIDIA will pay its next quarterly cash dividend of $0.25 per share on December 23, 2026, to all shareholders of record on December 2, 2026.\nQ3 Fiscal 2027 Summary\nGAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.8 % 75.0 % 73.4 % (0.2) pts 1.4 pts\nOperating expenses $9.2 $8.4 $5.8 9 % 57 %\nOperating income $77.5 $63.7 $36.0 22 % 115 %\nNet income $65.3 $59.7 $31.9 9 % 105 %\nDiluted earnings per share\n$2.70 $2.46 $1.30 10 % 108 %\n*Q/Q and Y/Y calculated based on $ in millions\nNon-GAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.9 % 75.0 % 73.5 % (0.1) pts 1.4 pts\nOperating expenses $8.8 $8.2 $5.8 7 % 52 %\nOperating income $77.9 $64.0 $36.1 22 % 116 %\nNet income $64.9 $54.0 $31.0 20 % 109 %\nDiluted earnings per share\n$2.68 $2.22 $1.27 21 % 111 %\n*Q/Q and Y/Y calculated based on $ in millions\nOutlook\nNVIDIA’s outlook for the fourth quarter of fiscal 2027, which includes an additional week, is as follows:\n•Revenue is expected to be $130.0 billion, plus or minus 3%. NVIDIA is not assuming any Data Center compute revenue from China in its outlook.\n•GAAP and non-GAAP gross margins are expected to be between 71.0% and 72.0%.\n•GAAP and non-GAAP operating expenses are expected to be approximately $11.0 billion and $10.7 billion, respectively.\n•For the full year fiscal 2027, NVIDIA expects GAAP and non-GAAP tax rates to be between 16.0% and 18.0%, excluding any discrete items and material changes to NVIDIA’s tax environment.\nHighlights\nData Center\n•Third-quarter revenue was $107.6 billion, up 21% from the previous quarter and up 110% from a year ago.\n•Ramped production and began shipping NVIDIA Vera Rubin NVL72 — the fastest product ramp in the company’s history — with racks running at partners including CoreWeave, Google Cloud, Microsoft Azure, Oracle Cloud Infrastructure and Nebius, and coming online soon at SpaceXSI.\n•Expanded the Vera Rubin cloud ecosystem, announcing general availability of Vera Rubin NVL72 systems and Vera CPUs on Oracle Cloud Infrastructure, general availability of Google Cloud’s Vera Rubin-powered A5X instances and the continued buildout of SpaceXSI’s infrastructure.\n•Announced Vera Rubin open architecture advances to help the industry scale faster, and revealed that Cisco, Google, Meta, Microsoft and Visionbay are joining many technology leaders advancing infrastructure for Vera Rubin.\n•Revealed that leading AI natives, cloud providers and neoclouds, including CoreWeave, Meta, Nebius, Nscale, OpenAI and Verda, are building with NVIDIA Vera CPUs to support the growing computing needs of businesses and developers, joining AWS, Oracle Cloud Infrastructure and SpaceXSI.\n•Expanded Anthropic’s access to NVIDIA Grace Blackwell and Vera Rubin capacity through cloud providers, and continued to collaborate on design and engineering to optimize future NVIDIA architectures for Anthropic’s workloads.\n•Announced the NVIDIA Vera CPU rack-scale platform for high-performance computing — combining NVIDIA’s first fully custom data center CPU with the gold standard for HPC networking to drive extreme efficiency and throughput for scientific modeling, simulation and agentic science.\n•Introduced NVIDIA Rubin HPC, a new GPU in the Vera Rubin platform designed to accelerate simulation and data processing for science, engineering and analytics workflows.\n•Expanded collaboration with Meta on AI agent Muse and its family of models, with Meta planning expanded deployment of Vera Rubin, Vera CPUs, NVIDIA Spectrum-X™ networking and BlueField®-4 to scale training, inference and agents.\n•Introduced DSX POD, a reference design for complete Vera Rubin AI factories built by partners inside modular containers, integrated and validated before delivery to accelerate infrastructure deployment.\n•Announced European ecosystem adoption of NVIDIA DSX™ to reduce AI factory power requirements and enable near-zero facility cooling water consumption.\n•Announced that NVIDIA swept every MLPerf Training and Endpoints benchmark, and Vera Rubin NVL72 demonstrated leading inference performance in its MLPerf Inference preview debut.\n•Launched NVIDIA Open Agent Safety Platform and introduced the NVIDIA OpenShell Reference Architecture, combining open source OpenShell software, Vera Rubin for model inference, Vera CPUs for agent execution and BlueField®-4 DPUs running NVIDIA Sentry to independently monitor agent behavior and enforce security policies in silicon.\n•Announced an agreement to acquire Hugging Face to scale its platform and make intelligence more open, capable and accessible.\n•Announced plans with global supply chain partners, including Amkor Technology, IBIDEN, King Yuan Electronics, Samsung Electro-Mechanics, Siliconware Precision Industries and Unimicron Technology Corporation, to scale critical manufacturing capabilities to meet demand for NVIDIA infrastructure.\n•Deepened partnership with MediaTek across cloud infrastructure, local computing and automotive, extending NVIDIA’s rack-scale platform to custom XPUs through NVIDIA NVLink Fusion™.\n•Announced plans with Cisco for USFP, a new optical-module form factor designed to increase bandwidth density and power efficiency for next-generation AI factory networks.\n•Announced collaboration with Australia’s data center ecosystem on infrastructure supporting a planned buildout of up to 2 gigawatts by 2027 for NVIDIA DSX AI factories.\n•Introduced NVIDIA Nemotron for Science to help researchers build specialized agents for scientific discovery, and collaborated with global healthcare and life sciences organizations to advance protein design, accelerate drug discovery and expand precision patient care.\n•Partnered with Palantir to bring sovereign AI intelligence and NVIDIA Nemotron™ open models to critical supply chains.\n•Partnered with Firebird to scale the company’s total potential AI infrastructure capacity.\n•Expanded the open source NVIDIA CUDA-Q™ platform with CUDA-Q Logical for fault-tolerant quantum computing development, and ran a record simulation of a fault-tolerant quantum processor on JUPITER at the Jülich Supercomputing Centre.\nEdge Computing\n•Third-quarter Edge Computing revenue was $8.2 billion, up 14% from the previous quarter and up 42% from a year ago.\n•Reinvented Windows PCs with NVIDIA RTX Spark™ laptops, now shipping from ASUS, Dell, HP, Lenovo, Microsoft Surface and MSI.\n•Launched NVIDIA DLSS 5 in NBA 2K27 and Hogwarts Legacy, bringing AI-powered, photorealistic lighting and materials to GeForce RTX 50 Series GPUs, GeForce NOW and RTX Spark, and coming soon to Where Winds Meet.\n•Expanded the NVIDIA local AI lineup with a new NVIDIA DGX Spark 64GB model, bringing near-frontier AI capabilities to desktops at a more accessible price point, and accelerated leading AI models from NVIDIA Nemotron, Black Forest Labs, Liquid AI and Qwen for running AI agents locally, with expanded support for Hermes, OpenClaw and Perplexity.\n•Introduced new NVIDIA Alpamayo™ development tools and the NVIDIA Halos™ SAFE framework to help developers build and evaluate autonomous-driving systems.\n•Expanded partnerships with Mercedes-Benz and Volvo Cars to advance safe automated driving.\n•Announced European mobility leaders — including Bolt with Lucid, Mercedes-Benz, Volkswagen Commercial Vehicles and Einride — are showcasing NVIDIA Hyperion™ use cases for automated vehicles and future robotaxi fleets.\n•Advanced the NVIDIA Isaac™ robotics platform with new development tools, datasets and runtime, alongside Agile Robots’ introduction of a reference humanoid powered by NVIDIA Jetson Thor™ and built on Isaac GR00T.\n•Expanded NVIDIA Cosmos™ with tools to train, evaluate and deploy world models for robotics, autonomous vehicles and industrial applications.\n•Advanced AI-RAN with Nokia and global telecom operators, including T-Mobile’s first AI-RAN call on a commercial network, bringing NVIDIA accelerated computing deeper into wireless networks.\nCFO Commentary\nCommentary on the quarter by Colette Kress, NVIDIA’s interim CEO and executive vice president and chief financial officer, is available at https://investor.nvidia.com.\nConference Call and Webcast Information\nNVIDIA will conduct a conference call with analysts and investors to discuss its third quarter fiscal 2027 financial results and current financial prospects today at 2 p.m. Pacific time (5 p.m. Eastern time). A live webcast (listen-only mode) of the conference call will be accessible at NVIDIA’s investor relations website, https://investor.nvidia.com. The webcast will be recorded and available for replay until NVIDIA’s conference call to discuss its financial results for its fourth quarter and full fiscal 2027.\nNon-GAAP Measures\nTo supplement NVIDIA’s condensed consolidated financial statements presented in accordance with GAAP, the company uses non-GAAP measures of certain components of financial performance.\nThese non-GAAP measures include non-GAAP gross profit, non-GAAP gross margin, non-GAAP operating expenses, non-GAAP operating income, non-GAAP other income (expense), net, non-GAAP net income, non-GAAP net income, or earnings, per diluted share, and free cash flow. For NVIDIA’s investors to be better able to compare its current results with those of previous periods, the company has shown a reconciliation of GAAP to non-GAAP financial measures. These reconciliations adjust the related GAAP financial measures to exclude acquisition-related and other costs, other, legal settlement costs, gains/losses from equity securities, net, certain other income and expense, and the associated tax impact of these items where applicable. Beginning in the first quarter of fiscal 2027, NVIDIA’s non-GAAP financial measures no longer exclude stock-based compensation expense. The historical non-GAAP financial information presented has been updated to include stock-based compensation expense. Free cash flow is calculated as GAAP net cash provided by operating activities less both purchases related to property and equipment and intangible assets and principal payments on property and equipment and intangible assets. NVIDIA believes the presentation of its non-GAAP financial measures enhances the users’ overall understanding of the company’s historical financial performance. The presentation of the company’s non-GAAP financial measures is not meant to be considered in isolation or as a substitute for the company’s financial results prepared in accordance with GAAP, and the company’s non-GAAP measures may be different from non-GAAP measures used by other companies.\nAbout NVIDIA\nNVIDIA (NASDAQ: NVDA) is the world leader in AI and accelerated computing.\n###\nFor further information, contact:\nToshiya Hari Mylene Mangalindan\nInvestor Relations Corporate Communications\nNVIDIA Corporation NVIDIA Corporation\nIR@nvidia.com press@nvidia.com\nCertain statements in this press release including, but not limited to, statements as to: the buildout of AI factories; NVIDIA’s strategy and expectations regarding data center sites; expectations with respect to growth, performance and benefits of NVIDIA’s products, services and technologies, including Blackwell and Vera Rubin, NVIDIA’s roadmap and related trends and drivers; expectations with respect to supply and demand for NVIDIA’s products, services and technologies, including Blackwell and Vera Rubin, and related matters including inventory, production and distribution; expectations with respect to NVIDIA’s strategic commitments and their anticipated benefits; expectations with respect to NVIDIA’s third party arrangements, including with its collaborators, partners and suppliers; expectations with respect to upcoming data center leases, including their commencement and reassignment; expectations regarding revenue under agreements with neoclouds; expectations with respect to NVIDIA’s investments and acquisitions, including NVIDIA’s pending acquisition of Hugging Face; expectations with respect to NVIDIA’s financing arrangements; expectations with respect to technology developments, and related trends and drivers; future NVIDIA cash dividends and stock repurchases or other returns to stockholders; NVIDIA’s financial and business outlook for the fourth quarter of fiscal 2027 and beyond; projected market growth and trends; expectations with respect to AI and related industries; expectations with respect to NVIDIA’s Form 10-Q for the third quarter of fiscal 2027; expectations with respect to NVIDIA’s leadership transition and the search for a new chief executive officer and related matters; expectations with respect to the ongoing investigation by an independent committee of NVIDIA’s board of directors and related matters; expectations with respect to litigation, government and regulatory inquiries and other actions or proceedings and related matters; and other statements that are not historical facts are forward-looking statements within the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended, which are subject to the “safe harbor” created by those sections based on management’s beliefs and assumptions and on information currently available to management and are subject to risks and uncertainties that could cause results to be materially different than expectations. Important factors that could cause actual results to differ materially include: global economic and political conditions; NVI [...text cut for length]"
+     "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ex99-1.htm",
+     "text": "EX-99.1\n4\ne26458_ex99-1.htm\nExhibit 99.1\nNews Release\nThe Coca-Cola Company Names David Elkins as Incoming Chief Financial Officer\nElkins to Succeed John Murphy, Who Will Continue to Serve as President of the Company\nATLANTA, Nov. 23, 2026 – The Coca-Cola Company today announced that David Elkins, a finance leader\nwith extensive experience across global pharmaceuticals and consumer products companies, will become executive vice president and chief\nfinancial officer of Coca-Cola April 2, 2027, succeeding John Murphy.\nElkins has served as EVP and CFO of Bristol Myers Squibb since 2019, and\nhis past roles include positions with Johnson & Johnson and AstraZeneca.\nMurphy, 64, intends to retire in 2027, with timing determined later to allow\nfor a smooth and orderly leadership transition for the CFO role. Murphy, who has been CFO since 2019, has been working with company leadership\nfor some time to prepare for the succession process.\nMurphy will continue to serve as president, focusing on key enterprise priorities\nin 2027, in addition to the CFO transition. As CFO, Elkins’ oversight will include finance, global strategy and Enterprise Services.\nElkins and Murphy will both report to CEO Henrique Braun.\n“John has been a transformational leader during his 38 years at Coca-Cola,\nespecially through his most recent service as president and CFO,” Braun said. “I am very happy John will ensure a smooth transition\nand provide valuable perspective as we maintain our focus on growing the company.”\n“David comes to Coca-Cola with a track record of success across complex,\nglobal companies,” Braun said. “He brings a strong understanding of finance and has developed future leaders. He will bring\ncomplementary skills to our highly experienced leadership team.”\nMore About David Elkins\nElkins, 58, has been responsible for the Global Business Operations organization\nat Bristol Myers Squibb, which consists of finance, business development, Global Financial Services & Operational Excellence, procurement\nand investor relations.\nElkins joined the company in 2019 when it acquired Celgene, where he was\nserving as EVP and CFO. He joined Celgene in 2018 after several years at Johnson & Johnson, where he was CFO for the consumer products\nand medical device businesses and corporate functions.\nEarlier, Elkins held roles with Becton, Dickinson, a leading global medical\ndevice company, and pharmaceutical and biotechnology company AstraZeneca. He began his career in finance at The Boeing Co.\nElkins is a member of the board of directors of Tapestry Inc.\nElkins earned a bachelor’s degree in economics from the University\nof Delaware, a master’s degree in organizational dynamics from the University of Pennsylvania and an MBA from Drexel University.\nAbout John Murphy\nMurphy was named CFO in 2019 and president in 2022. From 2016 to 2018, he\nserved as president of the company’s Asia Pacific group.\nMurphy began his career with Coca-Cola in 1988 and went on to hold a variety\nof general management, finance and strategic planning roles around the world.\nFor more about Murphy’s background, visit https://www.coca-colacompany.com/about-us/leadership/john-murphy.\nAbout The Coca-Cola Company\nThe Coca-Cola Company (NYSE: KO) is a total beverage company with products\nsold in more than 200 countries and territories. Our company’s purpose is to refresh the world and make a difference. We sell\nmultiple billion-dollar brands across several beverage categories worldwide. Our portfolio of sparkling soft drink brands includes\nCoca-Cola, Sprite and Fanta. Our water, sports, coffee and tea brands include Dasani, smartwater, vitaminwater, Topo Chico, BODYARMOR,\nPowerade, Costa, Georgia, Fuze Tea, Gold Peak and Ayataka. Our juice, value-added dairy and plant-based beverage brands include Minute\nMaid, Simply, innocent, Del Valle, fairlife and Santa Clara. We’re constantly transforming our portfolio, from reducing sugar in\nour drinks to bringing innovative new products to market. We seek to positively impact people’s lives, communities and the planet\nthrough water replenishment, packaging recycling, sustainable sourcing practices and carbon emissions reductions across our value chain.\nTogether with our bottling partners, we employ more than 700,000 people, helping bring economic opportunity to local communities worldwide.\nLearn more at www.coca-colacompany.com and follow us on Instagram, Facebook and LinkedIn.\nContacts:\nInvestors and Analysts: Todd Beiger, koinvestorrelations@coca-cola.com\nMedia: Scott Leith, sleith@coca-cola.com\nForward-Looking Statements\nThis press release may contain statements, estimates or projections that\nconstitute “forward-looking statements” as defined under U.S. federal securities laws. Generally, the words “believe,”\n“opportunity,” “ahead,” “expect,” “intend,” “estimate,” “anticipate,”\n“project,” “will” and similar expressions identify forward-looking statements, which generally are not historical\nin nature. Forward-looking statements are subject to certain risks and uncertainties that could cause The Coca-Cola Company’s actual\nresults to differ materially from its historical experience and our present expectations or projections. These risks include, but are\nnot limited to, unfavorable economic and geopolitical conditions, including the direct or indirect negative impacts of geopolitical conflicts;\nincreased competition; an inability to be successful in our innovation activities; changes in the retail landscape or the loss of key\ncustomers; an inability to expand our business in emerging and developing markets; an inability to successfully manage the potential negative\nconsequences of our productivity initiatives; an inability to attract, retain and inspire outstanding talent; disruption of our supply\nchain, including increased commodity, raw material, packaging, energy, transportation and other input costs; an inability to successfully\nintegrate and manage our acquired businesses, brands or bottling operations or an inability to realize a significant portion of the anticipated\nbenefits of our joint ventures or strategic relationships; failure by our third-party service providers and business partners to satisfactorily\nfulfill their commitments and responsibilities, or such third parties experience adverse events; an inability to renew collective bargaining\nagreements on satisfactory terms, or we or our bottling partners experience strikes, work stoppages, labor shortages or labor unrest;\nobesity and other health-related concerns; evolving consumer product and shopping preferences; product safety and quality concerns; perceived\nnegative health consequences of processing and of certain ingredients, such as nutritive and non-nutritive sweeteners, color additives\nand biotechnology-derived substances, and of other substances present in our beverage products or packaging materials; failure to digitalize\nthe Coca-Cola system; damage to our brand image, corporate reputation and social license to operate from negative publicity, whether or\nnot warranted, concerning product safety or quality, workplace and human rights, obesity or other issues; an inability to successfully\nmanage new product launches; an inability to maintain good relationships with our bottling partners; deterioration in our bottling partners’\nfinancial condition; an inability to successfully manage our refranchising activities or divestitures of certain brands or businesses;\nincreases in income tax rates, changes in income tax laws or the unfavorable resolution of tax matters, including the outcome of our ongoing\ntax dispute or any related disputes with the U.S. Internal Revenue Service (“IRS”); the possibility that the assumptions used\nto calculate our estimated aggregate incremental tax and interest liability related to the potential unfavorable outcome of the ongoing\ntax dispute with the IRS could significantly change; increased or new indirect taxes; changes in laws and regulations relating to beverage\ncontainers and packaging; significant additional labeling or warning requirements or limitations on the marketing or sale of our products;\nlitigation claims or legal proceedings; conducting business in markets with high-risk legal compliance environments; failure to adequately\nprotect, or disputes relating to, trademarks, formulas and other intellectual property rights; changes in, or failure to comply with,\nthe laws and regulations applicable to our products or our business operations; fluctuations in foreign currency exchange rates; interest\nrate increases; an inability to achieve our overall long-term growth objectives; default by or failure of one or more of our counterparty\nfinancial institutions; impairment charges; an inability to protect our information systems against service interruption, misappropriation\nof data or cybersecurity incidents; failure to comply with privacy and data protection laws; evolving sustainability regulatory requirements\nand expectations; increasing concerns about the environmental impact of plastic bottles and other packaging materials; water scarcity\nand poor quality; increased demand for food products, decreased agricultural productivity and increased regulation of ingredient sourcing\ndue diligence; climate change and legal or regulatory responses thereto; adverse weather conditions; and other risks discussed in our\nfilings with the Securities and Exchange Commission (“SEC”), including our Annual Report on Form 10-K for the year ended December 31,\n2025 and subsequently filed Quarterly Reports on Form 10-Q, which are available from the SEC. You should not place undue reliance on forward-looking\nstatements, which speak only as of the date they are made. We undertake no obligation to publicly update or revise any forward-looking\nstatements."
     },
     {
-     "type": "EX-99.2",
-     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm",
-     "text": "EX-99.2\n3\nq3fy27cfocommentary.htm\nEX-99.2\nCFO Commentary on Third Quarter Fiscal 2027 Results\nQ3 Fiscal 2027 Summary\nGAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.8 % 75.0 % 73.4 % (0.2) pts 1.4 pts\nOperating expenses $9.2 $8.4 $5.8 9 % 57 %\nOperating income $77.5 $63.7 $36.0 22 % 115 %\nNet income $65.3 $59.7 $31.9 9 % 105 %\nDiluted earnings per share\n$2.70 $2.46 $1.30 10 % 108 %\n*Q/Q and Y/Y calculated based on $ in millions\nNon-GAAP\n($ in billions, except earnings per share) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nRevenue $115.8 $96.2 $57.0 20 % 103 %\nGross margin 74.9 % 75.0 % 73.5 % (0.1) pts 1.4 pts\nOperating expenses $8.8 $8.2 $5.8 7 % 52 %\nOperating income $77.9 $64.0 $36.1 22 % 116 %\nNet income $64.9 $54.0 $31.0 20 % 109 %\nDiluted earnings per share\n$2.68 $2.22 $1.27 21 % 111 %\n*Q/Q and Y/Y calculated based on $ in millions\nRevenue by Reportable Segments\n($ in billions) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nCompute & Networking $106.0 $88.3 $50.9 20 % 108 %\nGraphics 9.8 7.9 6.1 25 % 62 %\nTotal $115.8 $96.2 $57.0 20 % 103 %\n*Q/Q and Y/Y calculated based on $ in millions\nRevenue by Market Platform\n($ in billions) Q3 FY27 Q2 FY27 Q3 FY26 Q/Q* Y/Y*\nData Center $107.6 $89.0 $51.2 21 % 110 %\nHyperscale 60.1 48.7 35.1 23 % 71 %\nAI Clouds, Industrial, & Enterprise 47.5 40.3 16.1 18 % 195 %\nEdge Computing 8.2 7.2 5.8 14 % 42 %\nTotal $115.8 $96.2 $57.0 20 % 103 %\n*Q/Q and Y/Y calculated based on $ in millions\nWe specialize in markets where our computing platforms can provide tremendous acceleration for applications. These platforms incorporate processors, interconnects, software, algorithms, systems, and services to deliver unique value. Our platforms address large markets where our expertise is critical: Data Center and Edge Computing.\nWe plan to file our 10-Q in the coming weeks. In the interim, we have provided a supplemental document with additional financial information on our investor website.\nRevenue\nRevenue for the third quarter was a record $115.8 billion, up 103% from a year ago and up 20% sequentially.\nData Center revenue for the third quarter was a record $107.6 billion, up 110% from a year ago and up 21% sequentially. Our Hyperscale and AI Clouds, Industrial, & Enterprise platforms both grew substantially, driven by the introduction of our Rubin infrastructure, our fastest architecture ramp ever, standalone Vera CPUs and the continued growth of Blackwell Ultra. Shipments of Data Center Hopper products to China during the quarter were $2.4 billion.\nEdge Computing revenue for the third quarter was $8.2 billion, up 42% from a year ago and up 14% sequentially. Strong Blackwell workstation sales and edge compute for Physical AI applications drove the increases, while higher memory and system prices continue to affect consumer PC demand.\nGross Margin\nGAAP and non-GAAP gross margins for the third quarter increased from a year ago on improved mix from Blackwell Ultra. GAAP and non-GAAP gross margins decreased slightly sequentially, reflecting the initial Rubin ramp.\nExpenses\nGAAP operating expenses for the third quarter were up 57% from a year ago and up 9% sequentially, and non-GAAP operating expenses were up 52% from a year ago and up 7% sequentially. These increases were driven by higher compute infrastructure and employee compensation and benefits costs.\nOther Income, Net and Income Tax\nGAAP other income, net includes equity securities gains or losses, interest income, interest expense, and other income and expense. Non-GAAP other income, net excludes equity securities gains or losses and certain other income and expense.\nNet gains from equity securities for the third quarter were $1.8 billion, comprised of net gains of $2.8 billion from our publicly held equity securities and a net loss of $1.0 billion from our non-marketable equity securities, including impairment of $1.8 billion.\nGAAP effective tax rate for the third quarter was 17.4%, an increase from a year ago, primarily due to higher revenue. Non-GAAP effective tax rate for the third quarter was 17.0%.\nCommitments\nWe have entered into strategic commitments across our supply, infrastructure, and partner ecosystems to capitalize on future growth opportunities and support our business.\nWe’ve partnered with our extensive network of suppliers to secure the critical components needed to meet demand for the next several years. Our supply commitments increased from $279 billion last quarter to $390 billion, primarily related to the multi-year procurement of memory supply.\nOur cloud service agreements and data center lease commitments together of $102 billion, an increase from last quarter’s $74 billion, provide the physical and cloud infrastructure that powers our research and development — from the engineering, product design, and testing of our compute chips, networking products, and systems, to the development of our open models, such as NVIDIA Nemotron™, NVIDIA Cosmos™, and GR00T, and our autonomous vehicle software. Our upcoming data center leases have terms up to twenty years and have not commenced. These leases are expected to commence between the fourth quarter of fiscal 2027 and fiscal 2033. We may assign some of these leases to third parties in the future.\nOur equity investments are focused on frontier labs, infrastructure financiers, and other private companies, subject to certain contingencies.\nFuture commitments by fiscal year as of October 25, 2026, were as follows:\nRemainder of 2027 2028 2029 2030 2031 2032 and thereafter Total\n(In billions)\nSupply and capacity $ 69 $ 203 $ 92 $ 10 $ 8 $ 8 $ 390\nCloud service agreements 2 7 7 6 4 2 28\nData center leases not commenced — 1 2 4 4 63 74\nEquity investments 5 11 2 2 — — 20\nCapital expenditures 6 — — — — — 6\nTotal $ 82 $ 222 $ 103 $ 22 $ 16 $ 73 $ 518\nAdditional Commitments\nSecuring land, power and shell for data centers has become the next critical phase in the AI infrastructure buildout. Neoclouds and frontier labs are seeing extraordinary demand for AI infrastructure, yet many are growing faster than their balance sheets and long-term credit profiles can support. In response, we have entered into arrangements that help select customers secure the land, power and data center capacity needed to support their growth. We will focus on exceptional sites where visible, durable demand can support multiple generations of NVIDIA compute.\nWe have partnered with leading neoclouds to enable broader access to our AI infrastructure to serve AI startups, model builders, enterprises, research organizations and sovereign customers. Our commitments take effect only if the neoclouds secure financing to purchase the data center infrastructure products and the related compute capacity is deployed, made operational, and accepted by us. The maximum commitment presented assumes these contingencies are satisfactorily resolved. If they are not timely resolved, the amount and timing of our commitments\nmay be affected, and certain commitments could be reduced or eliminated. Under these agreements, we will earn revenue on the upfront sale of our infrastructure and if certain criteria are met, we will participate in revenue share generated by the neoclouds from their third-party customers.\nFuture additional commitments by fiscal year as of October 25, 2026, were as follows:\nRemainder of 2027 2028 2029 2030 2031 2032 and thereafter Total\n(In billions)\nNeocloud agreements (1) $ — $ 6 $ 7 $ 6 $ 5 $ 8 $ 32\n(1)Formerly referred to as “AI cloud agreements”\nGuarantees\nWe have land, power, shell, and hardware financing arrangements, under which we may be required to make payments to third parties if certain of our partners default on their obligations.\nIn August 2026, we entered into guarantees to provide credit support on the land, power, and shell buildout to secure approximately 4.25 gigawatts (GW) across nine buildings at SB Energy's PORTS-Pike Technology Campus in Ohio, which will exclusively host NVIDIA infrastructure under 20-year leases to OpenAI, subject to limited exceptions. Our guarantees take effect phase by phase, with each one becoming effective only when its related building is completed and ready for service. The first is expected in fiscal 2029. Our exposure therefore builds over time as each building comes online, up to a maximum of $105 billion, and then declines over each 20-year lease term as OpenAI makes lease payments. We also have the option to provide credit support in phases for approximately 3.8 additional GW as the site scales.\nTo date, we have not made any payments related to our guarantees.\nThe following table summarizes the maximum gross exposure related to our guarantees:\nOctober 25, 2026\n(In billions)\nLand, power, and shell guarantees for neoclouds $ 3.5\nSB Energy Corp. credit support guarantees\n105.0\nPower and systems credit support guarantees 9.5\nTotal $ 118.0\nBalance Sheet and Cash Flow\nCash, cash equivalents, and marketable debt securities were $53.5 billion, down from $56.7 billion a year ago and down from $56.6 billion a quarter ago. These changes were driven by strong free cash flow generation and a record $28.1 billion of capital returned to shareholders in the third quarter through share repurchases and cash dividends.\nIn September 2026, our Board of Directors approved an increase of $150 billion to our share repurchase authorization, without expiration. At the end of our third quarter, we had $227.3 billion of share repurchase authorization remaining which we plan to utilize through fiscal 2028.\nAccounts receivable was $81.0 billion with 64 days sales outstanding (DSO), up from 60 days sequentially, driven by shipment linearity from our Rubin launch and extended payment terms on large, multi-quarter agreements with certain investment-grade customers.\nInventory was $39.7 billion, up from $31.6 billion sequentially, to support our Rubin product ramp.\nCash flow from operating activities was $48.3 billion, up from $23.8 billion a year ago and up from $24.1 billion a quarter ago. The year-on-year increases reflect growth in revenue, while the sequential increase was also impacted by the timing of federal cash tax payments.\nWe repaid $1.0 billion of senior notes in the third quarter.\nOutlook\nOutlook for the fourth quarter of fiscal 2027, which includes an additional week, is as follows:\n•Revenue is expected to be $130.0 billion, plus or minus 3%. We are not assuming any Data Center compute revenue from China in our outlook.\n•GAAP and non-GAAP gross margins are expected to be between 71.0% and 72.0%.\n•GAAP and non-GAAP operating expenses are expected to be approximately $11.0 billion and $10.7 billion, respectively.\nFor the full year fiscal 2027, we expect GAAP and non-GAAP tax rates to be between 16.0% and 18.0%, excluding any discrete items and material changes to our tax environment.\n______________\nFor further information, contact:\nToshiya Hari Mylene Mangalindan\nInvestor Relations Corporate Communications\nNVIDIA Corporation NVIDIA Corporation\nIR@nvidia.com press@nvidia.com\nNon-GAAP Measures\nTo supplement NVIDIA’s condensed consolidated financial statements presented in accordance with GAAP, the company uses non-GAAP measures of certain components of financial performance. These non-GAAP measures include non-GAAP gross profit, non-GAAP gross margin, non-GAAP operating expenses, non-GAAP operating income, non-GAAP other income (expense), net, non-GAAP net income, non-GAAP net income, or earnings, per diluted share, and free cash flow. For NVIDIA’s investors to be better able to compare its current results with those of previous periods, the company has shown a reconciliation of GAAP to non-GAAP financial measures. These reconciliations adjust the related GAAP financial measures to exclude acquisition-related and other costs, other, legal settlement costs, gains/losses from equity securities, net, certain other income and expense, and the associated tax impact of these items where applicable. Beginning in the first quarter of fiscal 2027, NVIDIA’s non-GAAP financial measures no longer exclude stock-based compensation expense. The historical non-GAAP financial information presented has been updated to include stock-based compensation expense. Free cash flow is calculated as GAAP net cash provided by operating activities less both purchases related to property and equipment and intangible assets and principal payments on property and equipment and intangible assets. NVIDIA believes the presentation of its non-GAAP financial measures enhances the users' overall understanding of the company’s historical financial performance. The presentation of the company’s non-GAAP financial measures is not meant to be considered in isolation or as a substitute for the company’s financial results prepared in accordance with GAAP, and the company’s non-GAAP measures may be different from non-GAAP measures used by other companies.\nCertain statements in this CFO Commentary including, but not limited to, statements as to: the buildout of AI factories; our strategy and expectations regarding data center sites; expectations with respect to growth, performance and benefits of our products, services, and technologies, including Blackwell and Vera Rubin, our roadmap and related trends and drivers; expectations with respect to supply and demand for our products, services, and technologies, including Blackwell and Vera Rubin, and related matters including inventory, production and distribution; expectations with respect to our strategic commitments and their anticipated benefits; expectations with respect to our third party arrangements, including with our collaborators, partners and suppliers; expectations with respect to upcoming data center leases, including their commencement and reassignment; expectations regarding revenue under agreements with neoclouds; expectations with respect to our investments and acquisitions, including our pending acquisition of Hugging Face; expectations with respect to our financing arrangements; expectations with respect to technology developments, and related trends and drivers; our future cash dividends and stock repurchases or other returns to stockholders; our financial and business outlook for the fourth quarter of fiscal 2027 and beyond; projected market growth and trends; expectations with respect to AI and related industries; expectations with respect to our Form 10-Q for the third quarter of fiscal 2027; expectations with respect to our leadership transition and the search for a new chief executive officer and related matters; expectations with respect to the ongoing investigation by an independent committee of our board of directors and related matters; expectations with respect to litigation, government and regulatory inquiries and other actions or proceedings and related matters; and other statements that are not historical facts are forward-looking statements within the meaning of Section 27A of the [...text cut for length]"
+     "type": "8-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm",
+     "text": "UNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWASHINGTON, D.C. 20549\nFORM 8-K\nCURRENT\nREPORT\nPursuant\nto Section 13 or 15(d) of the Securities Exchange Act of 1934\nDate of Report\n(Date of earliest event reported):\nNovember 23,\n2026 (November 17, 2026)\nCOCA COLA CO\n(Exact name of\nRegistrant as specified in its charter)\nDelaware\n001-02217\n58-0628465\n(State\nor other jurisdiction of incorporation)\n(Commission\nFile Number)\n(I.R.S.\nEmployer Identification No.)\nOne\nCoca-Cola Plaza\nAtlanta,\nGeorgia\n30313\n(Address\nof principal executive offices)\n(Zip\nCode)\nRegistrant’s\ntelephone number, including area code: (404) 676-2121\nCheck the appropriate\nbox below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the Registrant under any of the following\nprovisions:\n☐ Written communications pursuant\nto Rule 425 under the Securities Act (17 CFR 230.425)\n☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17\nCFR 240.14a-12)\n☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange\nAct (17 CFR 240.14d-2(b))\n☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered\npursuant to Section 12(b) of the Act:\nTitle\nof each class\nTrading\nSymbol(s)\nName\nof each exchange on which registered\nCommon\nStock, $0.25 Par Value\nKO\nNew\nYork Stock Exchange\n1.875%\nNotes Due 2026\nKO26\nNew\nYork Stock Exchange\n0.750%\nNotes Due 2026\nKO26C\nNew\nYork Stock Exchange\n1.125%\nNotes Due 2027\nKO27\nNew\nYork Stock Exchange\n0.125%\nNotes Due 2029\nKO29A\nNew\nYork Stock Exchange\n0.125%\nNotes Due 2029\nKO29B\nNew\nYork Stock Exchange\n0.400%\nNotes Due 2030\nKO30B\nNew\nYork Stock Exchange\n1.250%\nNotes Due 2031\nKO31\nNew\nYork Stock Exchange\n3.125% Notes Due 2032\nKO32\nNew York Stock Exchange\n0.375%\nNotes Due 2033\nKO33\nNew\nYork Stock Exchange\n0.500%\nNotes Due 2033\nKO33A\nNew\nYork Stock Exchange\n1.625%\nNotes Due 2035\nKO35\nNew\nYork Stock Exchange\n1.100%\nNotes Due 2036\nKO36\nNew\nYork Stock Exchange\n0.950%\nNotes Due 2036\nKO36A\nNew\nYork Stock Exchange\n3.375% Notes Due 2037\nKO37\nNew York Stock Exchange\n0.800%\nNotes Due 2040\nKO40B\nNew\nYork Stock Exchange\n1.000%\nNotes Due 2041\nKO41\nNew\nYork Stock Exchange\n3.500% Notes Due 2044\nKO44\nNew York Stock Exchange\n3.750% Notes Due 2053\nKO53\nNew York Stock Exchange\nIndicate by check\nmark whether the Registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this\nchapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth\ncompany ☐\nIf an emerging growth\ncompany, indicate by check mark if the Registrant has elected not to use the extended transition period for complying with any new or\nrevised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐\nItem\n5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory\nArrangements of Certain Officers.\nOn November 23, 2026, The Coca-Cola Company (the “Company”)\nannounced that David V. Elkins will succeed John Murphy as Executive Vice President and Chief Financial Officer, effective April 2, 2027.\nMr. Murphy will continue to serve as President of the Company. Mr. Murphy intends to retire at a later date in 2027.\nMr. Elkins, age 58, has served as Executive Vice President\nand Chief Financial Officer of Bristol Myers Squibb Company (“BMS”) since 2019. He joined BMS in connection with its acquisition\nof Celgene Corporation, where he served as Executive Vice President and Chief Financial Officer. Before joining Celgene Corporation, Mr.\nElkins held senior finance positions at Johnson & Johnson. His prior experience also includes roles at Becton, Dickinson and Company\nand AstraZeneca PLC. He began his career in finance at The Boeing Company.\nIn connection with Mr. Elkins’ appointment, the\nCompany provided Mr. Elkins a letter setting forth the primary compensation elements that will be effective upon the commencement of his\nemployment and the Company and Mr. Elkins separately entered into a deferred cash agreement providing for the replacement of certain compensation\nhe will forfeit from BMS.\nPursuant to Mr. Elkins’ letter, his base salary\nwill be $1,180,000. Mr. Elkins will be eligible to participate in the Company’s annual and long-term incentive programs, and his\ntarget annual incentive will be 135% of his annual base salary.\nFollowing the commencement of Mr. Elkins’ employment,\nthe Company will present to the Talent and Compensation Committee of the Company’s Board of Directors for approval one-time awards\nintended to replace equity that Mr. Elkins will forfeit from BMS upon joining the Company, which one-time awards consist of (i) restricted\nstock units with an approximate grant-date value of $5,400,000, expected to vest in two equal installments in February 2028 and February\n2029, and (ii) deferred cash in the aggregate amount of $5,400,000, expected to be paid in two equal installments in February 2028 and\nFebruary 2029, in each case subject to continued employment through the vesting or payment dates, as applicable, as well as the other terms\nand conditions of the applicable agreement.\nPursuant to the deferred cash agreement, Mr. Elkins\nwill also be eligible to receive a one-time cash payment in 2028, intended to replace the annual incentive he forfeits for the portion\nof 2027 during which he was employed by BMS. The amount of the payment will be based on BMS’s 2027 performance and prorated for\nthe portion of 2027 during which Mr. Elkins was employed by BMS, subject to the terms and conditions of the deferred cash agreement.\nThe letter also provides that Mr. Elkins may receive\na one-time cash payment of $300,000 if he does not receive certain one-time contributions from BMS under its retirement and deferred compensation\nprograms. In addition, the letter provides for make-whole compensation if, as a result of his employment with the Company, Mr. Elkins\nforfeits his 2026 annual incentive award or certain BMS equity scheduled to vest in March 2027.\nMr. Elkins will be subject to the Company’s share\nownership guidelines, and he will receive certain additional benefits described in his letter.\nThe foregoing descriptions of Mr. Elkins’ letter\nand deferred cash agreement are qualified in their entirety by the terms of such letter and agreement, copies of which are attached hereto\nas Exhibits 10.1 and 10.2, respectively, and incorporated herein by reference. Details regarding the Company’s annual and long-term\nincentive programs are included in the Compensation Discussion and Analysis section of the Company’s definitive proxy statement\nfor the 2026 Annual Meeting of Shareowners filed with the Securities and Exchange Commission on March 16, 2026.\nThere are no arrangements or understandings between\nMr. Elkins and any other person pursuant to which he was selected as an officer of the Company. Mr. Elkins does not have any family relationship\nwith any director or executive officer of the Company and is not a party to any transaction requiring disclosure under Item 404(a) of\nRegulation S-K.\nA copy of the Company’s press release announcing\nthese changes is furnished to this report as Exhibit 99.1.\nItem\n9.01(d). Financial\nStatements and Exhibits.\nEXHIBIT INDEX\nExhibit\nNo.\nDescription\nExhibit 10.1\nLetter, dated November 13, 2026, from The Coca-Cola Company to David V. Elkins.\nExhibit 10.2\nDeferred Cash Agreement, dated November 14, 2026, between The Coca-Cola Company and David V. Elkins.\nExhibit\n99.1\nPress Release of The Coca-Cola Company, dated November 23, 2026.\nExhibit\n104\nCover Page Interactive Data File (the cover page XBRL tags are embedded\nwithin the iXBRL document).\nSIGNATURES\nPursuant to the requirements of the Securities Exchange Act of 1934, the\nRegistrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nTHE\nCOCA-COLA COMPANY\n(REGISTRANT)\nDate:\nNovember 23, 2026\nBy:\n/s/\nMonica\nHoward Douglas\nMonica\nHoward Douglas\nExecutive Vice President and Global General Counsel"
     }
    ]
   },
   {
-   "symbol": "JPM",
+   "symbol": "NVDA",
    "form": "8-K",
-   "accepted_utc": "2026-11-17 13:00:28",
+   "accepted_utc": "2026-11-23 13:57:54",
    "items": "5.02 officer/director change",
-   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm",
    "documents": [
     {
      "type": "EX-99.1",
-     "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpmcpressrelease11172026.htm",
-     "text": "EX-99.1\n2\njpmcpressrelease11172026.htm\nJPMORGAN CHASE & CO. PRESS RELEASE DATED NOVEMBER 17, 2026\nJPMorgan Chase & Co. 270 Park Avenue, NY 10017-2014 NYSE symbol: JPM www.jpmorganchase.com News release: IMMEDIATE JPMorganChase announces Bregje de Best will succeed Jeremy Barnum as Chief Financial Officer following first-quarter 2027 financial reporting. Barnum to become a Vice Chairman at that time. New York, November 17, 2026 – JPMorganChase announced today that Bregje de Best, Chief Financial Officer (CFO) of the Commercial & Investment Bank (CIB), will succeed Jeremy Barnum as CFO of the company following its first-quarter 2027 financial reporting. At that time, de Best will join the firmwide Operating Committee (OC), and Barnum will become a Vice Chairman of the company. Barnum informed the company of his intention to conclude his tenure as CFO after six years in the role and to support the transition to the next generation of talent. He and de Best will work closely between now and the change to ensure a smooth transition, with Barnum leading the January and April earnings announcements and the company’s Investor Day in February. Following first-quarter financial reporting, Barnum will become a Vice Chairman and has agreed to stay on until early 2028, helping Chairman and Chief Executive Officer Jamie Dimon and other senior leaders on a range of firmwide initiatives. “Jeremy has been an outstanding CFO of our company since 2021 and is enormously respected both internally by our leadership team and employees as well as outside the company by investors, analysts and others. After many years in the job, he asked to transition leadership of Finance to another outstanding executive. I’m excited he will be helping Bregje through this period and taking on a Vice Chairman role, where he can continue to be such a valuable advisor and partner to me and our OC,” said Jamie Dimon. Barnum said: “My years as CFO at JPMorgan Chase have been among the most challenging and fulfilling of my life, and I am very grateful to Jamie for the opportunity to serve the company and its shareholders as well as for his mentorship and support. I couldn’t be happier to have Bregje as my successor to continue the tradition of excellence in our Finance organization, and I am very grateful to my team for their support during my time as CFO. During my remaining time at the company, I’m looking forward to helping with the many challenges present in the current environment.” As CFO of the CIB, de Best oversees Finance, Business Management and Controls for our Global Banking, Markets, Payments and Securities Services businesses. Prior to that, she was co-head of Global Corporate Banking, which serves large corporates, financial institutions and public-sector organizations. Previously, she held other senior roles in investment banking and markets in the U.K. and Asia.\nInvestor Contact: Mikael Grubb Media Contact: Joseph Evangelisti jpmcinvestorrelations@jpmchase.com joseph.evangelisti@jpmchase.com “Bregje is an extraordinary leader with outstanding experience both in finance and our businesses across the CIB,” said Jamie Dimon. “She has a deep understanding of how our company operates as well as extensive client- facing experience, and she can communicate our company story in a clear and compelling way. I’m very excited she will become our company’s next CFO.” Early next year, the company will announce a successor to de Best as CFO of the CIB. JPMorgan Chase & Co. (NYSE: JPM) is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $5.1 trillion in assets and $372 billion in stockholders’ equity as of September 30, 2026. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally. Information about JPMorgan Chase & Co. is available at www.jpmorganchase.com. # # #"
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nov23pressrelease.htm",
+     "text": "EX-99.1\n2\nnov23pressrelease.htm\nEX-99.1\nNVIDIA Board Reinstates Jensen Huang as President, CEO and Board Director\nSANTA CLARA, Calif.—November 23, 2026—NVIDIA (NASDAQ: NVDA) today announced that effective immediately, Jensen Huang has been reinstated as President and Chief Executive Officer, and as a member of the Board. The Board of Directors voted unanimously to reinstate Mr. Huang following a series of discussions and meetings with Mr. Huang, after which the Board was satisfied with respect to Mr. Huang’s candor and ability to lead NVIDIA. In the process of reaching its decision, the Board received input from senior levels of the United States government, and based on that input, the Board is confident that Mr. Huang’s reinstatement poses no national security risk.\n\"The Board believes Jensen is the right person to lead NVIDIA, and that his reinstatement is in the best interests of our stockholders, employees, partners, and customers,” said Harvey C. Jones, Chair of the Board. “We have every confidence in Jensen and look forward to working with him as he resumes his leadership of the Company. We are grateful to Colette Kress for her outstanding service as interim CEO, in addition to her continuing responsibilities as NVIDIA's Chief Financial Officer.\" Mr. Jones will continue to serve as Board chair.\n“I am honored to return to NVIDIA and lead one of the most consequential technology companies in the world at the beginning of a new industrial revolution,” said Jensen Huang. “I take this responsibility with the greatest humility and renewed commitment. I want to thank the NVIDIA Board for its confidence and deliberation through this process. I am especially grateful to Harvey Jones for his leadership as Chair, and to Colette Kress and our executive staff for leading NVIDIA during this period. I am also deeply thankful to our employees, shareholders, leaders across the industry, and partners around the world for their extraordinary support. Above all, I am grateful for the love and support of my family. I can’t wait to get back to work.”\nAs previously announced, in light of recent reporting that Mr. Huang has been the target of a foreign intelligence effort, the Board formed a committee comprised solely of independent directors to investigate, and the committee retained independent counsel to assist it in that investigation. The Board reiterated that the committee’s investigation will proceed to conclusion. Mr. Huang fully supports the investigation and is committed to cooperating with it.\nThe Board also recently formed a National Security and Export Control Committee comprised solely of independent directors to oversee trade compliance and national security risks. The committee is engaging counsel with experience in national security matters, and such counsel will be retaining advisors with expertise in national security matters. NVIDIA is commencing a search to fill a new position,\nChief Compliance Officer, to oversee compliance across NVIDIA and report to the Nominating and Corporate Governance Committee. NVIDIA will continue to cooperate with ongoing government investigations and inquiries.\n# # #\nFor further information, contact:\nMylene Mangalindan\nCorporate Communications\nNVIDIA Corporation\npress@nvidia.com\nToshiya Hari\nInvestor Relations\nNVIDIA Corporation\nir@nvidia.com"
     },
     {
      "type": "8-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm",
-     "text": "UNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\nFORM 8-K\nCURRENT REPORT\nPursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934\nDate of Report (date of earliest event reported): November 17, 2026\nJPMorgan Chase & Co.\n(Exact name of registrant as specified in its charter)\nDelaware 1-5805 13-2624428\n(State or other jurisdiction of\nincorporation or organization) (Commission File Number) (I.R.S. employer\nidentification no.)\n270 Park Avenue,\nNew York, New York 10017\n(Address of principal executive offices) (Zip Code)\nRegistrant’s telephone number, including area code: (212) 270-6000\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n☐ Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of the Act:\nTitle of each class Trading Symbol(s) Name of each exchange on which registered\nCommon stock JPM The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 5.75% Non-Cumulative Preferred Stock, Series DD JPM PR D The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 6.00% Non-Cumulative Preferred Stock, Series EE JPM PR C The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.75% Non-Cumulative Preferred Stock, Series GG JPM PR J The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.55% Non-Cumulative Preferred Stock, Series JJ JPM PR K The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.625% Non-Cumulative Preferred Stock, Series LL JPM PR L The New York Stock Exchange\nDepositary Shares, each representing a one-four hundredth interest in a share of 4.20% Non-Cumulative Preferred Stock, Series MM JPM PR M The New York Stock Exchange\nGuarantee of Callable Fixed Rate Notes due June 10, 2032 of JPMorgan Chase Financial Company LLC\nJPM/32 The New York Stock Exchange\nGuarantee of Alerian MLP Index ETNs due January 28, 2044 of JPMorgan Chase Financial Company LLC AMJB NYSE Arca, Inc.\nGuarantee of Inverse VIX Short-Term Futures ETNs due March 22, 2045 of JPMorgan Chase Financial Company LLC VYLD NYSE Arca, Inc.\nIndicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth company ☐\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐\nItem 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers\nOn November 17, 2026, JPMorgan Chase & Co. (\"JPMorganChase\" or the “Firm”) announced that Bregje de Best, 43, will succeed Jeremy Barnum as Chief Financial Officer (“CFO”) of the Firm, following its first-quarter 2027 financial reporting. At that time, Ms. de Best will join the Firm's Operating Committee, and Mr. Barnum will become a Vice Chairman of the Firm.\nMs. de Best currently serves as the CFO of the Commercial & Investment Bank (“CIB”), a position she has held since June 2025. Prior to her role as the CFO of CIB, Ms. de Best was the co-head of Global Corporate Banking from March 2024 to June 2025. Previously, Ms. de Best was co-head of Global Corporate Derivatives for the Firm’s Investment Bank from 2019 to 2024. Before that, she held other senior roles in investment banking and markets in the United Kingdom and Asia. Ms. de Best joined the Firm in 2006.\nA copy of the press release related to this announcement is attached hereto as Exhibit 99.1.\nItem 9.01 Financial Statements and Exhibits\n(d) Exhibit\nExhibit No. Description of Exhibit\n99.1\nJPMorgan Chase & Co. Press Release dated November 17, 2026\n101 Pursuant to Rule 406 of Regulation S-T, the cover page is formatted in Inline XBRL (Inline eXtensible Business Reporting Language).\n104 Cover Page Interactive Data File (embedded within the Inline XBRL document and included in Exhibit 101).\nSIGNATURE\nPursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nJPMorgan Chase & Co.\n(Registrant)\nBy: /s/ Reid R. Broda\nReid R. Broda\nCorporate Secretary\nDated: November 17, 2026\n2"
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm",
+     "text": "UNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWASHINGTON, DC 20549\n______________\nFORM 8-K\nCURRENT REPORT\nPURSUANT TO SECTION 13 OR 15(d) OF\nTHE SECURITIES EXCHANGE ACT OF 1934\nDate of Report (Date of earliest event reported): November 22, 2026\nNVIDIA CORPORATION\n(Exact name of registrant as specified in its charter)\nDelaware 0-23985 94-3177549\n(State or other jurisdiction (Commission (IRS Employer\nof incorporation) File Number) Identification No.)\n2788 San Tomas Expressway, Santa Clara, CA 95051\n(Address of principal executive offices) (Zip Code)\nRegistrant’s telephone number, including area code: (408) 486-2000\nNot Applicable\n(Former name or former address, if changed since last report)\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n☐ Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of the Act:\nTitle of each class Trading Symbol(s) Name of each exchange on which registered\nCommon Stock, $0.001 par value per share NVDA The Nasdaq Global Select Market\nIndicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging Growth Company ☐\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐\nItem 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\nOn November 22, 2026, the Board of Directors of NVIDIA Corporation reinstated Jen-Hsun Huang as NVIDIA’s President, Chief Executive Officer and member of the Board of Directors, effective immediately.\nFollowing the reinstatement of Mr. Huang, Ms. Kress will continue to serve as NVIDIA’s Executive Vice President and Chief Financial Officer.\nA copy of the press release announcing the above is attached as Exhibit 99.1 to this Current Report on Form 8-K.\nItem 9.01. Financial Statements and Exhibits.\n(d) Exhibits\nExhibit Description\n99.1\nPress Release, dated November 23, 2026\n104 The cover page of this Current Report on Form 8-K, formatted in inline XBRL (included as Exhibit 101)\nSIGNATURE\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nNVIDIA Corporation\nDate: November 23, 2026 By: /s/ Colette M. Kress\nColette M. Kress\nExecutive Vice President and Chief Financial Officer"
     }
    ]
   }
@@ -123,7 +123,7 @@
    "buyers": 0,
    "buy_value_usd": 0,
    "sellers": 2,
-   "sell_value_usd": 35059703.0
+   "sell_value_usd": 35069432.0
   },
   {
    "symbol": "KO",
@@ -138,114 +138,121 @@
    "buy_value_usd": 0,
    "sellers": 2,
    "sell_value_usd": 6631633.0
+  },
+  {
+   "symbol": "NVDA",
+   "buyers": 0,
+   "buy_value_usd": 0,
+   "sellers": 1,
+   "sell_value_usd": 4542781.0
   }
  ],
  "news_last_days": 3,
  "news_headlines": [
   {
    "symbol": "AAPL",
-   "published_utc": "2026-11-20 23:15:09",
-   "source": "Investor's Business Daily",
-   "headline": "Dow Jones Futures: Market Has Worst Week Since Covid Amid Nvidia, Anthropic. Does Fear Gauge Offer Hope?",
-   "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-worst-week-covid-nvidia-anthropic-vix-fear-gauge/?src=A00220&yptr=yahoo"
+   "published_utc": "2026-11-27 11:05:13",
+   "source": "GuruFocus.com",
+   "headline": "iShares Russell 3000 ETF (IWV) Adds Apple and Microsoft on Nov. 25",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-russell-3000-etf-iwv-110513086.html"
   },
   {
    "symbol": "AAPL",
-   "published_utc": "2026-11-20 23:02:13",
-   "source": "24/7 Wall St.",
-   "headline": "She Moves $250,000 of Her 401(k) Into a Nasdaq-100 Fund at 60 to Own Anthropic From Its Debut Thursday. Nasdaq’s Fast-Entry Rule Keeps Her Fund From Buying Until Dec. 21, After Any First-Month Pop",
-   "url": "https://247wallst.com/personal-finance/2026/11/20/she-moves-250000-of-her-401k-into-a-nasdaq-100-fund-at-60-to-own-anthropic-from-its-debut-thursday-nasdaqs-fast-entry-rule-keeps-her-fund-from-buying-until-dec-21-after-any-first-month-pop/"
+   "published_utc": "2026-11-27 11:05:06",
+   "source": "GuruFocus.com",
+   "headline": "iShares S&P 500 Growth (IVW) Adds Microsoft and Nvidia on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-p-500-growth-ivw-110506557.html"
   },
   {
    "symbol": "AAPL",
-   "published_utc": "2026-11-20 22:19:25",
-   "source": "Yahoo Finance Video",
-   "headline": "Tech sees huge sell-off as Anthropic IPO fails to lift the market",
-   "url": "https://finance.yahoo.com/video/tech-sees-huge-sell-off-as-anthropic-ipo-fails-to-lift-the-market-221925316.html"
+   "published_utc": "2026-11-27 11:04:55",
+   "source": "GuruFocus.com",
+   "headline": "iShares Paris-Aligned Climate (PABU) Buys $9.4 Million More Apple on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-paris-aligned-climate-pabu-110455750.html"
   },
   {
    "symbol": "JPM",
-   "published_utc": "2026-11-20 19:11:47",
-   "source": "American Banker",
-   "headline": "Exclusive Research: JPMorgan’s AI strategy puts governance to the test",
-   "url": "https://www.americanbanker.com/news/exclusive-research-jpmorgan-s-ai-strategy-puts-governance-to-the-test"
+   "published_utc": "2026-11-27 11:10:53",
+   "source": "Simply Wall St.",
+   "headline": "Banco Bradesco (BOVESPA:BBDC4) Stock Sees Fair Value Cut As Analysts Turn More Cautious",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/banco-bradesco-bovespa-bbdc4-stock-111053785.html"
   },
   {
    "symbol": "JPM",
-   "published_utc": "2026-11-20 19:00:58",
-   "source": "The Telegraph",
-   "headline": "Labour’s ‘unfair’ bank tax will have consequences, warns JP Morgan boss",
-   "url": "https://www.telegraph.co.uk/business/2026/11/20/labour-unfair-bank-tax-consequences-jp-morgan/"
+   "published_utc": "2026-11-27 11:09:54",
+   "source": "Simply Wall St.",
+   "headline": "3 Great Dividend Stocks To Own In November 2026",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/3-great-dividend-stocks-own-110954380.html"
   },
   {
    "symbol": "JPM",
-   "published_utc": "2026-11-20 19:00:00",
-   "source": "The Real Deal",
-   "headline": "JPMorgan adds Dallas fund-banking hub as Y’all Street private capital ecosystem grows",
-   "url": "https://finance.yahoo.com/real-estate/articles/jpmorgan-adds-dallas-fund-banking-190000985.html"
+   "published_utc": "2026-11-27 03:33:52",
+   "source": "Benzinga",
+   "headline": "AI Risk Is 'Moving Somewhere Harder to See': Citigroup, JPMorgan Reportedly Look to Offload AI Debt as Investors Grow Wary of Buildout",
+   "url": "https://finance.yahoo.com/technology/ai/articles/ai-risk-moving-somewhere-harder-033352825.html"
   },
   {
    "symbol": "KO",
-   "published_utc": "2026-11-20 22:25:00",
+   "published_utc": "2026-11-27 10:26:02",
    "source": "Motley Fool",
-   "headline": "Is Coca-Cola a Millionaire-Maker Stock?",
-   "url": "https://www.fool.com/investing/2026/11/20/is-coca-cola-a-millionaire-maker-stock/"
+   "headline": "Warren Buffett's Successor, Greg Abel, Has 47% of Berkshire Hathaway's $346 Billion Portfolio Invested in 3 Proven Winners",
+   "url": "https://www.fool.com/investing/2026/11/27/warren-buffett-successor-greg-abel-has-47-berkshire-hathaway-346-billion-portfolio-invested-3-proven-winners/"
   },
   {
    "symbol": "KO",
-   "published_utc": "2026-11-20 20:42:00",
+   "published_utc": "2026-11-26 21:33:02",
+   "source": "Motley Fool",
+   "headline": "The Nasdaq Composite Is in a Correction, but These 3 Dividend Stocks Are Near 52-Week Highs. Here's Why They're Still Worth Buying Right Now.",
+   "url": "https://www.fool.com/investing/2026/11/26/the-nasdaq-composite-is-in-a-correction-but-these-3-dividend-stocks-are-near-52-week-highs-here-s-why-they-re-still-worth-buying-right-now/"
+  },
+  {
+   "symbol": "KO",
+   "published_utc": "2026-11-26 15:30:14",
    "source": "Zacks",
-   "headline": "Top Research Reports for Coca-Cola, Medtronic & Palo Alto Networks",
-   "url": "https://finance.yahoo.com/markets/stocks/articles/top-research-reports-coca-cola-204200577.html"
+   "headline": "Coca-Cola (KO) Up 6.4% Since Last Earnings Report: Can It Continue?",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/coca-cola-ko-6-4-153014132.html"
   },
   {
-   "symbol": "KO",
-   "published_utc": "2026-11-20 20:13:20",
+   "symbol": "MSFT",
+   "published_utc": "2026-11-27 11:05:13",
+   "source": "GuruFocus.com",
+   "headline": "iShares Russell 3000 ETF (IWV) Adds Apple and Microsoft on Nov. 25",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-russell-3000-etf-iwv-110513086.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-27 11:05:06",
+   "source": "GuruFocus.com",
+   "headline": "iShares S&P 500 Growth (IVW) Adds Microsoft and Nvidia on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-p-500-growth-ivw-110506557.html"
+  },
+  {
+   "symbol": "MSFT",
+   "published_utc": "2026-11-27 11:04:55",
+   "source": "GuruFocus.com",
+   "headline": "iShares Paris-Aligned Climate (PABU) Buys $9.4 Million More Apple on Wednesday",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/ishares-paris-aligned-climate-pabu-110455750.html"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-27 11:56:50",
+   "source": "Investor's Business Daily",
+   "headline": "Dow Jones Futures Rise; Look For This Bullish Market Signal On Black Friday",
+   "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-wild-ride-nasdaq-nvidia-slash-losses-anthropic-higher/?src=A00220&yptr=yahoo"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-27 11:46:02",
+   "source": "Motley Fool",
+   "headline": "If You Put $10,000 in the Schwab U.S. Dividend Equity ETF 10 Years Ago, Here’s What You’d Have Now",
+   "url": "https://www.fool.com/investing/2026/11/27/if-you-put-usd10-000-in-the-schwab-u-s-dividend-equity-etf-10-years-ago-here-s-what-you-d-have-now/"
+  },
+  {
+   "symbol": "NVDA",
+   "published_utc": "2026-11-27 11:37:19",
    "source": "Simply Wall St.",
-   "headline": "Coca-Cola (KO) After ETF Selling Is It Still Fairly Valued",
-   "url": "https://finance.yahoo.com/markets/stocks/articles/coca-cola-ko-etf-selling-201320830.html"
-  },
-  {
-   "symbol": "MSFT",
-   "published_utc": "2026-11-20 23:25:00",
-   "source": "Barrons.com",
-   "headline": "Nvidia Can Rebound to $200, Analyst Says. Plus, L3Harris and 4 More Stocks.",
-   "url": "https://www.barrons.com/articles/nvidia-can-rebound-to-200-analyst-says-plus-l3harris-and-4-more-stocks-3c840464?siteid=yhoof2&yptr=yahoo"
-  },
-  {
-   "symbol": "MSFT",
-   "published_utc": "2026-11-20 23:14:52",
-   "source": "Simply Wall St.",
-   "headline": "International Business Machines (IBM) Opens Lightwell Access On Microsoft Marketplace, Is It Still Undervalued?",
-   "url": "https://finance.yahoo.com/markets/stocks/articles/international-business-machines-ibm-opens-231452605.html"
-  },
-  {
-   "symbol": "MSFT",
-   "published_utc": "2026-11-20 22:26:38",
-   "source": "TIKR",
-   "headline": "Andrew Ross Sorkin Doubts OpenAI Will Be “Worth More Than Anthropic.” That’s a Problem for Microsoft",
-   "url": "https://www.tikr.com/blog/andrew-ross-sorkin-doubts-openai-will-be-worth-more-than-anthropic-thats-a-problem-for-microsoft?ref=yahoofinance&tlnk=yf-261120-j5jvg3r4"
-  },
-  {
-   "symbol": "NVDA",
-   "published_utc": "2026-11-20 23:38:12",
-   "source": "Stocktwits",
-   "headline": "NVDA Stock Clocks Worst Week In 18 Years As SEC Reportedly Probes Its Accounting Practices",
-   "url": "https://stocktwits.com/news-articles/markets/equity/nvda-stock-clocks-worst-week-in-18-years-as-sec-reportedly-probes-its-accounting-practices/cNbSDIWR91Q"
-  },
-  {
-   "symbol": "NVDA",
-   "published_utc": "2026-11-20 23:28:00",
-   "source": "Barrons.com",
-   "headline": "At AI Summit, Industry Titans Wave Off Market Woes—and Defend Jensen Huang",
-   "url": "https://www.barrons.com/articles/ai-trade-stocks-bull-bear-anthropic-ipo-4139cf71?siteid=yhoof2&yptr=yahoo"
-  },
-  {
-   "symbol": "NVDA",
-   "published_utc": "2026-11-20 23:25:54",
-   "source": "24/7 Wall St.",
-   "headline": "Data Center AI Chips Could Change the Winners: Broadcom and Marvell",
-   "url": "https://247wallst.com/investing/2026/11/20/data-center-ai-chips-could-change-the-winners-broadcom-and-marvell/"
+   "headline": "AI Chips Update - AI Surge Accelerates Semiconductor Growth Through 2026",
+   "url": "https://finance.yahoo.com/technology/ai/articles/ai-chips-ai-surge-accelerates-113719623.html"
   }
  ],
  "largest_insider_trades": [
@@ -286,8 +293,8 @@
    "insider": "Newstead Jennifer",
    "title": "SVP, GC and Government Affairs",
    "type": "sell",
-   "date": "2026-10-27",
-   "value_usd": 823721.0
+   "date": "2026-11-24",
+   "value_usd": 833449.0
   },
   {
    "symbol": "KO",
@@ -352,29 +359,69 @@
    "type": "sell",
    "date": "2026-11-09",
    "value_usd": 759111.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 721615.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 626671.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 620917.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 455649.0
+  },
+  {
+   "symbol": "NVDA",
+   "insider": "Teter Timothy S.",
+   "title": "EVP, General Counsel and Sec",
+   "type": "sell",
+   "date": "2026-11-19",
+   "value_usd": 412197.0
   }
  ],
  "sentiment": [
   {
    "symbol": "KO",
-   "note": "building baseline (1/20 days, 0 headlines)"
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 8 headlines"
   },
   {
    "symbol": "AAPL",
-   "note": "building baseline (1/20 days, 0 headlines)"
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 20 headlines"
   },
   {
    "symbol": "NVDA",
-   "note": "building baseline (1/20 days, 0 headlines)"
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 20 headlines"
   },
   {
    "symbol": "MSFT",
-   "note": "building baseline (1/20 days, 0 headlines)"
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 20 headlines"
   },
   {
    "symbol": "JPM",
-   "note": "building baseline (1/20 days, 0 headlines)"
+   "note": "building baseline (5/20 days, 0 headlines); last 24h: 7 headlines"
   }
  ],
- "digest_text": "MARKET DIGEST · Mon 23 Nov 2026, 16:00 Asia/Tbilisi\n\nTODAY IN BRIEF\nThe market is in a BEAR regime: SPY closed 5.5% below its 200-day\naverage. SPY is down 8.6% over 5 days. Worth a look today: NVDA, JPM.\n\nWHAT MATTERS\n1. NVDA  125.53 · -14.0% today · -22.9% 5d · vol 2.4x\n   NVDA moved -14.0% on the day, -22.9% over 5 days, on 2.4x normal\n   volume (SPY -8.6% over 5 days)\n   What: Filed an 8-K (2.02 results of operations). From the filing:\n   \"Revenue of $115.8 billion, up 103% from a year ago\" \"Data Center\n   revenue of $107.6 billion, up 110% from a year ago\" \"SANTA CLARA,\n   Calif.—Nov. 17, 2026―NVIDIA (NASDAQ: NVDA) today reported revenue for\n   the third quarter ended October 25, 2026, of $115.8 billion, up 20%\n   from the previous quarter and up 103% from a year ago.\"\n   Why it may matter: The move came right after an earnings filing, so\n   the results or guidance are the likely cause.\n   Check next: Read the outlook/guidance and margin lines in the press\n   release (exhibit 99.1): a drop after strong headline numbers usually\n   means the outlook or something beneath the headline disappointed.\n   Source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n   News (21 Nov 03:38, Stocktwits): NVDA Stock Clocks Worst Week In 18\n   Years As SEC Reportedly Probes Its Accounting Practices\n   News (21 Nov 03:28, Barrons.com): At AI Summit, Industry Titans Wave\n   Off Market Woes—and Defend Jensen Huang\n   News (21 Nov 03:25, 24/7 Wall St.): Data Center AI Chips Could Change\n   the Winners: Broadcom and Marvell\n\n2. JPM  310.53 · -3.0% today · -10.3% 5d · vol 1.9x\n   JPM moved -3.0% on the day, -10.3% over 5 days, on 1.9x normal volume\n   (SPY -8.6% over 5 days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"JPMorgan Chase & Co. 270 Park Avenue, NY 10017-2014 NYSE symbol: JPM\n   www.jpmorganchase.com News release: IMMEDIATE JPMorganChase announces\n   Bregje de Best will succeed Jeremy Barnum as Chief Financial Officer\n   following first-quarter 2027 financial reporting.\" \"New York,\n   November 17, 2026 – JPMorganChase announced today that Bregje de\n   Best, Chief Financial Officer (CFO) of the Commercial & Investment\n   Bank (CIB), will succeed Jeremy Barnum as CFO of the company\n   following its first-quarter 2027 financial reporting.\" \"Item 5.02\n   Departure of Directors or Certain Officers; Election of Directors;\n   Appointment of Certain Officers; Compensatory Arrangements of Certain\n   Officers\"\n   Why it may matter: Leadership changes can signal a shift in strategy\n   or a problem.\n   Check next: Check whether the change is a planned succession or a\n   sudden departure, and whether the filing gives a reason.\n   Source: https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n   News (20 Nov 23:11, American Banker): Exclusive Research: JPMorgan’s\n   AI strategy puts governance to the test\n   News (20 Nov 23:00, The Telegraph): Labour’s ‘unfair’ bank tax will\n   have consequences, warns JP Morgan boss\n   News (20 Nov 23:00, The Real Deal): JPMorgan adds Dallas fund-banking\n   hub as Y’all Street private capital ecosystem grows\n\nBACKGROUND\n· KO: -2.3% over 5 days, 6.3 points better than the market. Nothing new\n  filed. Latest headline: \"Is Coca-Cola a Millionaire-Maker Stock?\"\n  (Motley Fool).\n· AAPL: -3.8% over 5 days, 4.7 points better than the market. Nothing\n  new filed. Latest headline: \"Dow Jones Futures: Market Has Worst Week\n  Since Covid Amid Nvidia, Anthropic. Does Fear Gauge Offer Hope?\"\n  (Investor's Business Daily).\n· MSFT: -7.5% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"Nvidia Can Rebound to $200, Analyst Says.\n  Plus, L3Harris and 4 More Stocks.\" (Barrons.com).\n· Insider selling, last 30 days, no buying: AAPL $35.1M (2 people), KO\n  $16.5M (4 people), MSFT $6.6M (2 people). Selling alone is weak\n  evidence: insiders sell for taxes, diversification and pre-planned\n  programs.\n\nNUMBERS (last close 2026-11-20)\n        CLOSE     1D     5D   VOL\nKO      96.99  +0.9%  -2.3%  1.4x\nAAPL   342.56  -1.9%  -3.8%  1.7x\nNVDA   125.53 -14.0% -22.9%  2.4x\nMSFT   484.52  -2.8%  -7.5%  1.7x\nJPM    310.53  -3.0% -10.3%  1.9x\nSPY    689.81  -3.6%  -8.6%  2.9x\nRegime: BEAR (SPY 689.81 vs 200-day avg 730.29)\n\nFILINGS (last 7 days, excluding Form 4)\n18 Nov 01:20 NVDA 8-K 2.02 results of operations\n  https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm\n17 Nov 17:00 JPM 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm\n\nNEWS SENTIMENT (FinBERT, vs each stock's own baseline)\nKO    building baseline (1/20 days, 0 headlines)\nAAPL  building baseline (1/20 days, 0 headlines)\nNVDA  building baseline (1/20 days, 0 headlines)\nMSFT  building baseline (1/20 days, 0 headlines)\nJPM   building baseline (1/20 days, 0 headlines)\nFinBERT isn't installed, so 100 of 100 collected headlines aren't\nscored. Install it once with: pip install -e .[sentiment]\n\nINSIDER OPEN-MARKET TRADES (last 30 days)\nAAPL: bought $0 (0), sold $35.1M (2)\nKO: bought $0 (0), sold $16.5M (4)\nMSFT: bought $0 (0), sold $6.6M (2)\n\nNotes from fixed rules; quotes are verbatim from the filings.\nDecision support only, not financial advice."
+ "digest_text": "MARKET DIGEST · Fri 27 Nov 2026, 16:01 Asia/Tbilisi\n\nTODAY IN BRIEF\nThe market is in a BEAR regime: SPY closed 1.6% below its 200-day\naverage. SPY is down 1.9% over 5 days. Worth a look today: NVDA, KO.\n\nWHAT MATTERS\n1. NVDA  155.38 · -5.9% today · -0.1% 5d · vol 1.2x\n   NVDA moved -5.9% on the day, -0.1% over 5 days (SPY -1.9% over 5\n   days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"Departure of Directors or Certain Officers; Election of Directors;\n   Appointment of Certain Officers; Compensatory Arrangements of Certain\n   Officers.\"\n   Why it may matter: A large move next to a fresh company filing; the\n   filing may explain it. Leadership changes can signal a shift in\n   strategy or a problem.\n   Check next: Check whether the change is a planned succession or a\n   sudden departure, and whether the filing gives a reason.\n   Source: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm\n   News (27 Nov 15:56, Investor's Business Daily): Dow Jones Futures\n   Rise; Look For This Bullish Market Signal On Black Friday\n   News (27 Nov 15:46, Motley Fool): If You Put $10,000 in the Schwab\n   U.S. Dividend Equity ETF 10 Years Ago, Here’s What You’d Have Now\n   News (27 Nov 15:37, Simply Wall St.): AI Chips Update - AI Surge\n   Accelerates Semiconductor Growth Through 2026\n\n2. KO  97.59 · -0.0% today · -0.5% 5d · vol 1.2x\n   KO moved -0.0% on the day, -0.5% over 5 days (SPY -1.9% over 5 days)\n   What: Filed an 8-K (5.02 officer/director change). From the filing:\n   \"Elkins to Succeed John Murphy, Who Will Continue to Serve as\n   President of the Company\" \"financial officer of Coca-Cola April 2,\n   2027, succeeding John Murphy.\" \"Murphy, 64, intends to retire in\n   2027, with timing determined later to allow\"\n   Why it may matter: Leadership changes can signal a shift in strategy\n   or a problem.\n   Check next: Check whether the change is a planned succession or a\n   sudden departure, and whether the filing gives a reason.\n   Source: https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm\n   News (27 Nov 14:26, Motley Fool): Warren Buffett's Successor, Greg\n   Abel, Has 47% of Berkshire Hathaway's $346 Billion Portfolio Invested\n   in 3 Proven Winners\n   News (27 Nov 01:33, Motley Fool): The Nasdaq Composite Is in a\n   Correction, but These 3 Dividend Stocks Are Near 52-Week Highs.\n   Here's Why They're Still Worth Buying Right Now.\n   News (26 Nov 19:30, Zacks): Coca-Cola (KO) Up 6.4% Since Last\n   Earnings Report: Can It Continue?\n\nBACKGROUND\n· AAPL: +0.6% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"iShares Russell 3000 ETF (IWV) Adds Apple and\n  Microsoft on Nov. 25\" (GuruFocus.com).\n· MSFT: -2.0% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"iShares Russell 3000 ETF (IWV) Adds Apple and\n  Microsoft on Nov. 25\" (GuruFocus.com).\n· JPM: -3.9% over 5 days, roughly in line with the market. Nothing new\n  filed. Latest headline: \"Banco Bradesco (BOVESPA:BBDC4) Stock Sees\n  Fair Value Cut As Analysts Turn More Cautious\" (Simply Wall St.).\n· Insider selling, last 30 days, no buying: AAPL $35.1M (2 people), KO\n  $16.5M (4 people), MSFT $6.6M (2 people), NVDA $4.5M (1 people).\n  Selling alone is weak evidence: insiders sell for taxes,\n  diversification and pre-planned programs.\n\nNUMBERS (last close 2026-11-25)\n        CLOSE     1D     5D   VOL\nKO      97.59  -0.0%  -0.5%  1.2x\nAAPL   354.07  +1.4%  +0.6%  0.8x\nNVDA   155.38  -5.9%  -0.1%  1.2x\nMSFT   496.13  +0.7%  -2.0%  0.8x\nJPM    317.10  +0.1%  -3.9%  1.0x\nSPY    718.78  -0.5%  -1.9%  1.1x\nRegime: BEAR (SPY 718.78 vs 200-day avg 730.62)\n\nFILINGS (last 7 days, excluding Form 4)\n24 Nov 01:35 KO 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm\n23 Nov 17:57 NVDA 8-K 5.02 officer/director change\n  https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm\n\nNEWS SENTIMENT (FinBERT, vs each stock's own baseline)\nKO    building baseline (5/20 days, 0 headlines); last 24h: 8 headlines\nAAPL  building baseline (5/20 days, 0 headlines); last 24h: 20 headlines\nNVDA  building baseline (5/20 days, 0 headlines); last 24h: 20 headlines\nMSFT  building baseline (5/20 days, 0 headlines); last 24h: 20 headlines\nJPM   building baseline (5/20 days, 0 headlines); last 24h: 7 headlines\nFinBERT isn't installed, so 299 of 299 collected headlines aren't\nscored. Install it once with: pip install -e .[sentiment]\n\nINSIDER OPEN-MARKET TRADES (last 30 days)\nAAPL: bought $0 (0), sold $35.1M (2)\nKO: bought $0 (0), sold $16.5M (4)\nMSFT: bought $0 (0), sold $6.6M (2)\nNVDA: bought $0 (0), sold $4.5M (1)\n\nNotes from fixed rules; quotes are verbatim from the filings.\nDecision support only, not financial advice."
 }
